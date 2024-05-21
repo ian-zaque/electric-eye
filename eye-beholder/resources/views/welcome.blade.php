@@ -70,14 +70,32 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">Entrar</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">Registre-se</a>
                         @endif
                     @endauth
                 </div>
             @endif
+
+            <div class="content">
+                <div class="title m-b-md">
+                    Veemo
+                </div>
+
+                <div class="links">
+                    @auth
+                        <a href="{{ url('/home') }}">Home</a>
+                    @else
+                        <a href="{{ route('login') }}">Entrar</a>
+
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}">Registre-se</a>
+                    @endif
+                @endauth
+                </div>
+            </div>
         </div>
     </body>
 </html>
