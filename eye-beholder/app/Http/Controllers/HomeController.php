@@ -23,6 +23,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = auth()->user();
+        unset($user->created_at);
+        unset($user->deleted_at);
+        unset($user->email_verified_at);
+        unset($user->provider);
+        unset($user->provider_id);
+        unset($user->updated_at);
+
+        return view('home', compact('user'));
     }
 }

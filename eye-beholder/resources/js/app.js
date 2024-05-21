@@ -5,8 +5,14 @@
  */
 
 require('./bootstrap');
+import App from './App.vue'
+import router from './router'
+import store from './store'
+import VueSidebarMenu from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
 window.Vue = require('vue');
+Vue.use(VueSidebarMenu)
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,7 +25,14 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+//App
+Vue.component('app-container', require('./App.vue').default);
+
+// Sidebar
+Vue.component("side-bar", require("./components/Sidebar/Sidebar.vue").default);
+Vue.component("side-bar-link", require("./components/Sidebar/SidebarLink.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

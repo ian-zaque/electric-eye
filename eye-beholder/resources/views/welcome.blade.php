@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Veemo
+                    Eye of the Beholder
                 </div>
 
                 <div class="links">
