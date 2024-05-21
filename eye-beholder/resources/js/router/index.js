@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
+import HomeView from '../Home/Home.vue'
 // import TypeSensorsPage from '../components/TypeSensors/TypeSensorsPage.vue'
 // import SensorsPage from '../components/Sensors/SensorsPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-//   {
-//     path: '/',
-//     name: 'home',
-//     component: HomeView
-//   },
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  },
 //   {
 //     path: '/sensors-types',
 //     name: 'Tipos de Sensores',
@@ -24,10 +24,9 @@ const routes = [
 //   },
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+
+export default new VueRouter({
+  // mode: 'history',
+  // base: process.env.BASE_URL,
   routes
 })
-
-export default router
