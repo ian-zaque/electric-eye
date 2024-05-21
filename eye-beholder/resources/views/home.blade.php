@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <app-container :user="{{$user}}" />
+        <app-user :user="{{$user}}" />
     </div>
 </div>
 @endsection

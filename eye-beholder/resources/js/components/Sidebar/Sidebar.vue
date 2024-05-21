@@ -27,7 +27,7 @@ export default {
             isSidebarOpen: true,
             sidebarProps: { theme: "default", width: "250px", disableHover: false, relative: true, },
             sidebarItems: [
-                { header: true, title: "ELETRIC EYE", hiddenOnCollapse: true, },
+                { header: true, title: "Eye of the Beholder", hiddenOnCollapse: true, },
                 { href: "/", title: "Início", icon: "fa-solid fa-house", },
                 {   href: "/sensors", 
                     title: "Dispositivos", 
