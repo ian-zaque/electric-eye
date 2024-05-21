@@ -9,10 +9,14 @@ import App from './AppUser.vue'
 import VueRouter from 'vue-router'
 import store from './store'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+import VueSidebarMenu from 'vue-sidebar-menu'
+import Home from './components/Home/Home.vue'
+import TypeSensorsPage from './components/TypeSensors/TypeSensorsPage.vue'
+import SensorsPage from './components/Sensors/SensorsPage.vue'
 
 window.Vue = require('vue');
 
@@ -27,7 +31,10 @@ const router = new VueRouter({
     hashbang: false,
     routes: [
         // { path: '/user/atividades', name: 'userAtividades', component: AtribuicoesTable, props: { hasFiltro: true } },
-        // { path: '/:pathMatch(.*)', name: 'NotFound', component: BoardColaborador }              // Redireciona NotFoundUrl para BoardColaborador
+        // { path: '/:pathMatch(.*)', name: 'NotFound', component: Home },              // Redireciona NotFoundUrl para Home
+        { path: '/',  name: 'home', component: Home },
+        { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
+        { path: '/sensors', name: 'Sensores', component: SensorsPage },
     ]
 })
 
@@ -39,6 +46,18 @@ Vue.component('app-user', require('./AppUser.vue').default);
 // Sidebar
 Vue.component("side-bar", require("./components/Sidebar/Sidebar.vue").default);
 Vue.component("side-bar-link", require("./components/Sidebar/SidebarLink.vue").default);
+
+// EmptySpace
+Vue.component("empty-space", require("./components/EmptySpace/EmptySpace.vue").default);
+
+// TypeSensors
+Vue.component("type-sensors-page", require("./components/TypeSensors/TypeSensorsPage.vue").default);
+Vue.component("type-sensors-modal", require("./components/TypeSensors/TypeSensorsModal.vue").default);
+
+// Sensors
+Vue.component("sensors-page", require("./components/Sensors/SensorsPage.vue").default);
+Vue.component("sensors-modal", require("./components/Sensors/SensorsModal.vue").default);
+
 
 const app = new Vue({
     router,
