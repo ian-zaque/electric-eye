@@ -7,21 +7,11 @@ import SensorsPage from '../components/Sensors/SensorsPage.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/sensors-types',
-    name: 'Tipos de Sensores',
-    component: TypeSensorsPage
-  },
-  {
-    path: '/sensors',
-    name: 'Sensores',
-    component: SensorsPage
-  },
+  // { path: '/', name: 'home', component: Home },
+  // { path: '/login', name: 'login', component: Home },
+  // { path: '/logout', name: 'logout', component: Home },
+  // { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
+  // { path: '/sensors', name: 'Sensores', component: SensorsPage },
 ]
 
 

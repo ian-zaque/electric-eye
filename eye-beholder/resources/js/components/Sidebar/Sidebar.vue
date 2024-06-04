@@ -24,29 +24,18 @@ export default {
 
     data() {
         return {
-            isSidebarOpen: true,
-            sidebarProps: { theme: "default", width: "250px", disableHover: false, relative: true, },
+            isSidebarOpen: true, sidebarProps: { theme: "default", width: "250px", disableHover: false, relative: true, },
             sidebarItems: [
                 { header: true, title: "Eye of the Beholder", hiddenOnCollapse: true, },
                 { href: "/", title: "Início", icon: "fa-solid fa-house", },
-                {   href: "/sensors", 
-                    title: "Dispositivos", 
-                    icon: "fa-solid fa-satellite",
+                { href: '/regions', title: "Regiões", icon: 'fa-solid fa-map-location-dot' },
+                { href: '/ude', title: "UDEs", icon: 'fa-solid fa-tachograph-digital' },
+                { href: "/sensors", title: "Dispositivos", icon: "fa-solid fa-satellite",
                     child:[
-                        {
-                            href: '/sensors',
-                            title: 'Sensores',
-                            icon: 'fa-solid fa-satellite-dish',
-                        },
-                        {
-                            href: '/sensors-types',
-                            title: 'Tipos de Sensores',
-                            icon: 'fa-solid fa-microchip',
-                        }
+                        { href: '/sensors', title: 'Sensores', icon: 'fa-solid fa-satellite-dish', },
+                        { href: '/sensors-types', title: 'Tipos de Sensores', icon: 'fa-solid fa-microchip', }
                     ]
                 },
-                { href: '/regions', title: "Regiões", icon: 'fa-solid fa-map-location-dot' },
-                { href: '/edu', title: "EDUs", icon: 'fa-solid fa-tachograph-digital' },
                 { href: '/mqtt', title: "MQTT", icon: 'fa-solid fa-tower-broadcast' },
                 { href: '/configuration', title: "Configurações", icon: 'fa-solid fa-gears' },
             ],
