@@ -46,7 +46,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-    name: 'TypeSensorsPage',
+    name: 'SensorsPage',
 
     components:{
     },

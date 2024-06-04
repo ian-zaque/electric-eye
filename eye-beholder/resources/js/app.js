@@ -17,6 +17,7 @@ import VueSidebarMenu from 'vue-sidebar-menu'
 import Home from './components/Home/Home.vue'
 import TypeSensorsPage from './components/TypeSensors/TypeSensorsPage.vue'
 import SensorsPage from './components/Sensors/SensorsPage.vue'
+import RegionsPage from './components/Regions/RegionsPage.vue'
 
 window.Vue = require('vue');
 
@@ -35,6 +36,7 @@ const router = new VueRouter({
         { path: '/',  name: 'home', alias: '/home', component: Home },
         { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
         { path: '/sensors', name: 'Sensores', component: SensorsPage },
+        { path: '/regions', name: 'Regiões', component: RegionsPage },
     ]
 })
 
@@ -57,6 +59,10 @@ Vue.component("type-sensors-modal", require("./components/TypeSensors/TypeSensor
 // Sensors
 Vue.component("sensors-page", require("./components/Sensors/SensorsPage.vue").default);
 Vue.component("sensors-modal", require("./components/Sensors/SensorsModal.vue").default);
+
+// Regions
+Vue.component("regions-page", require("./components/Regions/RegionsPage.vue").default);
+Vue.component("regions-modal", require("./components/Regions/RegionsModal.vue").default);
 
 
 const app = new Vue({
