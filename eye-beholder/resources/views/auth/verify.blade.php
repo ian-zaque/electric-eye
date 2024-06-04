@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Antes de continuar, por favor verifique sua caixa de entrada para ver o lind de verificação.') }}
+                    {{ __('Antes de continuar, por favor verifique sua caixa de entrada para ver o link de verificação.') }}
                     {{ __('Se você não recebeu o email') }},
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
