@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-      <h2>Eye of the Beholder</h2>
+      <empty-space></empty-space>
     </div>
   </template>
   

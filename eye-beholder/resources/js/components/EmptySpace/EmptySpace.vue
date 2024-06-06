@@ -1,7 +1,10 @@
 <template>
-    <div class="container">
-       <h2> Nada aqui por enquanto...</h2>
-    </div>
+    <b-card bg-variant="light" border-variant="dark">
+        <b-card-body class="text-center">
+            <b-icon icon="gear" animation="spin" font-scale="5"></b-icon>
+            <h2>Nada aqui por enquanto...</h2>
+        </b-card-body>
+    </b-card>
 </template>
   
 <script>
