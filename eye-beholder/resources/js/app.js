@@ -34,9 +34,10 @@ const router = new VueRouter({
         // { path: '/user/atividades', name: 'userAtividades', component: AtribuicoesTable, props: { hasFiltro: true } },
         // { path: '/:pathMatch(.*)', name: 'NotFound', component: Home },              // Redireciona NotFoundUrl para Home
         { path: '/',  name: 'home', alias: '/home', component: Home },
-        { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
-        { path: '/sensors', name: 'Sensores', component: SensorsPage },
         { path: '/regions', name: 'Regiões', component: RegionsPage },
+        { path: '/zones', name: 'Regiões', component: RegionsPage },
+        { path: '/sensors', name: 'Sensores', component: SensorsPage },
+        { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
     ]
 })
 

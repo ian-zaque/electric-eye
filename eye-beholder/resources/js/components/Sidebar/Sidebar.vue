@@ -6,10 +6,9 @@
             :width="sidebarProps.width"
             :disableHover="sidebarProps.disableHover"
             :collapsed="isSidebarOpen"
-            @toggle-collapse="toggleSidebar"
-        >
-            <span v-if="isSidebarOpen" slot="toggle-icon" class="fas fa-bars"> </span>
-            <span v-else slot="toggle-icon" class="fas fa-stream"> </span>
+            @toggle-collapse="toggleSidebar">
+            <span v-if="isSidebarOpen" slot="toggle-icon" class="fas fa-bars"></span>
+            <span v-else slot="toggle-icon" class="fas fa-stream"></span>
         </sidebar-menu>
 
     </div>
@@ -29,6 +28,7 @@ export default {
                 { header: true, title: "Eye of the Beholder", hiddenOnCollapse: true, },
                 { href: "/", title: "Início", icon: "fa-solid fa-house", },
                 { href: '/regions', title: "Regiões", icon: 'fa-solid fa-map-location-dot' },
+                { href: '/zones', title: "Zonas de Interesse", icon: 'fa-solid fa-magnifying-glass-location' },  
                 { href: '/ude', title: "UDEs", icon: 'fa-solid fa-tachograph-digital' },
                 { href: "/sensors", title: "Dispositivos", icon: "fa-solid fa-satellite",
                     child:[
