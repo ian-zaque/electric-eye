@@ -55,9 +55,8 @@ export default {
         return {
             openModal: false, isEditing: false,
             regionsFields:[
-                { key: "id", label: "ID", sortable: true },
-                
-                { key: "actions", label: "Ações", sortable: false },
+                { key: "id", label: "ID", sortable: true }, { key: "name", label: "Nome", sortable: true },
+                { key: "description", label: "Descrição", sortable: true }, { key: "actions", label: "Ações", sortable: false },
             ]
         }
     },
