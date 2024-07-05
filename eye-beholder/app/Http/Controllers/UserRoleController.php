@@ -14,7 +14,7 @@ class UserRoleController extends Controller
      */
     public function index()
     {
-        //
+        // return dd(UserRole::with('user_role_actions')->get()->toArray());
     }
 
     /**

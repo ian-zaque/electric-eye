@@ -14,7 +14,7 @@ class MqttTopicController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(MqttTopic::all());
     }
 
     /**
@@ -46,7 +46,7 @@ class MqttTopicController extends Controller
      */
     public function show(MqttTopic $mqttTopic)
     {
-        //
+        return response()->json($mqttTopic);
     }
 
     /**

@@ -46,7 +46,7 @@ class InterestZoneController extends Controller
      */
     public function show(InterestZone $interestZone)
     {
-        //
+        return response()->json($interestZone);
     }
 
     /**

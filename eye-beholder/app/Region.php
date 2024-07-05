@@ -16,4 +16,8 @@ class Region extends Model //implements Auditable
     protected $fillable = [
         "name", "description"
     ];
+
+    public function interest_zones(){
+        return $this->hasMany('App\Region', 'region_id');
+    }
 }

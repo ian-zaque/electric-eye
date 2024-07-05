@@ -16,4 +16,9 @@ class UdeClass extends Model //implements Auditable
     protected $fillable = [
         "class"
     ];
+
+    public function udes(){
+        return $this->hasMany('App\Ude', "class_id");
+    }
+
 }

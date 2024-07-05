@@ -18,9 +18,9 @@ class UserRole extends Model //implements Auditable
         "role"
     ];
 
-    // public function user_role_actions(){
-    //     return $this->hasMany(UserrRoleAction::class, 'id', 'user_role_id');
-    // }
+    public function user_role_actions(){
+        return $this->hasMany("App\UserRoleAction", "user_role_id");
+    }
 
 
 }

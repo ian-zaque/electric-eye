@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Region;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RegionController extends Controller
 {
@@ -33,9 +34,15 @@ class RegionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+            'description' => 'required|max:1000',
+        ]);
+
+        if($validator->fails()){ return response()->json($validator->errors(), 403); }
+
+        
     }
 
     /**

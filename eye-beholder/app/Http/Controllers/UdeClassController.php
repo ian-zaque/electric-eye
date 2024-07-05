@@ -14,7 +14,7 @@ class UdeClassController extends Controller
      */
     public function index()
     {
-        //
+        // return dd(UdeClass::with('udes')->get()->toArray());
     }
 
     /**
