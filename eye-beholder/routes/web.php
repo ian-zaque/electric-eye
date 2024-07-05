@@ -27,4 +27,13 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route::any('{query}', function() { return redirect('/'); })->where('query', '.*');
+// Route::any('{query}', function() { return redirect('/'); })->where('query', '.*');
+
+
+Route::resource('regions', 'RegionController');
+Route::resource('interest-zones', 'InterestZonesController');
+Route::resource('udes', 'UdeController');
+Route::resource('ude-classes', 'UdeClassController');
+Route::resource('mqtt-topics', 'MqttTopicController');
+Route::resource('user-roles', 'UserRoleController');
+Route::resource('user-role-actions', 'UserRoleActionController');
