@@ -18,6 +18,7 @@ import Home from './components/Home/Home.vue'
 import TypeSensorsPage from './components/TypeSensors/TypeSensorsPage.vue'
 import SensorsPage from './components/Sensors/SensorsPage.vue'
 import RegionsPage from './components/Regions/RegionsPage.vue'
+import InterestZonesPage from './components/InterestZones/InterestZonePage.vue'
 
 window.Vue = require('vue');
 
@@ -35,7 +36,7 @@ const router = new VueRouter({
         // { path: '/:pathMatch(.*)', name: 'NotFound', component: Home },              // Redireciona NotFoundUrl para Home
         { path: '/',  name: 'home', alias: '/home', component: Home },
         { path: '/regions', name: 'Regiões', component: RegionsPage },
-        { path: '/zones', name: 'Zonas de Interesse', component: RegionsPage },
+        { path: '/zones', name: 'Zonas de Interesse', component: InterestZonesPage },
         { path: '/sensors', name: 'Sensores', component: SensorsPage },
         { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
     ]
@@ -69,6 +70,9 @@ Vue.component("sensors-modal", require("./components/Sensors/SensorsModal.vue").
 Vue.component("regions-page", require("./components/Regions/RegionsPage.vue").default);
 Vue.component("regions-modal", require("./components/Regions/RegionsModal.vue").default);
 
+// InterestZone
+Vue.component("interest-zones-page", require("./components/InterestZones/InterestZonePage.vue").default);
+Vue.component("interest-zones-modal", require("./components/InterestZones/InterestZoneModal.vue").default);
 
 const app = new Vue({
     router,

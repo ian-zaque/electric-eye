@@ -10,7 +10,7 @@
                     <i class="fa-solid fa-plus"></i>
                 </b-button>
 
-                <b-button :disabled="isDownloadingCsv" @click="downloadCsv" variant="outline-success" outlined squared>
+                <b-button :disabled="isDownloadingCsv || regionsList.length == 0" @click="downloadCsv" variant="outline-success" outlined squared>
                     <i class="fa-solid fa-download"></i>
                 </b-button>
             </b-col>
@@ -64,7 +64,7 @@ export default {
             openModal: false, isEditing: false, isDownloadingCsv: false,
             regionsFields:[
                 { key: "id", label: "ID", sortable: true }, { key: "name", label: "Nome", sortable: true },
-                { key: "description", label: "Descrição", sortable: true }, { key: "actions", label: "Ações", sortable: false },
+                { key: "actions", label: "Ações", sortable: false },
             ]
         }
     },

@@ -19,9 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resources([
-    'regions' => 'RegionController'
+    'regions' => 'RegionController',
+    'interest-zones' => 'InterestZoneController',
 ]);
-// Route::resource('interest-zones', 'InterestZonesController');
 // Route::resource('udes', 'UdeController');
 // Route::resource('ude-classes', 'UdeClassController');
 // Route::resource('mqtt-topics', 'MqttTopicController');
