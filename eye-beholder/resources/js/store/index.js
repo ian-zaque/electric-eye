@@ -13,5 +13,11 @@ export default new Vuex.Store({
     sensors,
     regions,
     notifications,
+  },
+
+  actions: {
+    dispatchNotification({dispatch}, payload) {
+      dispatch('notifications/notificationStoreCommit', payload)
+    },
   }
 })
