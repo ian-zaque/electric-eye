@@ -113,13 +113,14 @@ export default {
                 return [
                     val.id,
                     val.name,
+                    val.region.name,
                     val.description,
                     new Date(val.created_at).toLocaleString().toString().replace(/\//g, '-'),
                 ];
             });
 
             mat.unshift([
-                'ID', 'Nome', 'Descrição', 'Criado em',
+                'ID', 'Nome', 'Região', 'Descrição', 'Criado em',
             ]);
             var universalBOM = "\uFEFF";
             let csvContent = "data:text/csv;charset=utf-8," + universalBOM + mat.map(e => e.join(";")).join("\n");
