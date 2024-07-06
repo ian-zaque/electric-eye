@@ -15,7 +15,7 @@ class RegionController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Region::all());
     }
 
     /**
@@ -34,15 +34,21 @@ class RegionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:100',
             'description' => 'required|max:1000',
         ]);
 
         if($validator->fails()){ return response()->json($validator->errors(), 403); }
-
-        
+        else{
+            $regionData = $request->all();
+            $region = new Region();
+            $region->fill($regionData)->save();
+            $region = Region::find($region->id);
+            return response()->json($region, 200);
+        }
     }
 
     /**
@@ -76,7 +82,19 @@ class RegionController extends Controller
      */
     public function update(Request $request, Region $region)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+            'description' => 'required|max:1000',
+        ]);
+
+        if($validator->fails()){ return response()->json($validator->errors(), 403); }
+        else{
+            $regionData = $request->all();
+            $region->update($regionData);
+            $region->save();
+            $region = Region::find($region->id);
+            return response()->json($region, 200);
+        }
     }
 
     /**

@@ -21,7 +21,8 @@ try {
 
 window.axios = require('axios');
 
-const baseURL = window.location.protocol + '//' + window.location.host
+// console.log('BASE URL >>>>', baseURL, axios.defaults.baseURL, window);
+const baseURL = window.location.protocol + '//' + window.location.host + "/"
 axios.defaults.baseURL = baseURL;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

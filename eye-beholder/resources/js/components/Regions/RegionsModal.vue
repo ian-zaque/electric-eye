@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitSensor()" no-close-on-backdrop no-close-on-esc hide-header-close>
+        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitSensor()" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
             <b-container fluid>
                 <b-row>
                     <b-col cols="12">
@@ -14,8 +14,8 @@
                 <b-row>
                     <b-col cols="12">
                         <b-form-group label="Descrição">
-                            <b-form-input v-model="region.description" type="text" placeholder="Insira a descrição da região" required>
-                            </b-form-input>
+                            <b-form-textarea v-model="region.description" type="text" placeholder="Insira a descrição da região" required>
+                            </b-form-textarea>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -25,11 +25,11 @@
                 <div class="text-center">
                     <b-row align-h="end">
                         <b-col cols="6">
-                            <b-button @click="submitRegion" variant="primary" size="sm" class="float-right">{{ okButtonTitle }}</b-button>
+                            <b-button @click="submitRegion" variant="primary" class="float-right">{{ okButtonTitle }}</b-button>
                         </b-col>
 
                         <b-col cols="6">
-                            <b-button @click="closeModal" variant="secondary" size="sm" class="float-right">Cancelar</b-button>
+                            <b-button @click="closeModal" variant="secondary" class="float-right">Cancelar</b-button>
                         </b-col>
                     </b-row>
                 </div>
@@ -79,7 +79,7 @@ export default {
 
     methods: {
         ...mapActions('regions', [
-            "createRegions",
+            "createRegion",
             "editRegion",
             "regionStoreCommit",
         ]),
@@ -91,16 +91,17 @@ export default {
 
         submitRegion(){
             if(this.isEditing){
-                this.editRegion(this.sensor)
-                    .then( () => {
+                this.editRegion(this.region)
+                    .then(() => {
                         this.closeModal()
                     })
                     .catch(() => {
                     })
             }
             else{
-                this.createRegion(this.sensor)
-                    .then( () => {
+                console.log('region >>>>', this.region);
+                this.createRegion(this.region)
+                    .then(() => {
                         this.closeModal()
                     })
                     .catch(() => {

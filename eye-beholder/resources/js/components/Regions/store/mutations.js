@@ -1,6 +1,9 @@
 const SET_CURRENT_REGION = (state, payload) => { state.region = payload }
 const RESET_CURRENT_REGION = (state) => { 
-    state.region = { } 
+    state.region = {
+        name: "",
+        description: "",
+    } 
 }
 
 const SET_REGIONS_LIST = (state, payload) => { state.regionsList = payload }

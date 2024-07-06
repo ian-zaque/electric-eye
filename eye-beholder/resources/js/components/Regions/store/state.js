@@ -1,5 +1,6 @@
 const region = {
-
+    name: "",
+    description: "",
 }
 const regionsList = []
 const isLoading = false

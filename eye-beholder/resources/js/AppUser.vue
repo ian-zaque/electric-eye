@@ -3,6 +3,8 @@
       <side-bar />
   
       <div class="ml-5">
+        <flash-notification></flash-notification>
+
         <router-view></router-view>
       </div>
   </div>

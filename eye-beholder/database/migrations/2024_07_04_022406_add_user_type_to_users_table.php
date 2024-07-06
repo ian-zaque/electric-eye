@@ -14,7 +14,7 @@ class AddUserTypeToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('user_role_id')->after('email');
+            $table->foreignId('user_role_id')->after('email')->default(1);
             $table->foreign('user_role_id')->references('id')->on('user_roles');
         });
     }

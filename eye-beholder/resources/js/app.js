@@ -35,7 +35,7 @@ const router = new VueRouter({
         // { path: '/:pathMatch(.*)', name: 'NotFound', component: Home },              // Redireciona NotFoundUrl para Home
         { path: '/',  name: 'home', alias: '/home', component: Home },
         { path: '/regions', name: 'Regiões', component: RegionsPage },
-        { path: '/zones', name: 'Regiões', component: RegionsPage },
+        { path: '/zones', name: 'Zonas de Interesse', component: RegionsPage },
         { path: '/sensors', name: 'Sensores', component: SensorsPage },
         { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
     ]
@@ -49,6 +49,10 @@ Vue.component('app-user', require('./AppUser.vue').default);
 // Sidebar
 Vue.component("side-bar", require("./components/Sidebar/Sidebar.vue").default);
 Vue.component("side-bar-link", require("./components/Sidebar/SidebarLink.vue").default);
+
+// Notification
+Vue.component("flash-notification", require("./components/Notification/FlashNotification.vue").default);
+Vue.component("notification", require("./components/Notification/Notification.vue").default);
 
 // EmptySpace
 Vue.component("empty-space", require("./components/EmptySpace/EmptySpace.vue").default);

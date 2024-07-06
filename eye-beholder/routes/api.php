@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resources([
+    'regions' => 'RegionController'
+]);
+// Route::resource('interest-zones', 'InterestZonesController');
+// Route::resource('udes', 'UdeController');
+// Route::resource('ude-classes', 'UdeClassController');
+// Route::resource('mqtt-topics', 'MqttTopicController');
+// Route::resource('user-roles', 'UserRoleController');
+// Route::resource('user-role-actions', 'UserRoleActionController');

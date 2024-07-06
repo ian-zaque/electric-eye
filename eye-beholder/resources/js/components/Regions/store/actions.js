@@ -4,11 +4,16 @@ const fetchRegions = async (state) => {
     state.commit('SET_IS_LOADING', true)
     state.commit('RESET_REGIONS_LIST')
 
-    return axios.get("/regions")
+    return axios.get("api/regions")
         .then((result) => {
             const response = result.data
             state.commit("RESET_ERRORS_REGIONS")
             state.commit('SET_REGIONS_LIST', response)
+            
+            // const rootState = context
+            // console.log('EAAAAAAAAAAAAAA');
+            console.log('ROOT STATE >>>', rootState);
+            // dispatch("notifications/PUSH_NOTIFICATION", { message: `Erro ao carregar Regiões! Requisição recusada. Erro:`, type: "danger" }, {root:true})
         })
         .catch((error) => {
             if (error.response) {
@@ -32,10 +37,10 @@ const fetchRegions = async (state) => {
         })
 }
 
-const createRegion = async (state, form) => {
+const createRegion = (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
-    return axios.post("/regions", form)
+    return axios.post("api/regions", form)
         .then((result) => {
             const response = result.data
             state.commit("RESET_ERRORS_REGIONS")
@@ -67,7 +72,7 @@ const createRegion = async (state, form) => {
 const editRegion = async (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
-    return axios.patch("/regions", form)
+    return axios.put(`api/regions/${form.id}`, form)
         .then((result) => {
             const response = result.data
             state.commit("RESET_ERRORS_REGIONS")
