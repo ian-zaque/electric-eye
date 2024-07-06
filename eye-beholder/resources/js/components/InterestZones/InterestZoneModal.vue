@@ -118,7 +118,6 @@ export default {
                     })
             }
             else{
-                console.log('InterestZone >>>>', this.interestZone);
                 this.createInterestZone(this.interestZone)
                     .then(() => {
                         this.closeModal()

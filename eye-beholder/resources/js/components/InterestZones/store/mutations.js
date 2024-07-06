@@ -3,6 +3,8 @@ const RESET_CURRENT_INTEREST_ZONE = (state) => {
     state.interestZone = {
         name: "",
         description: "",
+        region_id: null,
+        region: {},
     } 
 }
 
