@@ -16,6 +16,7 @@ class CreateUdeClassesTable extends Migration
         Schema::create('ude_classes', function (Blueprint $table) {
             $table->id();
             $table->string('class', 100);
+            $table->string('fullname', 100);
             $table->timestampsTz();
             $table->softDeletesTz();
         });

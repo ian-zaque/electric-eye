@@ -14,7 +14,7 @@ class UdeController extends Controller
      */
     public function index()
     {
-        // return dd(Ude::with('ude_class')->get()->toArray());
+        return response()->json(Ude::with(['ude_class', 'interest_zone'])->get());
     }
 
     /**

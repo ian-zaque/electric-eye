@@ -19,6 +19,8 @@ import TypeSensorsPage from './components/TypeSensors/TypeSensorsPage.vue'
 import SensorsPage from './components/Sensors/SensorsPage.vue'
 import RegionsPage from './components/Regions/RegionsPage.vue'
 import InterestZonesPage from './components/InterestZones/InterestZonePage.vue'
+import UdePage from './components/UDE/UdePage.vue'
+import UdeClassPage from './components/UdeClasses/UdeClassPage.vue'
 
 window.Vue = require('vue');
 
@@ -39,6 +41,8 @@ const router = new VueRouter({
         { path: '/zones', name: 'Zonas de Interesse', component: InterestZonesPage },
         { path: '/sensors', name: 'Sensores', component: SensorsPage },
         { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
+        { path: '/udes', name: 'UDEs', component: UdePage },
+        { path: '/ude-classes', name: 'Classes de UDEs', component: UdeClassPage },
     ]
 })
 
@@ -73,6 +77,14 @@ Vue.component("regions-modal", require("./components/Regions/RegionsModal.vue").
 // InterestZone
 Vue.component("interest-zones-page", require("./components/InterestZones/InterestZonePage.vue").default);
 Vue.component("interest-zones-modal", require("./components/InterestZones/InterestZoneModal.vue").default);
+
+// UDE
+Vue.component("udes-page", require("./components/UDE/UdePage.vue").default);
+Vue.component("udes-modal", require("./components/UDE/UdeModal.vue").default);
+
+// UDE CLASS
+Vue.component("ude-classes-page", require("./components/UdeClasses/UdeClassPage.vue").default);
+Vue.component("ude-classes-modal", require("./components/UdeClasses/UdeClassModal.vue").default);
 
 const app = new Vue({
     router,

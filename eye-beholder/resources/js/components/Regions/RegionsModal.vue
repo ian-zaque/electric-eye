@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitSensor()" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
+        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitRegion()" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
             <b-container fluid>
                 <b-row>
                     <b-col cols="12">

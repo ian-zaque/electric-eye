@@ -14,7 +14,7 @@ class UdeClass extends Model //implements Auditable
     protected $table = 'ude_classes';
 
     protected $fillable = [
-        "class"
+        "class", "fullname",
     ];
 
     public function udes(){

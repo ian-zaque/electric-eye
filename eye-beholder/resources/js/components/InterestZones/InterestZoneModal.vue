@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitSensor()" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
+        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitInterestZone()" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
             <b-container fluid>
                 <b-row>
                     <b-col cols="12">
@@ -87,7 +87,7 @@ export default {
 
         isModalVisible(){ return this.showModal },
 
-        modalTitle(){ return this.isEditing ? "Editando Região" : "Cadastro de Região" },
+        modalTitle(){ return this.isEditing ? "Editando Zona de Interesse" : "Cadastro de Zona de Interesse" },
 
         okButtonTitle(){ return this.isEditing ? "Confirmar" : "Cadastrar" }
     },

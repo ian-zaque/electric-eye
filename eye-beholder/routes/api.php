@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resources([
     'regions' => 'RegionController',
     'interest-zones' => 'InterestZoneController',
+    'udes' => 'UdeController',
+    'ude-classes' => 'UdeClassController',
 ]);
 // Route::resource('udes', 'UdeController');
 // Route::resource('ude-classes', 'UdeClassController');

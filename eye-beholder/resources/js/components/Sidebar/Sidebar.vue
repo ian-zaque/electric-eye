@@ -29,7 +29,12 @@ export default {
                 { href: "/", title: "Início", icon: "fa-solid fa-house", },
                 { href: '/regions', title: "Regiões", icon: 'fa-solid fa-map-location-dot' },
                 { href: '/zones', title: "Zonas de Interesse", icon: 'fa-solid fa-magnifying-glass-location' },  
-                { href: '/ude', title: "UDEs", icon: 'fa-solid fa-tachograph-digital' },
+                { href: '/udes', title: "UDEs", icon: 'fa-solid fa-tachograph-digital',
+                    child: [
+                        { href: '/udes', title: 'UDEs', icon: 'fa-solid fa-hard-drive', },
+                        { href: '/ude-classes', title: 'Classes de UDEs', icon: 'fa-regular fa-hard-drive', }
+                    ], 
+                },
                 { href: "/sensors", title: "Dispositivos", icon: "fa-solid fa-satellite",
                     child:[
                         { href: '/sensors', title: 'Sensores', icon: 'fa-solid fa-satellite-dish', },
