@@ -4,7 +4,7 @@
             <b-container fluid>
                 <b-row>
                     <b-col cols="12">
-                        <b-form-group label="Nome da Zona de Interesse">
+                        <b-form-group label="Nome">
                             <b-form-input v-model="interestZone.name" type="text" placeholder="Insira o nome da zona de interesse" required>
                             </b-form-input>
                         </b-form-group>
@@ -26,7 +26,7 @@
                         <b-form-group label="Região">
                             <b-form-select v-model="interestZone.region_id" :options="regionsList" value-field="id" text-field="name">
                                 <template #first>
-                                    <b-form-select-option :value="null" disabled>Seleciona uma Região</b-form-select-option>
+                                    <b-form-select-option :value="null" disabled>Selecione uma Região</b-form-select-option>
                                 </template>
                             </b-form-select>
                         </b-form-group>

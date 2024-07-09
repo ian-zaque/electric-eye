@@ -29,14 +29,6 @@
                                 </div>
                             </template>
 
-                            <template #cell(ude_class)="data">
-                                {{  data.value.name }}
-                            </template>
-
-                            <template #cell(interest_zone)="data">
-                                {{  data.value.name }}
-                            </template>
-
                             <template #cell(actions)="data">
                                 <b-row align-h="around">
                                     <b-button :disabled="isDownloadingCsv" @click="editUde(data)" size="sm" variant="outline-secondary">
@@ -72,8 +64,8 @@ export default {
             openModal: false, isEditing: false, isDownloadingCsv: false,
             udesFields:[
                 { key: "id", label: "ID", sortable: true }, { key: "name", label: "Nome", sortable: true },
-                { key: "ude_class", label: "Classe", sortable: true }, { key: "interest_zone", label: "Zona de Interesse", sortable: true }, 
-                { key: "actions", label: "Ações", sortable: false },
+                { key: "ude_class.class", label: "Classe", sortable: true }, { key: "interest_zone.region.name", label: "Região", sortable: true },
+                { key: "interest_zone.name", label: "Zona de Interesse", sortable: true }, { key: "actions", label: "Ações", sortable: false },
             ]
         }
     },
@@ -93,12 +85,12 @@ export default {
     methods: {
         ...mapActions('udes',[
             "fetchUdes",
-            "UdestoreCommit",
+            "udesStoreCommit",
         ]),
 
         editUde(data){
             var udeCopy = { ...data.item}
-            this.UdestoreCommit({ mutation: "SET_CURRENT_UDE", value: udeCopy })
+            this.udesStoreCommit({ mutation: "SET_CURRENT_UDE", value: udeCopy })
             this.isEditing = true
             this.openModalUdes()
         },
@@ -118,14 +110,17 @@ export default {
                 return [
                     val.id,
                     val.name,
-                    val.region.name,
-                    val.description,
+                    val.ude_class.class,
+                    val.interest_zone.region.name,
+                    val.interest_zone.name,
+                    val.latitude,
+                    val.longitude,
                     new Date(val.created_at).toLocaleString().toString().replace(/\//g, '-'),
                 ];
             });
 
             mat.unshift([
-                'ID', 'Nome', 'Região', 'Descrição', 'Criado em',
+                'ID', 'Nome', 'Classe de UDE', 'Região', 'Zona de Interesse', 'Latitude', 'Longitude', 'Criado em',
             ]);
             var universalBOM = "\uFEFF";
             let csvContent = "data:text/csv;charset=utf-8," + universalBOM + mat.map(e => e.join(";")).join("\n");

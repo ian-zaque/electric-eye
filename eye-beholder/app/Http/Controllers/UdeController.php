@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ude;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UdeController extends Controller
 {
@@ -14,7 +15,7 @@ class UdeController extends Controller
      */
     public function index()
     {
-        return response()->json(Ude::with(['ude_class', 'interest_zone'])->get());
+        return response()->json(Ude::with(['ude_class', 'interest_zone', 'interest_zone.region'])->get());
     }
 
     /**
@@ -35,7 +36,23 @@ class UdeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'interest_zone_id' => 'required|integer',
+            'class_id' => 'required|integer',
+            "name" => 'required|string|max:1000|min:2', 
+            "mac_id" => 'required|string|max:17|min:17',     // XX:XX:XX:XX:XX:XX
+            "latitude" => 'required|numeric',
+            "longitude" => 'required|numeric',
+        ]);
+
+        if($validator->fails()){ return response()->json($validator->errors(), 403); }
+        else{
+            $udeData = $request->all();
+            $ude = new Ude();
+            $ude->fill($udeData)->save();
+            $ude = Ude::with(['ude_class', 'interest_zone','interest_zone.region'])->find($ude->id);
+            return response()->json($ude, 200);
+        }
     }
 
     /**
@@ -57,7 +74,23 @@ class UdeController extends Controller
      */
     public function edit(Ude $ude)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'interest_zone_id' => 'required|integer',
+            'class_id' => 'required|integer',
+            "name" => 'required|string|max:1000|min:2', 
+            "mac_id" => 'required|string|max:17|min:17',     // XX:XX:XX:XX:XX:XX
+            "latitude" => 'required|numeric',
+            "longitude" => 'required|numeric',
+        ]);
+
+        if($validator->fails()){ return response()->json($validator->errors(), 403); }
+        else{
+            $udeData = $request->all();
+            $ude->update($udeData);
+            $ude->save();
+            $ude = Ude::with(['ude_class', 'interest_zone', 'interest_zone.region'])->find($ude->id);
+            return response()->json($ude, 200);
+        }
     }
 
     /**

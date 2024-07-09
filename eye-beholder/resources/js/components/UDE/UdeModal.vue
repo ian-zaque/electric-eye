@@ -24,7 +24,7 @@
                         <b-form-group label="Classe da UDE">
                             <b-form-select v-model="ude.class_id" :options="udeClassesList" value-field="id" text-field="class">
                                 <template #first>
-                                    <b-form-select-option :value="null" disabled>Seleciona uma Classe de UDE</b-form-select-option>
+                                    <b-form-select-option :value="null" disabled>Selecione uma Classe de UDE</b-form-select-option>
                                 </template>
                             </b-form-select>
                         </b-form-group>
@@ -34,7 +34,7 @@
                         <b-form-group label="Zona de Interesse">
                             <b-form-select v-model="ude.interest_zone_id" :options="interestZonesList" value-field="id" text-field="name">
                                 <template #first>
-                                    <b-form-select-option :value="null" disabled>Seleciona uma Zona de Interesse</b-form-select-option>
+                                    <b-form-select-option :value="null" disabled>Selecione uma Zona de Interesse</b-form-select-option>
                                 </template>
                             </b-form-select>
                         </b-form-group>
