@@ -102,7 +102,7 @@ export default {
             console.log("TYPE InterestZone >>", interestZone)
         },
 
-        openModalInterestZones(){ this.openModal = true; },
+        openModalInterestZones(){ this.interestZoneStoreCommit({ mutation: "RESET_ERRORS_INTEREST_ZONES" }); this.openModal = true; },
         closeModalInterestZones(){ this.openModal = false; this.isEditing = false },
 
         downloadCsv(){

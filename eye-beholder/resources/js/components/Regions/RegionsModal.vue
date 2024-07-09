@@ -5,8 +5,10 @@
                 <b-row>
                     <b-col cols="12">
                         <b-form-group label="Nome da Região">
-                            <b-form-input v-model="region.name" type="text" placeholder="Insira o nome da região" required>
+                            <b-form-input v-model="region.name" type="text" placeholder="Insira o nome da região" required @click="nameClick" :state="stateName">
                             </b-form-input>
+
+                            <small class="text-danger" :hidden="!errorsRegions.name">{{ formatErrorsArray(errorsRegions.name) }}</small>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -14,8 +16,11 @@
                 <b-row>
                     <b-col cols="12">
                         <b-form-group label="Descrição">
-                            <b-form-textarea v-model="region.description" type="text" placeholder="Insira a descrição da região" required>
+                            <b-form-textarea v-model="region.description" type="text" placeholder="Insira a descrição da região" required 
+                                @click="descriptionClick" :state="stateDescription">
                             </b-form-textarea>
+
+                            <small class="text-danger" :hidden="!errorsRegions.description">{{ formatErrorsArray(errorsRegions.description) }}</small>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -40,6 +45,11 @@
 <script>
 import { mapGetters, mapActions } from "vuex"
 
+const defaultInputState = {
+    name: false,
+    description: false,
+};
+
 export default {
     component: 'RegionsModal',
 
@@ -57,6 +67,7 @@ export default {
 
     data() {
         return {
+            inputState: { ...defaultInputState },
         }
     },
 
@@ -71,7 +82,17 @@ export default {
 
         modalTitle(){ return this.isEditing ? "Editando Região" : "Cadastro de Região" },
 
-        okButtonTitle(){ return this.isEditing ? "Confirmar" : "Cadastrar" }
+        okButtonTitle(){ return this.isEditing ? "Confirmar" : "Cadastrar" },
+
+        stateName() {
+            if (this.inputState.name || this.errorsRegions == {}) { return null; }
+            return Object.keys(this.errorsRegions).length === 0 ? null: this.errorsRegions.name ? false : true;
+        },
+
+        stateDescription() {
+            if (this.inputState.description || this.errorsRegions == {}) { return null; }
+            return Object.keys(this.errorsRegions).length === 0 ? null: this.errorsRegions.description ? false : true;
+        },
     },
 
     watch: {
@@ -108,12 +129,23 @@ export default {
 
         resetForm(){ this.regionStoreCommit({mutation: "RESET_CURRENT_REGION"}) },
 
-        closeModal(){ this.$emit("closeModal"); this.resetForm() }
-    },
+        closeModal(){ this.$emit("closeModal"); this.resetForm() },
 
-    mounted() {
-    },
+        formatErrorsArray(arrayError){
+            if(arrayError != null && arrayError != undefined && arrayError.length > 0){
+                var errorText = ""
+                arrayError.map(function(value, index){
+                    if(index == arrayError.length - 1){ errorText += value }
+                    if(index != arrayError.length - 1){ errorText += value + ". \n" }
+                })
+                return errorText
+            }
+            return ""
+        },
 
+        nameClick() { if (this.errorsRegions.name) { this.inputState.name = true; } },
+        descriptionClick() { if (this.errorsRegions.description) { this.inputState.description = true; } },
+    },
 }
 
 </script>

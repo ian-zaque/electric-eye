@@ -99,7 +99,7 @@ export default {
             console.log("TYPE ude >>", ude)
         },
 
-        openModalUdes(){ this.openModal = true; },
+        openModalUdes(){ this.udeStoreCommit({ mutation: "RESET_ERRORS_UDES" }); this.openModal = true; },
         closeModalUdes(){ this.openModal = false; this.isEditing = false },
 
         downloadCsv(){

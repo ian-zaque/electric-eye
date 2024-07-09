@@ -98,7 +98,7 @@ export default {
             console.log("TYPE region >>", region)
         },
 
-        openModalRegions(){ this.openModal = true; },
+        openModalRegions(){ this.regionStoreCommit({ mutation: "RESET_ERRORS_REGIONS" }); this.openModal = true; },
         closeModalRegions(){ this.openModal = false; this.isEditing = false },
 
         downloadCsv(){
