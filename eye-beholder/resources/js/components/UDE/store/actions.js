@@ -30,10 +30,10 @@ const fetchUdes = async (state) => {
         })
 }
 
-const createUde = (state, form) => {
+const createUde = async (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
-    return axios.post("api/udes", form)
+    return await axios.post("api/udes", form)
         .then((result) => {
             const response = result.data
             state.commit("RESET_ERRORS_UDES")
@@ -65,7 +65,7 @@ const createUde = (state, form) => {
 const editUde = async (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
-    return axios.put(`api/udes/${form.id}`, form)
+    return await axios.put(`api/udes/${form.id}`, form)
         .then((result) => {
             const response = result.data
             state.commit("RESET_ERRORS_UDES")

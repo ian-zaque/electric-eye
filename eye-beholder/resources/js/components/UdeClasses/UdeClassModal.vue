@@ -85,9 +85,9 @@ export default {
             "fetchUdeClasses",
         ]),
 
-        submitUdeClass(){
+        async submitUdeClass(){
             if(this.isEditing){
-                this.editUdeClass(this.udeClass)
+                await this.editUdeClass(this.udeClass)
                     .then(() => {
                         this.closeModal()
                     })
@@ -95,7 +95,7 @@ export default {
                     })
             }
             else{
-                this.createUdeClass(this.udeClass)
+                await this.createUdeClass(this.udeClass)
                     .then(() => {
                         this.closeModal()
                     })

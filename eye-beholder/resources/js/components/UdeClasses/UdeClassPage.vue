@@ -69,8 +69,8 @@ export default {
         }
     },
 
-    mounted(){
-        this.fetchUdeClasses();
+    async mounted(){
+        await this.fetchUdeClasses();
     },
 
     computed:{

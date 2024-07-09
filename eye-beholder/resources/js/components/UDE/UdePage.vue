@@ -70,8 +70,8 @@ export default {
         }
     },
 
-    mounted(){
-        this.fetchUdes();
+    async mounted(){
+        await this.fetchUdes();
     },
 
     computed:{

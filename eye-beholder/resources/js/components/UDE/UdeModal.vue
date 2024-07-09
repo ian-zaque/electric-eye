@@ -139,9 +139,9 @@ export default {
             "fetchUdeClasses",
         ]),
 
-        submitUde(){
+        async submitUde(){
             if(this.isEditing){
-                this.editUde(this.ude)
+                await this.editUde(this.ude)
                     .then(() => {
                         this.closeModal()
                     })
@@ -149,7 +149,7 @@ export default {
                     })
             }
             else{
-                this.createUde(this.ude)
+                await this.createUde(this.ude)
                     .then(() => {
                         this.closeModal()
                     })
@@ -164,9 +164,9 @@ export default {
         closeModal(){ this.$emit("closeModal"); this.resetForm() }
     },
 
-    mounted() {
-        this.fetchInterestZones()
-        this.fetchUdeClasses()
+    async mounted() {
+        await this.fetchInterestZones()
+        await this.fetchUdeClasses()
     },
 
 }
