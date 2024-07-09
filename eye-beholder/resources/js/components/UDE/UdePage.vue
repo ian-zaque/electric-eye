@@ -85,12 +85,12 @@ export default {
     methods: {
         ...mapActions('udes',[
             "fetchUdes",
-            "udesStoreCommit",
+            "udeStoreCommit",
         ]),
 
         editUde(data){
             var udeCopy = { ...data.item}
-            this.udesStoreCommit({ mutation: "SET_CURRENT_UDE", value: udeCopy })
+            this.udeStoreCommit({ mutation: "SET_CURRENT_UDE", value: udeCopy })
             this.isEditing = true
             this.openModalUdes()
         },

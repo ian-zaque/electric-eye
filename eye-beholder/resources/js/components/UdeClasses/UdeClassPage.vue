@@ -84,12 +84,12 @@ export default {
     methods: {
         ...mapActions('udeClasses',[
             "fetchUdeClasses",
-            "udeClassesStoreCommit",
+            "udeClassStoreCommit",
         ]),
 
         editUdeClass(data){
             var udeClassCopy = { ...data.item}
-            this.udeClassesStoreCommit({ mutation: "SET_CURRENT_UDE_CLASS", value: udeClassCopy })
+            this.udeClassStoreCommit({ mutation: "SET_CURRENT_UDE_CLASS", value: udeClassCopy })
             this.isEditing = true
             this.openModalUdeClass()
         },

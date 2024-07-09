@@ -94,7 +94,7 @@ const editUdeClass = async (state, form) => {
         })
 }
 
-const udeClassesStoreCommit = (state, payload) => {
+const udeClassStoreCommit  = (state, payload) => {
     state.commit(payload.mutation, payload.value)
 }
 
@@ -102,5 +102,5 @@ export default {
     fetchUdeClasses,
     createUdeClass,
     editUdeClass,
-    udeClassesStoreCommit,
+    udeClassStoreCommit ,
 }

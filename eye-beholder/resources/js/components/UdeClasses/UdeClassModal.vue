@@ -81,7 +81,7 @@ export default {
         ...mapActions('udeClasses', [
             "createUdeClass",
             "editUdeClass",
-            "udeClassesStoreCommit",
+            "udeClassStoreCommit",
             "fetchUdeClasses",
         ]),
 
@@ -105,7 +105,7 @@ export default {
             }
         },
 
-        resetForm(){ this.udeClassesStoreCommit({mutation: "RESET_CURRENT_UDE_CLASS"}) },
+        resetForm(){ this.udeClassStoreCommit({mutation: "RESET_CURRENT_UDE_CLASS"}) },
 
         closeModal(){ this.$emit("closeModal"); this.resetForm() }
     },
