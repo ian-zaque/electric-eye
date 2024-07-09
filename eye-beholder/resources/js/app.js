@@ -43,6 +43,8 @@ const router = new VueRouter({
         { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
         { path: '/udes', name: 'UDEs', component: UdePage },
         { path: '/ude-classes', name: 'Classes de UDEs', component: UdeClassPage },
+        { path: '/emergency', name: 'Emergências', component: UdeClassPage },
+        { path: '/emergency-parameters', name: 'Parâmetros de Emergências', component: UdeClassPage },
     ]
 })
 

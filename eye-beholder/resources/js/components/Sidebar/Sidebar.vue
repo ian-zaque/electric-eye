@@ -35,6 +35,12 @@ export default {
                         { href: '/ude-classes', title: 'Classes de UDEs', icon: 'fa-regular fa-hard-drive', }
                     ], 
                 },
+                { href: "/emergency", title: "Emergências", icon: "fa-solid fa-umbrella",
+                    child:[
+                        { href: '/emergency', title: 'Emergências', icon: 'fa-solid fa-cloud-bolt', },
+                        { href: '/emergency-parameters', title: 'Parâmetros', icon: 'fa-solid fa-toolbox', }
+                    ]
+                },
                 { href: "/sensors", title: "Dispositivos", icon: "fa-solid fa-satellite",
                     child:[
                         { href: '/sensors', title: 'Sensores', icon: 'fa-solid fa-satellite-dish', },
