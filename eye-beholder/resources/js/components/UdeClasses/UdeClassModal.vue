@@ -5,8 +5,10 @@
                 <b-row>
                     <b-col cols="12">
                         <b-form-group label="Classe de UDE">
-                            <b-form-input v-model="udeClass.class" disabled type="text" placeholder="Insira a Classe de UDE" required>
+                            <b-form-input v-model="udeClass.class" disabled type="text" placeholder="Insira a Classe de UDE" required @click="classClick" :state="stateClass">
                             </b-form-input>
+
+                            <small class="text-danger" :hidden="!errorsUdeClasses.class">{{ formatErrorsArray(errorsUdeClasses.class) }}</small>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -14,8 +16,10 @@
                 <b-row>
                     <b-col cols="12">
                         <b-form-group label="Nome da Classe de UDE">
-                            <b-form-input v-model="udeClass.fullname" disabled type="text" placeholder="Insira o nome da Classe de UDE" required>
+                            <b-form-input v-model="udeClass.fullname" disabled type="text" placeholder="Insira o nome da Classe de UDE" required @click="fullnameClick" :state="stateFullname">
                             </b-form-input>
+
+                            <small class="text-danger" :hidden="!errorsUdeClasses.fullname">{{ formatErrorsArray(errorsUdeClasses.fullname) }}</small>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -40,6 +44,11 @@
 <script>
 import { mapGetters, mapActions } from "vuex"
 
+const defaultInputState = {
+    class: false,
+    fullname: false,
+};
+
 export default {
     component: 'UdeClassesModal',
 
@@ -57,6 +66,7 @@ export default {
 
     data() {
         return {
+            inputState: { ...defaultInputState },
         }
     },
 
@@ -71,10 +81,17 @@ export default {
 
         modalTitle(){ return this.isEditing ? "Editando Classe de UDE" : "Cadastro de Classe de UDE" },
 
-        okButtonTitle(){ return this.isEditing ? "Confirmar" : "Cadastrar" }
-    },
+        okButtonTitle(){ return this.isEditing ? "Confirmar" : "Cadastrar" },
 
-    watch: {
+        stateClass() {
+            if (this.inputState.class || this.errorsUdeClasses == {}) { return null; }
+            return Object.keys(this.errorsUdeClasses).length === 0 ? null: this.errorsUdeClasses.class ? false : true;
+        },
+
+        stateFullname() {
+            if (this.inputState.fullname || this.errorsUdeClasses == {}) { return null; }
+            return Object.keys(this.errorsUdeClasses).length === 0 ? null: this.errorsUdeClasses.fullname ? false : true;
+        },
     },
 
     methods: {
@@ -104,10 +121,22 @@ export default {
 
         resetForm(){ this.udeClassStoreCommit({mutation: "RESET_CURRENT_UDE_CLASS"}) },
 
-        closeModal(){ this.$emit("closeModal"); this.resetForm() }
-    },
+        closeModal(){ this.$emit("closeModal"); this.resetForm() },
 
-    mounted() {
+        formatErrorsArray(arrayError){
+            if(arrayError != null && arrayError != undefined && arrayError.length > 0){
+                var errorText = ""
+                arrayError.map(function(value, index){
+                    if(index == arrayError.length - 1){ errorText += value }
+                    if(index != arrayError.length - 1){ errorText += value + ". \n" }
+                })
+                return errorText
+            }
+            return ""
+        },
+
+        classClick() { if (this.errorsUdeClasses.class) { this.inputState.class = true; } },
+        fullnameClick() { if (this.errorsUdeClasses.fullname) { this.inputState.fullname = true; } },
     },
 
 }

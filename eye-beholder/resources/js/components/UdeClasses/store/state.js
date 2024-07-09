@@ -4,11 +4,11 @@ const udeClass = {
 }
 const udeClassesList = []
 const isLoading = false
-const errorsUdeClass = {}
+const errorsUdeClasses = {}
 
 export default {
     udeClass,
     udeClassesList,
     isLoading,
-    errorsUdeClass,
+    errorsUdeClasses,
 }
