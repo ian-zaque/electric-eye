@@ -10,7 +10,7 @@
                     <i class="fa-solid fa-plus"></i>
                 </b-button>
 
-                <b-button :disabled="isDownloadingCsv || udeList.length == 0" @click="downloadCsv" variant="outline-success" outlined squared>
+                <b-button :disabled="isDownloadingCsv || udesList.length == 0" @click="downloadCsv" variant="outline-success" outlined squared>
                     <i class="fa-solid fa-download"></i>
                 </b-button>
             </b-col>
@@ -20,7 +20,7 @@
             <b-col>
                 <b-card footer-classes="pb-2">
                     <div>
-                        <b-table :items="udeList" :fields="udesFields" :busy="isLoading" :sortDesc="true" empty-text="Não há UDEs registradas." hover show-empty 
+                        <b-table :items="udesList" :fields="udesFields" :busy="isLoading" :sortDesc="true" empty-text="Não há UDEs registradas." hover show-empty 
                             responsive="sm" small>
                             <template #table-busy>
                                 <div class="text-center my-2">
@@ -86,7 +86,7 @@ export default {
         ...mapGetters('udes',{
             errors: "getErrorsUdes",
             isLoading: "getIsLoading",
-            udeList: "getUdesList",
+            udesList: "getUdesList",
         }),
     },
 
@@ -114,7 +114,7 @@ export default {
             this.isDownloadingCsv = true
             var data = new Date().toLocaleString().toString().replace(/\//g, '-')
 
-            var mat = this.udeList.map(function(val){
+            var mat = this.udesList.map(function(val){
                 return [
                     val.id,
                     val.name,

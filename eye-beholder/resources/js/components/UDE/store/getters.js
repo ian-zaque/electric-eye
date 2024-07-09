@@ -1,6 +1,6 @@
 const getCurrentUde = (state) =>{ return state.ude }
 
-const getUdesList = (state) =>{ return state.udeList }
+const getUdesList = (state) =>{ return state.udesList }
 
 const getIsLoading = (state) =>{ return state.isLoading }
 

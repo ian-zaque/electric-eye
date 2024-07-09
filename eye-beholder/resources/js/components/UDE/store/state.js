@@ -8,13 +8,13 @@ const ude = {
     interest_zone_id: null,
     interest_zone: {},
 }
-const udeList = []
+const udesList = []
 const isLoading = false
 const errorsUde = {}
 
 export default {
     ude,
-    udeList,
+    udesList,
     isLoading,
     errorsUde,
 }
