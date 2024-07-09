@@ -22,9 +22,9 @@ const UPDATE_UDES_LIST = (state, payload) => {
 }
 const RESET_UDES_LIST = (state) => { state.udesList = [] }
 
-const SET_ERRORS_UDES = (state, payload) => { state.errorsUde = payload }
+const SET_ERRORS_UDES = (state, payload) => { state.errorsUdes = payload }
 const RESET_ERRORS_UDES = (state) => { 
-    state.errorsUde = {}
+    state.errorsUdes = {}
 }
 
 const SET_IS_LOADING = (state, payload) => { state.isloading = payload }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitUde()" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
+        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitUde" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
             <b-container fluid>
                 <b-row>
                     <b-col cols="6">
@@ -125,10 +125,10 @@ export default {
 
     methods: {
         ...mapActions('udes', [
+            "fetchUdes",
             "createUde",
             "editUde",
             "udeStoreCommit",
-            "fetchUdes",
         ]),
 
         ...mapActions('interestZones', [
@@ -139,23 +139,20 @@ export default {
             "fetchUdeClasses",
         ]),
 
-        async submitUde(){
-            if(this.isEditing){
-                await this.editUde(this.ude)
-                    .then(() => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
-                    })
-            }
-            else{
-                await this.createUde(this.ude)
-                    .then(() => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
+        async submitUde(bvModalEvt){
+            // Prevent modal from closing
+            bvModalEvt.preventDefault();
 
-                    })
+            try {
+                if(this.isEditing){ await this.editUde(this.ude) }
+                else{ await this.createUde(this.ude) }
+
+                if(Object.values(this.errorsUdes).length == 0 || this.errorsUdes == null || this.errorsUdes == undefined){
+                    this.closeModal()
+                }
+            }
+            catch (error) {
+                console.log(error);
             }
         },
 

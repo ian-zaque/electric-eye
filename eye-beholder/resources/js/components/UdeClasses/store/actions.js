@@ -30,10 +30,10 @@ const fetchUdeClasses = async (state) => {
         })
 }
 
-const createUdeClass = async (state, form) => {
+const createUdeClass = (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
-    return await axios.post("api/ude-classes", form)
+    return axios.post("api/ude-classes", form)
         .then((result) => {
             const response = result.data
             state.commit("RESET_ERRORS_UDE_CLASSES")
@@ -62,10 +62,10 @@ const createUdeClass = async (state, form) => {
         })
 }
 
-const editUdeClass = async (state, form) => {
+const editUdeClass = (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
-    return await axios.put(`api/ude-classes/${form.id}`, form)
+    return axios.put(`api/ude-classes/${form.id}`, form)
         .then((result) => {
             const response = result.data
             state.commit("RESET_ERRORS_UDE_CLASSES")

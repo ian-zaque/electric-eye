@@ -35,7 +35,19 @@ class UdeClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "class" => 'required|string|max:1000|min:3', 
+            "fullname" => 'required|string|max:1000|min:3',
+        ]);
+
+        if($validator->fails()){ return response()->json($validator->errors(), 403); }
+        else{
+            $udeClassData = $request->all();
+            $udeClass = new UdeClass();
+            $udeClass->fill($udeClassData)->save();
+            $udeClass = UdeClass::find($udeClass->id);
+            return response()->json($udeClass, 200);
+        }
     }
 
     /**
@@ -69,7 +81,19 @@ class UdeClassController extends Controller
      */
     public function update(Request $request, UdeClass $udeClass)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "class" => 'required|string|max:1000|min:3', 
+            "fullname" => 'required|string|max:1000|min:3',
+        ]);
+
+        if($validator->fails()){ return response()->json($validator->errors(), 403); }
+        else{
+            $udeClassData = $request->all();
+            $udeClass->update($udeClassData);
+            $udeClass->save();
+            $udeClass = UdeClass::find($udeClass->id);
+            return response()->json($udeClass, 200);
+        }
     }
 
     /**

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitRegion()" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
+        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitRegion" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
             <b-container fluid>
                 <b-row>
                     <b-col cols="12">
@@ -89,24 +89,20 @@ export default {
         ]),
 
 
-        submitRegion(){
-            if(this.isEditing){
-                this.editRegion(this.region)
-                    .then(() => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
-                    })
-            }
-            else{
-                console.log('region >>>>', this.region);
-                this.createRegion(this.region)
-                    .then(() => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
+        async submitRegion(bvModalEvt){
+            // Prevent modal from closing
+            bvModalEvt.preventDefault();
 
-                    })
+            try {
+                if(this.isEditing){ await this.editRegion(this.region) }
+                else{ await this.createRegion(this.region) }
+
+                if(Object.values(this.errorsRegions).length == 0 || this.errorsRegions == null || this.errorsRegions == undefined){
+                    this.closeModal()
+                }
+            } 
+            catch (error) {
+                console.log(error);
             }
         },
 

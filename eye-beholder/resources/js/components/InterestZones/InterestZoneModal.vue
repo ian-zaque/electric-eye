@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitInterestZone()" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
+        <b-modal v-model="isModalVisible" :title="modalTitle" @ok="submitInterestZone" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close>
             <b-container fluid>
                 <b-row>
                     <b-col cols="12">
@@ -38,7 +38,7 @@
                 <div class="text-center">
                     <b-row align-h="end">
                         <b-col cols="6">
-                            <b-button @click="submitInterestZone" variant="primary" class="float-right">{{ okButtonTitle }}</b-button>
+                            <b-button @click.prevent="submitInterestZone" variant="primary" class="float-right">{{ okButtonTitle }}</b-button>
                         </b-col>
 
                         <b-col cols="6">
@@ -108,23 +108,20 @@ export default {
         ]),
 
 
-        submitInterestZone(){
-            if(this.isEditing){
-                this.editInterestZone(this.interestZone)
-                    .then(() => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
-                    })
-            }
-            else{
-                this.createInterestZone(this.interestZone)
-                    .then(() => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
+        async submitInterestZone(bvModalEvt){
+            // Prevent modal from closing
+            bvModalEvt.preventDefault();
 
-                    })
+            try {
+                if(this.isEditing){ await this.editInterestZone(this.interestZone) }
+                else{ await this.createInterestZone(this.interestZone) }
+
+                if(Object.values(this.errorsInterestZones).length == 0 || this.errorsInterestZones == null || this.errorsInterestZones == undefined){
+                    this.closeModal()
+                }
+            } 
+            catch (error) {
+                console.log(error);
             }
         },
 

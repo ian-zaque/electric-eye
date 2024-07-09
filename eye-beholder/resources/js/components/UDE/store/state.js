@@ -10,11 +10,11 @@ const ude = {
 }
 const udesList = []
 const isLoading = false
-const errorsUde = {}
+const errorsUdes = {}
 
 export default {
     ude,
     udesList,
     isLoading,
-    errorsUde,
+    errorsUdes,
 }

@@ -62,7 +62,7 @@ const createInterestZone = (state, form) => {
         })
 }
 
-const editInterestZone = async (state, form) => {
+const editInterestZone = (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
     return axios.put(`api/interest-zones/${form.id}`, form)

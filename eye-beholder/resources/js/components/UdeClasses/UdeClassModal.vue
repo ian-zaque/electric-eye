@@ -62,7 +62,7 @@ export default {
 
     computed: {
         ...mapGetters('udeClasses',{
-            errorsUdes: "getErrorsUdeClasses",
+            errorsUdeClasses: "getErrorsUdeClasses",
             isLoading: "getIsLoading",
             udeClass: "getCurrentUdeClass",
         }),
@@ -85,23 +85,20 @@ export default {
             "fetchUdeClasses",
         ]),
 
-        async submitUdeClass(){
-            if(this.isEditing){
-                await this.editUdeClass(this.udeClass)
-                    .then(() => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
-                    })
-            }
-            else{
-                await this.createUdeClass(this.udeClass)
-                    .then(() => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
+        async submitUdeClass(bvModalEvt){
+            // Prevent modal from closing
+            bvModalEvt.preventDefault();
 
-                    })
+            try {
+                if(this.isEditing){ await this.editUdeClass(this.udeClass) }
+                else{ await this.createUdeClass(this.udeClass) }
+
+                if(Object.values(this.errorsUdeClasses).length == 0 || this.errorsUdeClassess == null || this.errorsUdeClassess == undefined){
+                    this.closeModal()
+                }
+            }
+            catch (error) {
+                console.log(error);
             }
         },
 

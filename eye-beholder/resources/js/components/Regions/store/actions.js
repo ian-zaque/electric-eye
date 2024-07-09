@@ -62,7 +62,7 @@ const createRegion = (state, form) => {
         })
 }
 
-const editRegion = async (state, form) => {
+const editRegion = (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
     return axios.put(`api/regions/${form.id}`, form)

@@ -74,6 +74,18 @@ class UdeController extends Controller
      */
     public function edit(Ude $ude)
     {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Ude  $ude
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Ude $ude)
+    {
         $validator = Validator::make($request->all(), [
             'interest_zone_id' => 'required|integer',
             'class_id' => 'required|integer',
@@ -91,18 +103,6 @@ class UdeController extends Controller
             $ude = Ude::with(['ude_class', 'interest_zone', 'interest_zone.region'])->find($ude->id);
             return response()->json($ude, 200);
         }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ude  $ude
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Ude $ude)
-    {
-        //
     }
 
     /**
