@@ -12,7 +12,8 @@
 
                     <b-col cols="6">
                         <b-form-group label="Endereço MAC">
-                            <b-form-input v-model="ude.mac_id" type="text" placeholder="Insira o endereço MAC da UDE" required>
+                            <b-form-input v-model="ude.mac_id" v-mask="'XX:XX:XX:XX:XX:XX'" @change="convertToUppercase" type="text" placeholder="Insira o endereço MAC da UDE" 
+                                required>
                             </b-form-input>
                         </b-form-group>
                     </b-col>
@@ -75,10 +76,13 @@
     </div>
 </template>
 <script>
+import { VueMaskDirective } from 'v-mask'
 import { mapGetters, mapActions } from "vuex"
 
 export default {
     component: 'UdeModal',
+
+    directives: { mask: VueMaskDirective },
 
     props:{
         showModal:{
@@ -138,6 +142,8 @@ export default {
         ...mapActions('udeClasses', [
             "fetchUdeClasses",
         ]),
+
+        convertToUppercase(){ this.ude.mac_id = this.ude.mac_id.toUpperCase(); },
 
         async submitUde(bvModalEvt){
             // Prevent modal from closing
