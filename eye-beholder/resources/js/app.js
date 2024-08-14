@@ -21,6 +21,7 @@ import RegionsPage from './components/Regions/RegionsPage.vue'
 import InterestZonesPage from './components/InterestZones/InterestZonePage.vue'
 import UdePage from './components/UDE/UdePage.vue'
 import UdeClassPage from './components/UdeClasses/UdeClassPage.vue'
+import EmergenciesPage from './components/Emergencies/EmergenciesPage.vue';
 
 window.Vue = require('vue');
 
@@ -43,8 +44,8 @@ const router = new VueRouter({
         { path: '/sensors-types', name: 'Tipos de Sensores', component: TypeSensorsPage },
         { path: '/udes', name: 'UDEs', component: UdePage },
         { path: '/ude-classes', name: 'Classes de UDEs', component: UdeClassPage },
-        { path: '/emergency', name: 'Emergências', component: UdeClassPage },
-        { path: '/emergency-parameters', name: 'Parâmetros de Emergências', component: UdeClassPage },
+        { path: '/emergency', name: 'Emergências', component: EmergenciesPage },
+        { path: '/emergency-parameters', name: 'Parâmetros de Emergências', component: EmergenciesPage },
     ]
 })
 
@@ -87,6 +88,10 @@ Vue.component("udes-modal", require("./components/UDE/UdeModal.vue").default);
 // UDE CLASS
 Vue.component("ude-classes-page", require("./components/UdeClasses/UdeClassPage.vue").default);
 Vue.component("ude-classes-modal", require("./components/UdeClasses/UdeClassModal.vue").default);
+
+// EMERGENCIES
+Vue.component("emergencies-page", require("./components/Emergencies/EmergenciesPage.vue").default);
+Vue.component("emergencies-modal", require("./components/Emergencies/EmergenciesModal.vue").default);
 
 const app = new Vue({
     router,

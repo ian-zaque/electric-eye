@@ -23,9 +23,9 @@ Route::resources([
     'interest-zones' => 'InterestZoneController',
     'udes' => 'UdeController',
     'ude-classes' => 'UdeClassController',
+    'emergencies' => 'EmergencyController',
+    'emergency-parameters' => 'EmergencyParameterController',
 ]);
-// Route::resource('udes', 'UdeController');
-// Route::resource('ude-classes', 'UdeClassController');
 // Route::resource('mqtt-topics', 'MqttTopicController');
 // Route::resource('user-roles', 'UserRoleController');
 // Route::resource('user-role-actions', 'UserRoleActionController');

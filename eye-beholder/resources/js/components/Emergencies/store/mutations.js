@@ -3,7 +3,9 @@ const RESET_CURRENT_EMERGENCY = (state) => {
     state.emergency = {
         name: "",
         description: "",
-        parameters: {},
+        emergency_parameters: [{value: "", value: 0}],
+        interest_zone_id: "",
+        interest_zone: {},
     } 
 }
 

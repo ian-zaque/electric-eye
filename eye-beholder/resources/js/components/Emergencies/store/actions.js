@@ -94,7 +94,7 @@ const editEmergency = (state, form) => {
         })
 }
 
-const emergencyStoreCommit = (state, payload) => {
+const emergenciesStoreCommit = (state, payload) => {
     state.commit(payload.mutation, payload.value)
 }
 
@@ -102,5 +102,5 @@ export default {
     fetchEmergencies,
     createEmergency,
     editEmergency,
-    emergencyStoreCommit,
+    emergenciesStoreCommit,
 }

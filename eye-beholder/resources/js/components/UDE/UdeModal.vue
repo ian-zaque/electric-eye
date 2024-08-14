@@ -155,11 +155,6 @@ export default {
             return Object.keys(this.errorsUdes).length === 0 ? null: this.errorsUdes.mac_id ? false : true;
         },
 
-        stateMacId() {
-            if (this.inputState.mac_id || this.errorsUdes == {}) { return null; }
-            return Object.keys(this.errorsUdes).length === 0 ? null: this.errorsUdes.mac_id ? false : true;
-        },
-
         stateInterestZoneId() {
             if (this.inputState.interest_zone_id || this.errorsUdes == {}) { return null; }
             return Object.keys(this.errorsUdes).length === 0 ? null: this.errorsUdes.interest_zone_id ? false : true;

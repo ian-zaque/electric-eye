@@ -1,7 +1,9 @@
 const emergency = {
     name: "",
     description: "",
-    parameters: {},
+    emergency_parameters: [{value: "", value: 0}],
+    interest_zone_id: null,
+    interest_zone: {},
 }
 const emergenciesList = []
 const isLoading = false
