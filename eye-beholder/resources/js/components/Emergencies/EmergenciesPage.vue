@@ -20,8 +20,7 @@
             <b-col>
                 <b-card footer-classes="pb-2">
                     <div>
-                        <b-table :items="emergenciesList" :fields="emergenciesFields" :busy="isLoading" :sortDesc="true" empty-text="Não há Emergências registradas." hover show-empty 
-                            responsive="sm" small>
+                        <b-table :items="emergenciesList" :fields="emergenciesFields" :busy="isLoading" :sortDesc="true" hover show-empty responsive="sm" small empty-text="Não há Emergências registradas.">
                             <template #table-busy>
                                 <div class="text-center my-2">
                                     <b-spinner class="align-middle"></b-spinner>
@@ -33,27 +32,20 @@
                                 <b-button @click="row.toggleDetails" size="sm" class="mr-2" variant="outline-secondary">
                                     {{ row.detailsShowing ? 'Recolher' : 'Ver'}}
                                 </b-button>
-
-                                <!-- <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
-                                    Details via check
-                                </b-form-checkbox> -->
                             </template>
 
                             <template #row-details="row">
-                                {{ row.item.emergency_parameters }}
-                                <!-- <b-card>
-                                    <b-row class="mb-2">
-                                        <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
-                                        <b-col>{{ row.item.age }}</b-col>
-                                    </b-row>
+                                <b-container>
+                                    <b-table :items="row.item.emergency_parameters" :fields="parametersFields" small show-empty empty-text="Sem parâmetros cadastrados.">
+                                        <template #table-caption>
+                                            Parâmetros de <b>{{ row.item.name }}</b>
 
-                                    <b-row class="mb-2">
-                                        <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
-                                        <b-col>{{ row.item.isActive }}</b-col>
-                                    </b-row>
-
-                                    <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
-                                </b-card> -->
+                                            <b-button @click="downloadCsvParameters(row.item)" :disabled="row.item.emergency_parameters.length == 0" size="sm" variant="outline-primary">
+                                                <i class="fa-solid fa-file-arrow-down"></i>
+                                            </b-button>
+                                        </template>
+                                    </b-table>
+                                </b-container>
                             </template>
 
                             <template #cell(actions)="data">
@@ -93,6 +85,9 @@ export default {
                 { key: "id", label: "ID", sortable: true }, { key: "name", label: "Nome", sortable: true },
                 { key: "interest_zone.name", label: "Zona de Interesse", sortable: true }, { key: "show_details", label: "Parâmetros", sortable: false },
                 { key: "actions", label: "Ações", sortable: false },
+            ],
+            parametersFields: [
+                { key: "name", label: "Nome", sortable: true }, { key: "value", label: "Valor", sortable: true },
             ]
         }
     },
@@ -157,12 +152,41 @@ export default {
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "Planilha Unidades de Detecção de Emergências - " + data +  ".csv");
+            link.setAttribute("download", "Planilha Emergências - " + data +  ".csv");
             document.body.appendChild(link);
 
             link.click();
             this.isDownloadingCsv = false
         },
+
+        downloadCsvParameters(emergency){
+            this.isDownloadingCsv = true
+            var data = new Date().toLocaleString().toString().replace(/\//g, '-')
+
+            var mat = emergency.emergency_parameters.map(function(val){
+                return [
+                    emergency.name,
+                    val.id,
+                    val.name,
+                    val.value,
+                    new Date(val.created_at).toLocaleString().toString().replace(/\//g, '-'),
+                ];
+            });
+
+            mat.unshift([
+                'Emergência', 'ID', 'Parâmetro', 'Valor de referência', 'Criado em',
+            ]);
+            var universalBOM = "\uFEFF";
+            let csvContent = "data:text/csv;charset=utf-8," + universalBOM + mat.map(e => e.join(";")).join("\n");
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Planilha Parâmetros da Emergência " + emergency.name + " - " + data +  ".csv");
+            document.body.appendChild(link);
+
+            link.click();
+            this.isDownloadingCsv = false
+        }
 
     },
 };

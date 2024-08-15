@@ -24,7 +24,7 @@ Route::resources([
     'udes' => 'UdeController',
     'ude-classes' => 'UdeClassController',
     'emergencies' => 'EmergencyController',
-    'emergency-parameters' => 'EmergencyParameterController',
+    // 'emergency-parameters' => 'EmergencyParameterController',
 ]);
 // Route::resource('mqtt-topics', 'MqttTopicController');
 // Route::resource('user-roles', 'UserRoleController');

@@ -8,7 +8,7 @@ import interestZones from '../components/InterestZones/store/index.js'
 import udes from '../components/UDE/store/index.js'
 import udeClasses from '../components/UdeClasses/store/index.js'
 import emergencies from '../components/Emergencies/store/index.js'
-import emergencyParameters from '../components/EmergencyParameters/store/index.js'
+// import emergencyParameters from '../components/EmergencyParameters/store/index.js'
 
 Vue.use(Vuex)
 
@@ -22,7 +22,7 @@ export default new Vuex.Store({
     udes,
     udeClasses,
     emergencies,
-    emergencyParameters
+    // emergencyParameters
   },
 
   actions: {

@@ -95,9 +95,11 @@ class EmergencyController extends Controller
     public function update(Request $request, Emergency $emergency)
     {
         $validator = Validator::make($request->all(), [
-            'interest_zone_id' => 'required|integer',
-            "name" => 'required|string|max:1000|min:2', 
-            "description" => 'required|numeric',
+            "interest_zone_id" => "required|integer",
+            "name" => "required|string|max:1000|min:2", 
+            "description" => "required|string|min:2|max:5000",
+            "emergency_parameters.*.name" => "required|distinct|string|min:2|max:100",
+            "emergency_parameters.*.value" => "required|numeric",
         ]);
 
         if($validator->fails()){ return response()->json($validator->errors(), 403); }
@@ -105,6 +107,21 @@ class EmergencyController extends Controller
             $emergencyData = $request->all();
             $emergency->update($emergencyData);
             $emergency->save();
+
+            $emergency_parameters = $request->all()['emergency_parameters'];
+            foreach ($emergency_parameters as $param) {
+                if(isset($param['id'])){
+                    $emergency_param = EmergencyParameter::find($param['id']);
+                    $emergency_param->update($param);
+                    $emergency_param->save();
+                }
+                else{
+                    $param['emergency_id'] = $emergency->id;
+                    $emergency_param = new EmergencyParameter();
+                    $emergency_param->fill($param)->save();
+                }
+            }
+
             $emergency = Emergency::with(['emergency_parameters', 'interest_zone', 'interest_zone.region'])->find($emergency->id);
             return response()->json($emergency, 200);
         }
