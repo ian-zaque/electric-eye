@@ -25,42 +25,55 @@
                     </b-col>
                 </b-row>
 
-                <div v-for="(param, idx) in emergency.emergency_parameters" :key="idx">
-                    <b-row align-h="between" align-v="center">
-                        <b-col>
-                            <b-form-group label="Chave">
-                                <b-form-input v-model="emergency.emergency_parameters[idx].name" type="text" placeholder="Nome do Parâmetro" required @click="nameClick" :state="stateName">
-                                </b-form-input>
+                <b-row>
+                    <b-col cols="12">
+                        <b-form-group label="Descrição">
+                            <b-form-textarea v-model="emergency.description" type="text" placeholder="Insira a descrição da emergência" required 
+                                @click="descriptionClick" :state="stateDescription">
+                            </b-form-textarea>
 
-                                <small class="text-danger" :hidden="!errorsEmergencies.name">{{ formatErrorsArray(errorsEmergencies.name) }}</small>
-                            </b-form-group>
-                        </b-col>
+                            <small class="text-danger" :hidden="!errorsEmergencies.description">{{ formatErrorsArray(errorsEmergencies.description) }}</small>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
 
-                        <b-col>
-                            <b-form-group label="Valor">
-                                <b-form-input v-model="emergency.emergency_parameters[idx].value" type="text" placeholder="Valor do Parâmetro" required @click="nameClick" :state="stateName">
-                                </b-form-input>
+                <b-form-group label="Parâmetros da Emergência" label-size="lg">
+                    <div v-for="(param, idx) in emergency.emergency_parameters" :key="idx">
+                        <b-row align-h="around">
+                            <b-col cols="6">
+                                <b-form-group label="Chave">
+                                    <b-form-input v-model="emergency.emergency_parameters[idx].name" type="text" placeholder="Nome do Parâmetro" required @click="nameClick" :state="stateName">
+                                    </b-form-input>
 
-                                <small class="text-danger" :hidden="!errorsEmergencies.name">{{ formatErrorsArray(errorsEmergencies.name) }}</small>
-                            </b-form-group>
-                        </b-col>
+                                    <small class="text-danger" :hidden="!errorsEmergencies.name">{{ formatErrorsArray(errorsEmergencies.name) }}</small>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col>
-                            <b-button v-show="idx || (!idx && emergency.emergency_parameters.length > 1)" @click="removeNewParameter(idx)" size="sm" type="button" variant="outline-secondary"> 
-                                <i class="fas fa-minus"></i> 
-                            </b-button>
-                        </b-col>
-                    </b-row>
+                            <b-col cols="5">
+                                <b-form-group label="Valor">
+                                    <b-form-input v-model="emergency.emergency_parameters[idx].value" type="number" placeholder="Parâmetro de referência" required @click="nameClick" :state="stateName">
+                                    </b-form-input>
 
-                    <b-row align-h="end">
-                        <b-col>
-                            <b-button v-show="idx == emergency.emergency_parameters.length - 1" @click="addNewParameter()" size="sm" variant="outline-secondary" type="button">
-                                <i class="fas fa-plus fa-sm"></i>
-                            </b-button>
-                        </b-col>
-                    </b-row>
-                </div>
+                                    <small class="text-danger" :hidden="!errorsEmergencies.name">{{ formatErrorsArray(errorsEmergencies.name) }}</small>
+                                </b-form-group>
+                            </b-col>
 
+                            <b-col>
+                                <b-button v-show="idx || (!idx && emergency.emergency_parameters.length > 1)" @click="removeNewParameter(idx)" size="sm" type="button" variant="outline-secondary" style="margin-top: 32px;"> 
+                                    <i class="fas fa-minus fa-sm"></i> 
+                                </b-button>
+                            </b-col>
+                        </b-row>
+
+                        <b-row class="text-right">
+                            <b-col>
+                                <b-button v-show="idx == emergency.emergency_parameters.length - 1" @click="addNewParameter()" size="sm" variant="outline-secondary" type="button">
+                                    <i class="fas fa-plus fa-sm"></i>
+                                </b-button>
+                            </b-col>
+                        </b-row>
+                    </div>
+                </b-form-group>
             </b-container>
 
             <template #modal-footer>
@@ -85,9 +98,11 @@ import { mapGetters, mapActions } from "vuex"
 
 const defaultInputState = {
     name: false,
-    mac_id: false,
-    class_id: false,
+    description: false,
     interest_zone_id: false,
+    emergency_parameters: false,
+    interest_zone_id: false,
+    interest_zone: false,
 };
 
 export default {
@@ -133,6 +148,11 @@ export default {
         stateName() {
             if (this.inputState.name || this.errorsEmergencies == {}) { return null; }
             return Object.keys(this.errorsEmergencies).length === 0 ? null: this.errorsEmergencies.name ? false : true;
+        },
+
+        stateDescription() {
+            if (this.inputState.description || this.errorsEmergencies == {}) { return null; }
+            return Object.keys(this.errorsEmergencies).length === 0 ? null: this.errorsEmergencies.description ? false : true;
         },
 
         stateInterestZoneId() {
@@ -186,10 +206,11 @@ export default {
             return ""
         },
 
-        addNewParameter(){ this.emergency.emergency_parameters.push({ name: "", value: 0}); },
+        addNewParameter(){ this.emergency.emergency_parameters.push({ name: "", value: ""}); },
         removeNewParameter(i){ this.emergency.emergency_parameters.splice(i,1); },
 
         nameClick() { if (this.errorsEmergencies.name) { this.inputState.name = true; } },
+        descriptionClick() { if (this.errorsEmergencies.description) { this.inputState.description = true; } },
         interestZoneIdClick() { if (this.errorsEmergencies.interest_zone_id) { this.inputState.interest_zone_id = true; } },
     },
 

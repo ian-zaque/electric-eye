@@ -45,7 +45,7 @@ const router = new VueRouter({
         { path: '/udes', name: 'UDEs', component: UdePage },
         { path: '/ude-classes', name: 'Classes de UDEs', component: UdeClassPage },
         { path: '/emergency', name: 'Emergências', component: EmergenciesPage },
-        { path: '/emergency-parameters', name: 'Parâmetros de Emergências', component: EmergenciesPage },
+        // { path: '/emergency-parameters', name: 'Parâmetros de Emergências', component: EmergenciesPage },
     ]
 })
 

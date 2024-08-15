@@ -1,7 +1,7 @@
 const emergency = {
     name: "",
     description: "",
-    emergency_parameters: [{value: "", value: 0}],
+    emergency_parameters: [{value: "", value: ""}],
     interest_zone_id: null,
     interest_zone: {},
 }

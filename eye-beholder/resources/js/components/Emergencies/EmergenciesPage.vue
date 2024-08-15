@@ -29,6 +29,33 @@
                                 </div>
                             </template>
 
+                            <template #cell(show_details)="row">
+                                <b-button @click="row.toggleDetails" size="sm" class="mr-2" variant="outline-secondary">
+                                    {{ row.detailsShowing ? 'Recolher' : 'Ver'}}
+                                </b-button>
+
+                                <!-- <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
+                                    Details via check
+                                </b-form-checkbox> -->
+                            </template>
+
+                            <template #row-details="row">
+                                {{ row.item.emergency_parameters }}
+                                <!-- <b-card>
+                                    <b-row class="mb-2">
+                                        <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
+                                        <b-col>{{ row.item.age }}</b-col>
+                                    </b-row>
+
+                                    <b-row class="mb-2">
+                                        <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
+                                        <b-col>{{ row.item.isActive }}</b-col>
+                                    </b-row>
+
+                                    <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
+                                </b-card> -->
+                            </template>
+
                             <template #cell(actions)="data">
                                 <b-row align-h="around">
                                     <b-button :disabled="isDownloadingCsv" @click="editEmergency(data)" size="sm" variant="outline-secondary">
@@ -64,7 +91,8 @@ export default {
             openModal: false, isEditing: false, isDownloadingCsv: false,
             emergenciesFields:[
                 { key: "id", label: "ID", sortable: true }, { key: "name", label: "Nome", sortable: true },
-                { key: "interest_zone.name", label: "Zona de Interesse", sortable: true }, { key: "actions", label: "Ações", sortable: false },
+                { key: "interest_zone.name", label: "Zona de Interesse", sortable: true }, { key: "show_details", label: "Parâmetros", sortable: false },
+                { key: "actions", label: "Ações", sortable: false },
             ]
         }
     },
@@ -89,6 +117,9 @@ export default {
 
         editEmergency(data){
             var emergencyCopy = { ...data.item}
+            if(emergencyCopy.emergency_parameters.length == 0){
+                emergencyCopy.emergency_parameters.push({ name: "", value: ""})
+            }
             this.emergenciesStoreCommit({ mutation: "SET_CURRENT_EMERGENCY", value: emergencyCopy })
             this.isEditing = true
             this.openModalEmergencies()
@@ -98,7 +129,10 @@ export default {
             console.log("TYPE emergency >>", emergency)
         },
 
-        openModalEmergencies(){ this.emergenciesStoreCommit({ mutation: "RESET_ERRORS_EMERGENCIES" }); this.openModal = true; },
+        openModalEmergencies(){ 
+            this.emergenciesStoreCommit({ mutation: "RESET_ERRORS_EMERGENCIES" });
+            this.openModal = true;
+        },
         closeModalEmergencies(){ this.openModal = false; this.isEditing = false },
 
         downloadCsv(){

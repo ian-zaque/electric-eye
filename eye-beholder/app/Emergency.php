@@ -18,7 +18,7 @@ class Emergency extends Model //implements Auditable
     ];
 
     public function emergency_parameters(){
-        return $this->hasMany('App\EmergencyParameters', "emergency_id");
+        return $this->hasMany('App\EmergencyParameter', "emergency_id");
     }
 
     public function interest_zone(){
