@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\MqttTopic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MqttTopicController extends Controller
 {
@@ -35,7 +36,20 @@ class MqttTopicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'topic' => 'required|distinct|min:2|max:100',
+            'description' => 'required|min:3|max:1000',
+            'active' => 'required|boolean',
+        ]);
+
+        if($validator->fails()){ return response()->json($validator->errors(), 403); }
+        else{
+            $topicData = $request->all();
+            $topic = new MqttTopic();
+            $topic->fill($topicData)->save();
+            $topic = MqttTopic::find($topic->id);
+            return response()->json($topic, 200);
+        }
     }
 
     /**
@@ -69,7 +83,20 @@ class MqttTopicController extends Controller
      */
     public function update(Request $request, MqttTopic $mqttTopic)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'topic' => 'required|distinct|min:2|max:100',
+            'description' => 'required|min:3|max:1000',
+            'active' => 'required|boolean',
+        ]);
+
+        if($validator->fails()){ return response()->json($validator->errors(), 403); }
+        else{
+            $topicData = $request->all();
+            $mqttTopic->update($topicData);
+            $mqttTopic->save();
+            $mqttTopic = MqttTopic::find($mqttTopic->id);
+            return response()->json($mqttTopic, 200);
+        }
     }
 
     /**

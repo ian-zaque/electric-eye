@@ -4,7 +4,7 @@
             <b-container fluid>
                 <b-row>
                     <b-col cols="12">
-                        <b-form-group label="Classe de UDE">
+                        <b-form-group label="Classe">
                             <b-form-input v-model="udeClass.class" disabled type="text" placeholder="Insira a Classe de UDE" required @click="classClick" :state="stateClass">
                             </b-form-input>
 
@@ -15,7 +15,7 @@
 
                 <b-row>
                     <b-col cols="12">
-                        <b-form-group label="Nome da Classe de UDE">
+                        <b-form-group label="Nome">
                             <b-form-input v-model="udeClass.fullname" disabled type="text" placeholder="Insira o nome da Classe de UDE" required @click="fullnameClick" :state="stateFullname">
                             </b-form-input>
 

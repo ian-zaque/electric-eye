@@ -22,6 +22,7 @@ import InterestZonesPage from './components/InterestZones/InterestZonePage.vue'
 import UdePage from './components/UDE/UdePage.vue'
 import UdeClassPage from './components/UdeClasses/UdeClassPage.vue'
 import EmergenciesPage from './components/Emergencies/EmergenciesPage.vue';
+import MqttPage from './components/MQTT/MqttPage.vue';
 
 window.Vue = require('vue');
 
@@ -45,7 +46,7 @@ const router = new VueRouter({
         { path: '/udes', name: 'UDEs', component: UdePage },
         { path: '/ude-classes', name: 'Classes de UDEs', component: UdeClassPage },
         { path: '/emergency', name: 'Emergências', component: EmergenciesPage },
-        // { path: '/emergency-parameters', name: 'Parâmetros de Emergências', component: EmergenciesPage },
+        { path: '/mqtt', name: 'MQTT', component: MqttPage },
     ]
 })
 
@@ -92,6 +93,10 @@ Vue.component("ude-classes-modal", require("./components/UdeClasses/UdeClassModa
 // EMERGENCIES
 Vue.component("emergencies-page", require("./components/Emergencies/EmergenciesPage.vue").default);
 Vue.component("emergencies-modal", require("./components/Emergencies/EmergenciesModal.vue").default);
+
+// MQTT Topic
+Vue.component("mqtt-page", require("./components/MQTT/MqttPage.vue").default);
+Vue.component("mqtt-modal", require("./components/MQTT/MqttModal.vue").default);
 
 const app = new Vue({
     router,

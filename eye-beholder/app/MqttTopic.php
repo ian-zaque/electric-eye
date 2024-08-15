@@ -17,4 +17,8 @@ class MqttTopic extends Model //implements Auditable
         "topic", "description", "active"
     ];
 
+    protected $casts = [
+        'active' => 'boolean',
+    ];
+
 }

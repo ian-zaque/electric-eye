@@ -4,7 +4,7 @@
             <b-container fluid>
                 <b-row>
                     <b-col cols="12">
-                        <b-form-group label="Nome da Região">
+                        <b-form-group label="Nome">
                             <b-form-input v-model="region.name" type="text" placeholder="Insira o nome da região" required @click="nameClick" :state="stateName">
                             </b-form-input>
 
