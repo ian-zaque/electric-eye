@@ -91,9 +91,15 @@ export default {
             console.log("TYPE SENSOR >>", sensor)
         },
 
-        openModalSensors(){ this.openModal = true; },
+        openModalSensors(){
+            this.sensorStoreCommit({ mutation: "RESET_ERRORS_SENSORS" })
+            this.openModal = true; 
+        },
 
-        closeModalSensors(){ this.openModal = false; this.isEditing = false },
+        closeModalSensors(){ 
+            this.openModal = false; this.isEditing = false
+            this.sensorStoreCommit({ mutation: "RESET_CURRENT_SENSOR" })
+        },
     },
 };
 </script>

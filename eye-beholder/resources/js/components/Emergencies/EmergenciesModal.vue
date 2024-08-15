@@ -42,25 +42,25 @@
                         <b-row align-h="around">
                             <b-col cols="6">
                                 <b-form-group label="Chave">
-                                    <b-form-input v-model="emergency.emergency_parameters[idx].name" type="text" placeholder="Nome do Parâmetro" required @click="nameClick" :state="stateName">
+                                    <b-form-input v-model="emergency.emergency_parameters[idx].name" type="text" placeholder="Nome do Parâmetro" required @click="emergencyParametersNameClick(idx)" :state="stateEmergencyParametersName(idx)">
                                     </b-form-input>
 
-                                    <small class="text-danger" :hidden="!errorsEmergencies.name">{{ formatErrorsArray(errorsEmergencies.name) }}</small>
+                                    <small class="text-danger" :hidden="!errorsEmergencies['emergency_parameters.'+idx+'.name']">{{ formatErrorsArray(errorsEmergencies['emergency_parameters.'+idx+'.name'] )}} </small>
                                 </b-form-group>
                             </b-col>
 
                             <b-col cols="5">
                                 <b-form-group label="Valor">
-                                    <b-form-input v-model="emergency.emergency_parameters[idx].value" type="number" placeholder="Parâmetro de referência" required @click="nameClick" :state="stateName">
+                                    <b-form-input v-model="emergency.emergency_parameters[idx].value" type="number" placeholder="Parâmetro de referência" required @click="emergencyParametersValueClick(idx)" :state="stateEmergencyParametersValue(idx)">
                                     </b-form-input>
 
-                                    <small class="text-danger" :hidden="!errorsEmergencies.name">{{ formatErrorsArray(errorsEmergencies.name) }}</small>
+                                    <small class="text-danger" :hidden="!errorsEmergencies['emergency_parameters.'+idx+'.value']">{{ formatErrorsArray(errorsEmergencies['emergency_parameters.'+idx+'.value'] )}} </small>
                                 </b-form-group>
                             </b-col>
 
                             <b-col>
                                 <b-button v-show="idx || (!idx && emergency.emergency_parameters.length > 1)" @click="removeNewParameter(idx)" size="sm" type="button" variant="outline-secondary" style="margin-top: 32px;"> 
-                                    <i class="fas fa-minus fa-sm"></i> 
+                                    <i class="fas fa-minus fa-sm"></i>
                                 </b-button>
                             </b-col>
                         </b-row>
@@ -159,6 +159,20 @@ export default {
             if (this.inputState.interest_zone_id || this.errorsEmergencies == {}) { return null; }
             return Object.keys(this.errorsEmergencies).length === 0 ? null: this.errorsEmergencies.interest_zone_id ? false : true;
         },
+
+        stateEmergencyParametersName() {
+            return idx =>{
+                if (this.inputState['emergency_parameters'+idx+'.name'] || this.errorsEmergencies == []) { return null; }
+                return Object.keys(this.errorsEmergencies).length === 0 ? null	: this.errorsEmergencies['emergency_parameters.'+idx+'.name'] ? false : true;
+            }
+        },
+
+        stateEmergencyParametersValue() {
+            return idx =>{
+                if (this.inputState['emergency_parameters'+idx+'.value'] || this.errorsEmergencies == []) { return null; }
+                return Object.keys(this.errorsEmergencies).length === 0 ? null	: this.errorsEmergencies['emergency_parameters.'+idx+'.value'] ? false : true;
+            }
+        },
     },
 
     methods: {
@@ -212,6 +226,8 @@ export default {
         nameClick() { if (this.errorsEmergencies.name) { this.inputState.name = true; } },
         descriptionClick() { if (this.errorsEmergencies.description) { this.inputState.description = true; } },
         interestZoneIdClick() { if (this.errorsEmergencies.interest_zone_id) { this.inputState.interest_zone_id = true; } },
+        emergencyParametersNameClick(idx) { if(this.errorsEmergencies['emergency_parameters.'+idx+'.name']) { this.inputState['emergency_parameters.'+idx+'.name'] = true; } },
+        emergencyParametersValueClick(idx) { if(this.errorsEmergencies['emergency_parameters.'+idx+'.value']) { this.inputState['emergency_parameters.'+idx+'.value'] = true; } },
     },
 
     async mounted() {

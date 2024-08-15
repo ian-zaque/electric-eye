@@ -128,7 +128,11 @@ export default {
             this.emergenciesStoreCommit({ mutation: "RESET_ERRORS_EMERGENCIES" });
             this.openModal = true;
         },
-        closeModalEmergencies(){ this.openModal = false; this.isEditing = false },
+
+        closeModalEmergencies(){ 
+            this.openModal = false; this.isEditing = false;
+            this.emergenciesStoreCommit({ mutation: "RESET_CURRENT_EMERGENCY" })
+        },
 
         downloadCsv(){
             this.isDownloadingCsv = true

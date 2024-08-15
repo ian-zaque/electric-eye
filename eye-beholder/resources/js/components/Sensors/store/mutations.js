@@ -4,17 +4,11 @@ const RESET_CURRENT_SENSOR = (state) => {
 }
 
 const SET_SENSORS_LIST = (state, payload) => { state.sensorsList = payload }
-
 const ADD_SENSORS_LIST = (state, payload) => { state.sensorsList.push(payload) }
-
-const RESET_SENSORS_LIST = (state) => { 
-    state.sensorsList = []
-}
+const RESET_SENSORS_LIST = (state) => { state.sensorsList = [] }
 
 const SET_ERRORS_SENSORS = (state, payload) => { state.errorsSensors = payload }
-const RESET_ERRORS_SENSORS = (state) => { 
-    state.errorsSensors = {}
-}
+const RESET_ERRORS_SENSORS = (state) => { state.errorsSensors = {} }
 
 const SET_IS_LOADING = (state, payload) => { state.isloading = payload }
 

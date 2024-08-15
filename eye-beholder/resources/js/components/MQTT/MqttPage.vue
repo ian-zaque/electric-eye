@@ -107,7 +107,11 @@ export default {
             this.mqttTopicStoreCommit({ mutation: "RESET_ERRORS_MQTT_TOPICS" });
             this.openModal = true;
         },
-        closeModalMqttTopics(){ this.openModal = false; this.isEditing = false },
+
+        closeModalMqttTopics(){ 
+            this.openModal = false; this.isEditing = false;
+            this.mqttTopicStoreCommit({ mutation: "RESET_CURRENT_MQTT_TOPIC" })
+        },
 
         downloadCsv(){
             this.isDownloadingCsv = true

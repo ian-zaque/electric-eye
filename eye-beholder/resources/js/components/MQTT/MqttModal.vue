@@ -5,18 +5,21 @@
                 <b-row align-v="center">
                     <b-col cols="6">
                         <b-form-group label="Nome">
-                            <b-form-input v-model="mqtt_topic.topic" type="text" placeholder="Insira o nome do Tópico MQTT" required @click="nameClick" :state="stateName">
+                            <b-form-input v-model="mqtt_topic.topic" type="text" placeholder="Insira o nome do Tópico MQTT" required @click="topicClick" :state="stateTopic">
                             </b-form-input>
 
-                            <small class="text-danger" :hidden="!errorsTopics.name">{{ formatErrorsArray(errorsTopics.name) }}</small>
+                            <small class="text-danger" :hidden="!errorsTopics.topic">{{ formatErrorsArray(errorsTopics.topic) }}</small>
                         </b-form-group>
                     </b-col>
 
                     <b-col cols="6">
                         <b-form-group label="Status">
-                            <b-form-checkbox v-model="mqtt_topic.active" name="check-button" switch>
+                            <b-form-checkbox v-model="mqtt_topic.active" name="check-button" switch  @click="activeClick" :state="stateActive">
                                 <b>{{ mqtt_topic.active ? 'Online' : 'Offline' }}</b>
                             </b-form-checkbox>
+
+                            <b-form-invalid-feedback :state="stateActive">{{errorsTopics.active}}</b-form-invalid-feedback>
+                            <b-form-valid-feedback :state="stateActive">Ok</b-form-valid-feedback>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -93,9 +96,9 @@ export default {
 
         okButtonTitle(){ return this.isEditing ? "Confirmar" : "Cadastrar" },
 
-        stateName() {
-            if (this.inputState.name || this.errorsTopics == {}) { return null; }
-            return Object.keys(this.errorsTopics).length === 0 ? null: this.errorsTopics.name ? false : true;
+        stateTopic() {
+            if (this.inputState.topic || this.errorsTopics == {}) { return null; }
+            return Object.keys(this.errorsTopics).length === 0 ? null: this.errorsTopics.topic ? false : true;
         },
 
         stateDescription() {
@@ -152,7 +155,7 @@ export default {
             return ""
         },
 
-        nameClick() { if (this.errorsTopics.name) { this.inputState.name = true; } },
+        topicClick() { if (this.errorsTopics.topic) { this.inputState.topic = true; } },
         descriptionClick() { if (this.errorsTopics.description) { this.inputState.description = true; } },
         activeClick() { if (this.errorsTopics.active) { this.inputState.active = true; } },
     },
