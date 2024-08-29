@@ -5,7 +5,7 @@
                 <b-row align-v="center">
                     <b-col cols="12">
                         <b-form-group label="Tipo de Sensor">
-                            <b-form-select v-model="sensor.type_sensor" @click="typeSensorClick" :state="stateTypeSensor" class="mb-3">
+                            <b-form-select v-model="sensor.type_sensor_id" @click="typeSensorClick" :state="stateTypeSensor" class="mb-3">
                                 <template #first>
                                     <b-form-select-option value="" disabled>Selecione o Tipo de Sensor</b-form-select-option>
                                 </template>
@@ -22,18 +22,22 @@
 
                 <b-row>
                     <b-col cols="12">
-                        <b-form-group label="Descrição">
-                            <b-form-input v-model="sensor.description" type="text" placeholder="Insira a descrição do sensor" required>
+                        <b-form-group label="Modelo do Sensor">
+                            <b-form-input v-model="sensor.model" @click="modelClick" :state="stateModel" type="text" placeholder="Insira o modelo do sensor" required>
                             </b-form-input>
+
+                            <small class="text-danger" :hidden="!errorsSensors.model">{{ formatErrorsArray(errorsSensors.model) }}</small>
                         </b-form-group>
                     </b-col>
                 </b-row>
 
                 <b-row>
                     <b-col cols="12">
-                        <b-form-group label="Modelo do Sensor">
-                            <b-form-input v-model="sensor.model" type="text" placeholder="Insira o modelo do sensor" required>
-                            </b-form-input>
+                        <b-form-group label="Descrição">
+                            <b-form-textarea v-model="sensor.description" @click="descriptionClick" :state="stateDescription" type="text" placeholder="Insira a descrição do sensor" required>
+                            </b-form-textarea>
+
+                            <small class="text-danger" :hidden="!errorsSensors.description">{{ formatErrorsArray(errorsSensors.description) }}</small>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -103,8 +107,8 @@ export default {
         okButtonTitle(){ return this.isEditing ? "Confirmar" : "Cadastrar" },
 
         stateTypeSensor() {
-            if (this.inputState.type_sensor || this.errorsSensors == {}) { return null; }
-            return Object.keys(this.errorsSensors).length === 0 ? null: this.errorsSensors.type_sensor ? false : true;
+            if (this.inputState.type_sensor_id || this.errorsSensors == {}) { return null; }
+            return Object.keys(this.errorsSensors).length === 0 ? null: this.errorsSensors.type_sensor_id ? false : true;
         },
 
         stateModel() {
@@ -120,7 +124,7 @@ export default {
 
     methods: {
         ...mapActions('sensors', [
-            "createSensors",
+            "createSensor",
             "editSensor",
             "sensorStoreCommit",
         ]),
@@ -141,24 +145,20 @@ export default {
             return ""
         },
 
-        submitSensor(){
-            if(this.isEditing){
-                this.editSensor(this.sensor)
-                    .then( () => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
+        async submitSensor(bvModalEvt){
+            // Prevent modal from closing
+            bvModalEvt.preventDefault();
 
-                    })
+            try {
+                if(this.isEditing){ await this.editSensor(this.sensor) }
+                else{ await this.createSensor(this.sensor) }
+
+                if(Object.values(this.errorsSensors).length == 0 || this.errorsSensors == null || this.errorsSensors == undefined){
+                    this.closeModal()
+                }
             }
-            else{
-                this.createSensors(this.sensor)
-                    .then( () => {
-                        this.closeModal()
-                    })
-                    .catch(() => {
-
-                    })
+            catch (error) {
+                console.log(error);
             }
         },
 
@@ -166,7 +166,7 @@ export default {
 
         closeModal(){ this.$emit("closeModal"); this.resetForm() },
 
-        typeSensorClick() { if (this.errorsSensors.type_sensor) { this.inputState.type_sensor = true; } },
+        typeSensorClick() { if (this.errorsSensors.type_sensor_id) { this.inputState.type_sensor_id = true; } },
         modelClick() { if (this.errorsSensors.model) { this.inputState.model = true; } },
         descriptionClick() { if (this.errorsSensors.description) { this.inputState.description = true; } },
     },

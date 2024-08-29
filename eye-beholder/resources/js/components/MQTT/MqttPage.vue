@@ -92,7 +92,6 @@ export default {
         ]),
 
         editMqttTopic(topic){
-            console.log('TOPIC >>>>', topic);
             var mqttTopicCopy = { ...topic}
             this.mqttTopicStoreCommit({ mutation: "SET_CURRENT_MQTT_TOPIC", value: mqttTopicCopy })
             this.isEditing = true

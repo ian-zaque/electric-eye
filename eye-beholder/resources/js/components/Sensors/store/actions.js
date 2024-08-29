@@ -1,46 +1,106 @@
-// IMPORT API SERVICES HERE IN THE FUTURE
-
 const fetchSensors = async (state) => {
     state.commit('SET_IS_LOADING', true)
     state.commit('RESET_SENSORS_LIST')
 
-    const response = [
-        { id: 1, type_sensor: '3', description: 'Sensor de Nível de Água', model: 'Water-7' }, 
-        { id: 2, type_sensor: '1', description: 'Sensor 1 de Temperatura ºC', model: 'Temp1' } ,
-        { id: 3, type_sensor: '1', description: 'Sensor 2 de Temperatura ºC', model: 'Temp2' } ,
-    ]
-
-    // CALLING AXIOS HERE
-
-    state.commit('SET_SENSORS_LIST', response)
-    state.commit('SET_IS_LOADING', false)
+    return await axios.get("api/sensors")
+        .then((result) => {
+            const response = result.data
+            state.commit("RESET_ERRORS_SENSORS")
+            state.commit('SET_SENSORS_LIST', response)
+        })
+        .catch((error) => {
+            if (error.response) {
+                //ERRO NA RESPOSTA
+                state.commit("SET_ERRORS_SENSORS", error.response.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao carregar Sensores! Requisição recusada. Erro: ${error.response.status}`, type: "danger" }}, {root:true})
+            }
+            else if (error.request) {
+                //ERRO NA REQUISIÇÃO
+                state.commit("SET_ERRORS_SENSORS", error.request.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao carregar Sensores!  Servidor não respondendo. Erro: ${error.request.status}`, type: "danger" }}, {root:true})
+            }
+            else {
+                //ERRO DESCONHECIDO
+                state.commit("SET_ERRORS_SENSORS", error);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro desconhecido ao carregar Sensores!`, type: "danger" }}, {root:true})  
+            }
+        })
+        .finally(() => {
+            state.commit('SET_IS_LOADING', false)
+        })
 }
 
-const createSensors = async (state, form) => {
+const createSensor = (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
-    // CALLING AXIOS HERE
-
-    state.commit('ADD_SENSORS_LIST', form)
-    state.commit('SET_IS_LOADING', false)
+    return axios.post("api/sensors", form)
+        .then((result) => {
+            const response = result.data
+            state.commit("RESET_ERRORS_SENSORS")
+            state.commit('ADD_SENSORS_LIST', response)
+            state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Sucesso ao cadastrar Sensor!`, type: "success" }}, {root:true})  
+        })
+        .catch((error) => {
+            if (error.response) {
+                //ERRO NA RESPOSTA
+                state.commit("SET_ERRORS_SENSORS", error.response.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao cadastrar Sensor! Requisição recusada. Erro: ${error.response.status}`, type: "danger" }}, {root:true})  
+            }
+            else if (error.request) {
+                //ERRO NA REQUISIÇÃO
+                state.commit("SET_ERRORS_SENSORS", error.request.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao cadastrar Sensor! Servidor não respondendo. Erro: ${error.request.status}`, type: "danger" }}, {root:true})  
+            }
+            else {
+                //ERRO DESCONHECIDO
+                state.commit("SET_ERRORS_SENSORS", error);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro desconhecido ao cadastrar Sensor!`, type: "danger" }}, {root:true})
+            }
+        })
+        .finally(() => {
+            state.commit('SET_IS_LOADING', false)
+        })
 }
 
-const editSensor = async (state, form) => {
+const editSensor = (state, form) => {
     state.commit('SET_IS_LOADING', true)
 
-    // CALLING AXIOS HERE
-
-    console.log("EDITING SENSOR >>>", form)
-    state.commit('SET_IS_LOADING', false)
+    return axios.put(`api/sensors/${form.id}`, form)
+        .then((result) => {
+            const response = result.data
+            state.commit("RESET_ERRORS_SENSORS")
+            state.commit('UPDATE_SENSORS_LIST', response)
+            state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Sucesso ao editar Sensor!`, type: "success" }}, {root:true})
+        })
+        .catch((error) => {
+            if (error.response) {
+                //ERRO NA RESPOSTA
+                state.commit("SET_ERRORS_SENSORS", error.response.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao editar Sensor! Requisição recusada. Erro: ${error.response.status}!`, type: "danger" }}, {root:true})
+            }
+            else if (error.request) {
+                //ERRO NA REQUISIÇÃO
+                state.commit("SET_ERRORS_SENSORS", error.request.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao editar Sensor! Servidor não respondendo. Erro: ${error.request.status}`, type: "danger" }}, {root:true})
+            }
+            else {
+                //ERRO DESCONHECIDO
+                state.commit("SET_ERRORS_SENSORS", error);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro desconhecido ao editar Sensor!`, type: "danger" }}, {root:true})
+            }
+        })
+        .finally(() => {
+            state.commit('SET_IS_LOADING', false)
+        })
 }
 
-const sensorStoreCommit = (state, payload) => {
+const sensorStoreCommit  = (state, payload) => {
     state.commit(payload.mutation, payload.value)
 }
 
 export default {
     fetchSensors,
-    createSensors,
+    createSensor,
     editSensor,
-    sensorStoreCommit,
+    sensorStoreCommit ,
 }

@@ -36,7 +36,7 @@
 
                             <template #row-details="row">
                                 <b-container>
-                                    <b-table :items="row.item.emergency_parameters" :fields="parametersFields" small show-empty empty-text="Sem parâmetros cadastrados.">
+                                    <b-table :items="row.item.emergency_parameters" :fields="parametersFields" caption-top small show-empty empty-text="Sem parâmetros cadastrados.">
                                         <template #table-caption>
                                             Parâmetros de <b>{{ row.item.name }}</b>
 

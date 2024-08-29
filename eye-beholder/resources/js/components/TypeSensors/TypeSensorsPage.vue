@@ -92,9 +92,15 @@ export default {
             console.log("TYPE SENSOR >>", typeSensor)
         },
 
-        openModalTypes(){ this.openModal = true; },
+        openModalTypes(){ 
+            this.openModal = true;
+            this.typeSensorStoreCommit({ mutation: "RESET_ERRORS_TYPE_SENSORS" })
+        },
 
-        closeModalTypes(){ this.openModal = false; this.isEditing = false },
+        closeModalTypes(){ 
+            this.openModal = false; this.isEditing = false
+            this.typeSensorStoreCommit({ mutation: "RESET_ERRORS_TYPE_SENSORS" })
+        },
     },
 };
 </script>

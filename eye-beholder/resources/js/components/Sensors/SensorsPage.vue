@@ -55,7 +55,7 @@ export default {
         return {
             openModal: false, isEditing: false,
             sensorsFields:[
-                { key: "id", label: "ID", sortable: true }, { key: "type_sensor", label: "Tipo de Sensor", sortable: true },
+                { key: "id", label: "ID", sortable: true }, { key: "type_sensor.type", label: "Tipo de Sensor", sortable: true },
                 { key: "model", label: "Modelo", sortable: true },  //{ key: "description", label: "Descrição", sortable: true },
                 { key: "actions", label: "Ações", sortable: false },
             ]

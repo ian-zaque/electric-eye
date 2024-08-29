@@ -1,4 +1,5 @@
 const sensor = {
+    type_sensor_id: '',
     type_sensor: '',
     model: '',
     description: '',

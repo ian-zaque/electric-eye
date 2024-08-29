@@ -25,6 +25,8 @@ Route::resources([
     'ude-classes' => 'UdeClassController',
     'emergencies' => 'EmergencyController',
     'mqtt-topics' => 'MqttTopicController',
+    'sensors' => 'SensorController',
+    'type-sensors' => 'TypeSensorController',
 ]);
 // 'emergency-parameters' => 'EmergencyParameterController',
 // Route::resource('user-roles', 'UserRoleController');
