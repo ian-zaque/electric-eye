@@ -1,11 +1,19 @@
 <template>
     <div class="blackened container">
         <b-row align-h="between" align-v="center" style="margin-top: 5px;" class="container">
-            <h3>Tipos de Sensores</h3>
+            <b-col cols="10">
+                <h3>Tipos de Sensores</h3>
+            </b-col>
             
-            <b-button @click="openModalTypes" variant="primary" squared>
-                <i class="fa-solid fa-plus"></i>
-            </b-button>
+            <b-col cols="2">
+                <b-button :disabled="isDownloadingCsv" @click="openModalTypes" variant="primary" squared>
+                    <i class="fa-solid fa-plus"></i>
+                </b-button>
+
+                <b-button :disabled="isDownloadingCsv || typeSensorsList.length == 0" @click="downloadCsv" variant="outline-success" outlined squared>
+                    <i class="fa-solid fa-download"></i>
+                </b-button>
+            </b-col>
         </b-row>
 
         <b-row cols="12">
@@ -23,7 +31,7 @@
 
                             <template #cell(actions)="data">
                                 <b-row align-h="around">
-                                    <b-button @click="editTypeSensor(data)" size="sm" variant="outline-secondary">
+                                    <b-button :disabled="isDownloadingCsv" @click="editTypeSensor(data)" size="sm" variant="outline-secondary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </b-button>
                                     
@@ -54,7 +62,7 @@ export default {
 
     data() {
         return {
-            openModal: false, isEditing: false,
+            openModal: false, isEditing: false, isDownloadingCsv: false,
             typesSensorsFields:[
                 { key: "id", label: "ID", sortable: true }, { key: "type", label: "Tipo", sortable: true },
                 { key: "unit", label: "Unidade de Medida", sortable: true }, //{ key: "description", label: "Descrição", sortable: true },
@@ -100,6 +108,35 @@ export default {
         closeModalTypes(){ 
             this.openModal = false; this.isEditing = false
             this.typeSensorStoreCommit({ mutation: "RESET_ERRORS_TYPE_SENSORS" })
+        },
+
+        downloadCsv(){
+            this.isDownloadingCsv = true
+            var data = new Date().toLocaleString().toString().replace(/\//g, '-')
+
+            var mat = this.typeSensorsList.map(function(val){
+                return [
+                    val.id,
+                    val.type,
+                    val.unit,
+                    val.description,
+                    new Date(val.created_at).toLocaleString().toString().replace(/\//g, '-'),
+                ];
+            });
+
+            mat.unshift([
+                'ID', 'Tipo de Sensor', 'Modelo', 'Descrição', 'Criado em',
+            ]);
+            var universalBOM = "\uFEFF";
+            let csvContent = "data:text/csv;charset=utf-8," + universalBOM + mat.map(e => e.join(";")).join("\n");
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Planilha Tipo de Sensores - " + data +  ".csv");
+            document.body.appendChild(link);
+
+            link.click();
+            this.isDownloadingCsv = false
         },
     },
 };
