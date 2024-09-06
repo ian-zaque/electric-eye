@@ -63,7 +63,7 @@
 import { mapGetters, mapActions } from "vuex"
 
 const defaultInputState = {
-    type_sensor: false,
+    type_sensor_id: false,
     model: false,
     description: false,
 };

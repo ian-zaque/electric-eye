@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Ude;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Services\MqttPublisherService;
 
 class UdeController extends Controller
 {
@@ -34,7 +35,7 @@ class UdeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, MqttPublisherService $mqtt_publisher_service)
     {
         $validator = Validator::make($request->all(), [
             'interest_zone_id' => 'required|integer',
@@ -51,6 +52,9 @@ class UdeController extends Controller
             $ude = new Ude();
             $ude->fill($udeData)->save();
             $ude = Ude::with(['ude_class', 'interest_zone','interest_zone.region'])->find($ude->id);
+
+            $mqtt_publisher_service->publishQoS2('subscribe', strval($ude->mac_id));
+
             return response()->json($ude, 200);
         }
     }
