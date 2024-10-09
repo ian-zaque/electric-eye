@@ -35,6 +35,5 @@ class SubscribeUdeProcess implements ShouldQueue
     public function handle()
     {
         MQTT::publish($this->topic, $this->data, true);
-        // MQTT::disconnect();
     }
 }
