@@ -41,7 +41,7 @@ class UdeController extends Controller
             'interest_zone_id' => 'required|integer',
             'class_id' => 'required|integer',
             "name" => 'required|string|max:1000|min:2', 
-            "mac_id" => 'required|string|max:17|min:17',     // XX:XX:XX:XX:XX:XX
+            "mac_id" => 'required|string|max:17|min:17|unique:udes,mac_id',     // XX:XX:XX:XX:XX:XX
             "latitude" => 'required|numeric',
             "longitude" => 'required|numeric',
         ]);
@@ -53,7 +53,7 @@ class UdeController extends Controller
             $ude->fill($udeData)->save();
             $ude = Ude::with(['ude_class', 'interest_zone','interest_zone.region'])->find($ude->id);
 
-            $mqtt_publisher_service->publishQoS2('subscribe', strval($ude->mac_id));
+            $mqtt_publisher_service->subscribeUde($ude->mac_id);
 
             return response()->json($ude, 200);
         }
@@ -94,7 +94,7 @@ class UdeController extends Controller
             'interest_zone_id' => 'required|integer',
             'class_id' => 'required|integer',
             "name" => 'required|string|max:1000|min:2', 
-            "mac_id" => 'required|string|max:17|min:17',     // XX:XX:XX:XX:XX:XX
+            "mac_id" => 'required|string|max:17|min:17|unique:udes,mac_id',     // XX:XX:XX:XX:XX:XX
             "latitude" => 'required|numeric',
             "longitude" => 'required|numeric',
         ]);
