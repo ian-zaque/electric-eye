@@ -94,7 +94,7 @@ class UdeController extends Controller
             'interest_zone_id' => 'required|integer',
             'class_id' => 'required|integer',
             "name" => 'required|string|max:1000|min:2', 
-            "mac_id" => 'required|string|max:17|min:17|unique:udes,mac_id',     // XX:XX:XX:XX:XX:XX
+            "mac_id" => 'required|string|max:17|min:17|unique:App\Ude,mac_id,' . $ude->id,     // XX:XX:XX:XX:XX:XX
             "latitude" => 'required|numeric',
             "longitude" => 'required|numeric',
         ]);
