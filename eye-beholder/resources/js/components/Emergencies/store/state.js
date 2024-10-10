@@ -6,12 +6,10 @@ const emergency = {
     interest_zone: {},
 }
 const emergenciesList = []
-const isLoading = false
 const errorsEmergencies = {}
 
 export default {
     emergency,
     emergenciesList,
-    isLoading,
     errorsEmergencies,
 }

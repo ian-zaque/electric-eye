@@ -1,5 +1,5 @@
 const fetchMqttTopics = async (state) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
     state.commit('RESET_MQTT_TOPICS_LIST')
 
     return await axios.get("api/mqtt-topics")
@@ -26,12 +26,12 @@ const fetchMqttTopics = async (state) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const createMqttTopics = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.post("api/mqtt-topics", form)
         .then((result) => {
@@ -58,12 +58,12 @@ const createMqttTopics = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const editMqttTopics = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.put(`api/mqtt-topics/${form.id}`, form)
         .then((result) => {
@@ -90,7 +90,7 @@ const editMqttTopics = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 

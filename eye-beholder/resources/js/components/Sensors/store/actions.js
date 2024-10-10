@@ -1,5 +1,5 @@
 const fetchSensors = async (state) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
     state.commit('RESET_SENSORS_LIST')
 
     return await axios.get("api/sensors")
@@ -26,12 +26,12 @@ const fetchSensors = async (state) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const createSensor = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.post("api/sensors", form)
         .then((result) => {
@@ -58,12 +58,12 @@ const createSensor = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const editSensor = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.put(`api/sensors/${form.id}`, form)
         .then((result) => {
@@ -90,7 +90,7 @@ const editSensor = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 

@@ -1,5 +1,5 @@
 const fetchUdeClasses = async (state) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
     state.commit('RESET_UDE_CLASSES_LIST')
 
     return await axios.get("api/ude-classes")
@@ -26,12 +26,12 @@ const fetchUdeClasses = async (state) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const createUdeClass = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.post("api/ude-classes", form)
         .then((result) => {
@@ -58,12 +58,12 @@ const createUdeClass = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const editUdeClass = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.put(`api/ude-classes/${form.id}`, form)
         .then((result) => {
@@ -90,7 +90,7 @@ const editUdeClass = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 

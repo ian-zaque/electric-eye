@@ -22,7 +22,7 @@
                     <div>
                         <b-table :items="emergenciesList" :fields="emergenciesFields" :busy="isLoading" :sortDesc="true" hover show-empty responsive="sm" small empty-text="Não há Emergências registradas.">
                             <template #table-busy>
-                                <div class="text-center my-2">
+                                <div class="text-center text-secondary my-2">
                                     <b-spinner class="align-middle"></b-spinner>
                                     <strong>Carregando...</strong>
                                 </div>
@@ -99,9 +99,12 @@ export default {
     computed:{
         ...mapGetters('emergencies',{
             errors: "getErrorsEmergencies",
-            isLoading: "getIsLoading",
             emergenciesList: "getEmergenciesList",
         }),
+
+        ...mapGetters('loading', {
+            isLoading: "isLoading",
+        })
     },
 
     methods: {

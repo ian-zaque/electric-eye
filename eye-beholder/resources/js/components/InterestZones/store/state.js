@@ -5,12 +5,10 @@ const interestZone = {
     region: {},
 }
 const interestZonesList = []
-const isLoading = false
 const errorsInterestZones = {}
 
 export default {
     interestZone,
     interestZonesList,
-    isLoading,
     errorsInterestZones,
 }

@@ -1,5 +1,5 @@
 const fetchRegions = async (state) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
     state.commit('RESET_REGIONS_LIST')
 
     return await axios.get("api/regions")
@@ -26,12 +26,12 @@ const fetchRegions = async (state) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const createRegion = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.post("api/regions", form)
         .then((result) => {
@@ -58,12 +58,12 @@ const createRegion = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const editRegion = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.put(`api/regions/${form.id}`, form)
         .then((result) => {
@@ -90,7 +90,7 @@ const editRegion = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 

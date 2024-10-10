@@ -1,5 +1,5 @@
 const fetchInterestZones = async (state) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
     state.commit('RESET_INTEREST_ZONES_LIST')
 
     return await axios.get("api/interest-zones")
@@ -26,12 +26,12 @@ const fetchInterestZones = async (state) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const createInterestZone = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.post("api/interest-zones", form)
         .then((result) => {
@@ -58,12 +58,12 @@ const createInterestZone = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const editInterestZone = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.put(`api/interest-zones/${form.id}`, form)
         .then((result) => {
@@ -90,7 +90,7 @@ const editInterestZone = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 

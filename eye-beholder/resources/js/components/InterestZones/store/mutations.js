@@ -23,8 +23,6 @@ const RESET_ERRORS_INTEREST_ZONES = (state) => {
     state.errorsInterestZones = {}
 }
 
-const SET_IS_LOADING = (state, payload) => { state.isloading = payload }
-
 export default {
     SET_CURRENT_INTEREST_ZONE,
     RESET_CURRENT_INTEREST_ZONE,
@@ -36,6 +34,4 @@ export default {
 
     SET_ERRORS_INTEREST_ZONES,
     RESET_ERRORS_INTEREST_ZONES,
-
-    SET_IS_LOADING,
 }

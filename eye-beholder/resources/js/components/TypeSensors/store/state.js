@@ -6,13 +6,10 @@ const type_sensor = {
 
 const typeSensorsList = []
 
-const isLoading = false
-
 const errorsTypeSensors = {}
 
 export default {
     type_sensor,
     typeSensorsList,
-    isLoading,
     errorsTypeSensors,
 }

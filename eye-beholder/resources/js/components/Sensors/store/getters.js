@@ -6,10 +6,6 @@ const getSensorsList = (state) =>{
     return state.sensorsList
 }
 
-const getIsLoading = (state) =>{
-    return state.isLoading
-}
-
 const getErrorsSensors = (state) =>{
     return state.errorsSensors
 }
@@ -17,6 +13,5 @@ const getErrorsSensors = (state) =>{
 export default {
     getCurrentSensor,
     getSensorsList,
-    getIsLoading,
     getErrorsSensors,
 }

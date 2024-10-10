@@ -24,8 +24,6 @@ const RESET_ERRORS_EMERGENCIES = (state) => {
     state.errorsEmergencies = {}
 }
 
-const SET_IS_LOADING = (state, payload) => { state.isloading = payload }
-
 export default {
     SET_CURRENT_EMERGENCY,
     RESET_CURRENT_EMERGENCY,
@@ -37,6 +35,4 @@ export default {
 
     SET_ERRORS_EMERGENCIES,
     RESET_ERRORS_EMERGENCIES,
-
-    SET_IS_LOADING,
 }

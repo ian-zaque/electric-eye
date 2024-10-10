@@ -23,7 +23,7 @@
                         <b-table :items="typeSensorsList" :fields="typesSensorsFields" :busy="isLoading" :sortDesc="true" empty-text="Não há tipos de sensores registrados." 
                             show-empty hover responsive="sm" small>
                             <template #table-busy>
-                                <div class="text-center my-2">
+                                <div class="text-center text-secondary my-2">
                                     <b-spinner class="align-middle"></b-spinner>
                                     <strong>Carregando...</strong>
                                 </div>
@@ -78,9 +78,12 @@ export default {
     computed:{
         ...mapGetters('typeSensors',{
             errors: "getErrorsTypeSensors",
-            isLoading: "getIsLoading",
             typeSensorsList: "getTypeSensorsList",
         }),
+
+        ...mapGetters('loading', {
+            isLoading: "isLoading",
+        })
     },
 
     methods: {

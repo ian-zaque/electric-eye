@@ -27,10 +27,6 @@ const RESET_ERRORS_UDES = (state) => {
     state.errorsUdes = {}
 }
 
-const INCREMENT_LOAD_COUNT = (state) => { state.loadCount++ }
-const DECREMENT_LOAD_COUNT = (state) => { state.loadCount-- }
-const RESET_LOAD_COUNT = (state) => { state.loadCount = 0 }
-
 export default {
     SET_CURRENT_UDE,
     RESET_CURRENT_UDE,
@@ -42,8 +38,4 @@ export default {
 
     SET_ERRORS_UDES,
     RESET_ERRORS_UDES,
-
-    INCREMENT_LOAD_COUNT,
-    DECREMENT_LOAD_COUNT,
-    RESET_LOAD_COUNT,
 }

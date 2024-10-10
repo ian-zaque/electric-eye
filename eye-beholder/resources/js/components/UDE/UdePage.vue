@@ -6,11 +6,11 @@
             </b-col>
 
             <b-col cols="2">
-                <b-button :disabled="isDownloadingCsv" @click="openModalUdes" variant="primary" squared>
+                <b-button :disabled="isDownloadingCsv" @click="openModalUdes" variant="primary">
                     <i class="fa-solid fa-plus"></i>
                 </b-button>
 
-                <b-button :disabled="isDownloadingCsv || udesList.length == 0" @click="downloadCsv" variant="outline-success" outlined squared>
+                <b-button :disabled="isDownloadingCsv || udesList.length == 0" @click="downloadCsv" variant="outline-success" outlined>
                     <i class="fa-solid fa-download"></i>
                 </b-button>
             </b-col>

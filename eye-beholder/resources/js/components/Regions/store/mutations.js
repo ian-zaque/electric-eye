@@ -21,8 +21,6 @@ const RESET_ERRORS_REGIONS = (state) => {
     state.errorsRegions = {}
 }
 
-const SET_IS_LOADING = (state, payload) => { state.isloading = payload }
-
 export default {
     SET_CURRENT_REGION,
     RESET_CURRENT_REGION,
@@ -34,6 +32,4 @@ export default {
 
     SET_ERRORS_REGIONS,
     RESET_ERRORS_REGIONS,
-
-    SET_IS_LOADING,
 }

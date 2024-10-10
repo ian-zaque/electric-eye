@@ -22,8 +22,6 @@ const RESET_ERRORS_MQTT_TOPICS = (state) => {
     state.errorsTopics = {}
 }
 
-const SET_IS_LOADING = (state, payload) => { state.isloading = payload }
-
 export default {
     SET_CURRENT_MQTT_TOPIC,
     RESET_CURRENT_MQTT_TOPIC,
@@ -35,6 +33,4 @@ export default {
 
     SET_ERRORS_MQTT_TOPICS,
     RESET_ERRORS_MQTT_TOPICS,
-
-    SET_IS_LOADING,
 }

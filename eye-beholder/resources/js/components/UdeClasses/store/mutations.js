@@ -21,8 +21,6 @@ const RESET_ERRORS_UDE_CLASSES = (state) => {
     state.errorsUdeClasses = {}
 }
 
-const SET_IS_LOADING = (state, payload) => { state.isloading = payload }
-
 export default {
     SET_CURRENT_UDE_CLASS,
     RESET_CURRENT_UDE_CLASS,
@@ -34,6 +32,4 @@ export default {
 
     SET_ERRORS_UDE_CLASSES,
     RESET_ERRORS_UDE_CLASSES,
-
-    SET_IS_LOADING,
 }

@@ -23,7 +23,7 @@
                         <b-table :items="regionsList" :fields="regionsFields" :busy="isLoading" :sortDesc="true" empty-text="Não há regiões registradas." hover show-empty 
                             responsive="sm" small>
                             <template #table-busy>
-                                <div class="text-center my-2">
+                                <div class="text-center text-secondary my-2">
                                     <b-spinner class="align-middle"></b-spinner>
                                     <strong>Carregando...</strong>
                                 </div>
@@ -76,9 +76,12 @@ export default {
     computed:{
         ...mapGetters('regions',{
             errors: "getErrorsRegions",
-            isLoading: "getIsLoading",
             regionsList: "getRegionsList",
         }),
+
+        ...mapGetters('loading', {
+            isLoading: "isLoading",
+        })
     },
 
     methods: {

@@ -92,7 +92,6 @@ export default {
     computed: {
         ...mapGetters('sensors',{
             errorsSensors: "getErrorsSensors",
-            isLoading: "getIsLoading",
             sensor: "getCurrentSensor",
         }),
 

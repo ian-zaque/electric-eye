@@ -20,9 +20,6 @@ const RESET_ERRORS_TYPE_SENSORS = (state) => {
     state.errorsTypeSensors = {}
 }
 
-const SET_IS_LOADING = (state, payload) => { state.isloading = payload }
-
-
 export default {
     SET_CURRENT_TYPE_SENSOR,
     RESET_CURRENT_TYPE_SENSOR,
@@ -34,6 +31,4 @@ export default {
 
     SET_ERRORS_TYPE_SENSORS,
     RESET_ERRORS_TYPE_SENSORS,
-
-    SET_IS_LOADING,
 }

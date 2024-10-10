@@ -7,13 +7,10 @@ const sensor = {
 
 const sensorsList = []
 
-const isLoading = false
-
 const errorsSensors = {}
 
 export default {
     sensor,
     sensorsList,
-    isLoading,
     errorsSensors,
 }

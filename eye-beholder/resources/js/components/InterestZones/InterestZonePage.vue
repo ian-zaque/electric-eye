@@ -6,11 +6,11 @@
             </b-col>
 
             <b-col cols="2">
-                <b-button :disabled="isDownloadingCsv" @click="openModalInterestZones" variant="primary" squared>
+                <b-button :disabled="isDownloadingCsv" @click="openModalInterestZones" variant="primary">
                     <i class="fa-solid fa-plus"></i>
                 </b-button>
 
-                <b-button :disabled="isDownloadingCsv || interestZonesList.length == 0" @click="downloadCsv" variant="outline-success" outlined squared>
+                <b-button :disabled="isDownloadingCsv || interestZonesList.length == 0" @click="downloadCsv" variant="outline-success" outlined>
                     <i class="fa-solid fa-download"></i>
                 </b-button>
             </b-col>
@@ -23,7 +23,7 @@
                         <b-table :items="interestZonesList" :fields="interestZonesFields" :busy="isLoading" :sortDesc="true" empty-text="Não há Zonas de Interesse registradas." hover show-empty 
                             responsive="sm" small>
                             <template #table-busy>
-                                <div class="text-center my-2">
+                                <div class="text-center text-secondary my-2">
                                     <b-spinner class="align-middle"></b-spinner>
                                     <strong>Carregando...</strong>
                                 </div>
@@ -80,9 +80,13 @@ export default {
     computed:{
         ...mapGetters('interestZones',{
             errors: "getErrorsInterestZones",
-            isLoading: "getIsLoading",
             interestZonesList: "getInterestZonesList",
         }),
+
+        
+        ...mapGetters('loading', {
+            isLoading: "isLoading",
+        })
     },
 
     methods: {

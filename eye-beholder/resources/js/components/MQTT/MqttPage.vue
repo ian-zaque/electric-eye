@@ -15,32 +15,45 @@
                 </b-button>
             </b-col>
         </b-row>
+        
+        <div v-if="!isLoading && splittedMqttTopicsList.length > 0">
+            <b-row v-for="(half, index) in splittedMqttTopicsList" :key="index" cols="12">
+                <b-col v-for="(topic, idx) in half" :key="idx" cols="3">
+                    <b-card :title="topic.topic" border-variant="secondary" style="margin-bottom: 15px; margin-top: 10px; border-radius: 5%;">
+                        <b-card-text class="condensed">
+                            {{ topic.description }}
+                        </b-card-text>
 
-        <b-row v-for="(half, index) in splittedMqttTopicsList" :key="index" cols="12">
-            <b-col v-for="(topic, idx) in half" :key="idx" cols="3">
-                <b-card :title="topic.topic" border-variant="secondary" style="margin-bottom: 15px; margin-top: 10px; border-radius: 5%;">
-                    <b-card-text class="condensed">
-                        {{ topic.description }}
-                    </b-card-text>
+                        <b-row align-v="center" align-h="between">
+                            <b-col cols="6">
+                                <b-button :disabled="isDownloadingCsv" @click="editMqttTopic(topic)" size="sm" variant="outline-secondary">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </b-button>
 
-                    <b-row align-v="center" align-h="between">
-                        <b-col cols="6">
-                            <b-button :disabled="isDownloadingCsv" @click="editMqttTopic(topic)" size="sm" variant="outline-secondary">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </b-button>
+                                <b-button :disabled="isDownloadingCsv" @click="deleteMqttTopic(topic)" size="sm" variant="outline-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </b-button>
+                            </b-col>
 
-                            <b-button :disabled="isDownloadingCsv" @click="deleteMqttTopic(topic)" size="sm" variant="outline-danger">
-                                <i class="fa-solid fa-trash"></i>
-                            </b-button>
-                        </b-col>
+                            <b-col cols="6" class="text-right">
+                                <b-badge pill :variant="topic.active == 1 ? 'success' : 'secondary'">{{ topic.active == 1 ? 'Online' : 'Offline' }}</b-badge>
+                            </b-col>
+                        </b-row>
+                    </b-card>
+                </b-col>
+            </b-row>
+        </div>
 
-                        <b-col cols="6" class="text-right">
-                            <b-badge pill :variant="topic.active == 1 ? 'success' : 'secondary'">{{ topic.active == 1 ? 'Online' : 'Offline' }}</b-badge>
-                        </b-col>
-                    </b-row>
-                </b-card>
-            </b-col>
-        </b-row>
+        <div v-else-if="isLoading">
+            <div class="text-center text-secondary my-2">
+                <b-spinner class="align-middle"></b-spinner>
+                <strong>Carregando...</strong>
+            </div>
+        </div>
+
+        <div v-else>
+            <empty-space></empty-space>
+        </div>
 
         <mqtt-modal :showModal="openModal" @closeModal="closeModalMqttTopics" :isEditing="isEditing"></mqtt-modal>
     </div>
@@ -73,8 +86,11 @@ export default {
     computed:{
         ...mapGetters('mqtt',{
             errors: "getErrorsMqttTopics",
-            isLoading: "getIsLoading",
             topicsList: "getMqttTopicsList",
+        }),
+
+        ...mapGetters('loading', {
+            isLoading: "isLoading",
         }),
 
         splittedMqttTopicsList(){
