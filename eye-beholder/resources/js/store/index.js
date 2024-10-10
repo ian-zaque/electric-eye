@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import notifications from '../components/Notification/store/index.js'
+import loading from '../components/Loading/store/index.js'
 import typeSensors from '../components/TypeSensors/store/index.js'
 import sensors from '../components/Sensors/store/index.js'
 import regions from '../components/Regions/store/index.js'
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     sensors,
     regions,
     notifications,
+    loading,
     interestZones,
     udes,
     udeClasses,
@@ -28,6 +30,10 @@ export default new Vuex.Store({
   actions: {
     dispatchNotification({dispatch}, payload) {
       dispatch('notifications/notificationStoreCommit', payload)
+    },
+    
+    dispatchLoading({dispatch}, payload){
+      dispatch('loading/loadingStoreCommit', payload)
     },
   }
 })

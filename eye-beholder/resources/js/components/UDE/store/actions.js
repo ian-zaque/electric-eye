@@ -1,5 +1,5 @@
 const fetchUdes = async (state) => {
-    state.commit('INCREMENT_LOAD_COUNT')
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
     state.commit('RESET_UDES_LIST')
 
     return await axios.get("api/udes")
@@ -26,12 +26,12 @@ const fetchUdes = async (state) => {
             }
         })
         .finally(() => {
-            state.commit('DECREMENT_LOAD_COUNT')
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const createUde = (state, form) => {
-    state.commit('INCREMENT_LOAD_COUNT')
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.post("api/udes", form)
         .then((result) => {
@@ -58,12 +58,12 @@ const createUde = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('DECREMENT_LOAD_COUNT')
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 
 const editUde = (state, form) => {
-    state.commit('INCREMENT_LOAD_COUNT')
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
 
     return axios.put(`api/udes/${form.id}`, form)
         .then((result) => {
@@ -90,7 +90,7 @@ const editUde = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('DECREMENT_LOAD_COUNT')
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
         })
 }
 

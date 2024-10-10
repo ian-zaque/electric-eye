@@ -76,9 +76,12 @@ export default {
     computed:{
         ...mapGetters('udes',{
             errors: "getErrorsUdes",
-            isLoading: "isLoading",
             udesList: "getUdesList",
         }),
+
+        ...mapGetters('loading', {
+            isLoading: "isLoading",
+        })
     },
 
     methods: {
