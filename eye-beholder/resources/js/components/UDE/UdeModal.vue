@@ -24,13 +24,16 @@
                 </b-row>
 
                 <b-row>
-                    <!-- @input="tipo_rap_idClick" :state="stateTipo_rap_id" -->
                     <b-col cols="6">
                         <b-form-group label="Classe da UDE">
-                            <b-form-select v-model="ude.class_id" :options="udeClassesList" value-field="id" text-field="class" @click="classIdClick" :state="stateClassId">
+                            <b-form-select v-model="ude.class_id" @click="classIdClick" :state="stateClassId">
                                 <template #first>
                                     <b-form-select-option :value="null" disabled>Selecione uma Classe de UDE</b-form-select-option>
                                 </template>
+
+                                <b-form-select-option v-for="(ude_class, idx) in udeClassesList" :key="idx" :value="ude_class.id">
+                                    {{ ude_class.class + ' - ' +  ude_class.fullname }}
+                                </b-form-select-option>
                             </b-form-select>
 
                             <small class="text-danger" :hidden="!errorsUdes.class_id">{{ formatErrorsArray(errorsUdes.class_id) }}</small>

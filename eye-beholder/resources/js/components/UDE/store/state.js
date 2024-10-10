@@ -9,12 +9,12 @@ const ude = {
     interest_zone: {},
 }
 const udesList = []
-const isLoading = false
+const loadCount = 0
 const errorsUdes = {}
 
 export default {
     ude,
     udesList,
-    isLoading,
+    loadCount,
     errorsUdes,
 }

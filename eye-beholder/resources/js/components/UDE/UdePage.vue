@@ -20,10 +20,9 @@
             <b-col>
                 <b-card footer-classes="pb-2">
                     <div>
-                        <b-table :items="udesList" :fields="udesFields" :busy="isLoading" :sortDesc="true" empty-text="Não há UDEs registradas." hover show-empty 
-                            responsive="sm" small>
+                        <b-table :items="udesList" :fields="udesFields" :busy="isLoading" :sortDesc="true" empty-text="Não há UDEs registradas." hover show-empty responsive="sm" small>
                             <template #table-busy>
-                                <div class="text-center my-2">
+                                <div class="text-center text-secondary my-2">
                                     <b-spinner class="align-middle"></b-spinner>
                                     <strong>Carregando...</strong>
                                 </div>
@@ -77,7 +76,7 @@ export default {
     computed:{
         ...mapGetters('udes',{
             errors: "getErrorsUdes",
-            isLoading: "getIsLoading",
+            isLoading: "isLoading",
             udesList: "getUdesList",
         }),
     },

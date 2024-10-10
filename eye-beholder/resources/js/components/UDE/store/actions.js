@@ -1,5 +1,5 @@
 const fetchUdes = async (state) => {
-    state.commit('SET_IS_LOADING', true)
+    state.commit('INCREMENT_LOAD_COUNT')
     state.commit('RESET_UDES_LIST')
 
     return await axios.get("api/udes")
@@ -26,12 +26,12 @@ const fetchUdes = async (state) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.commit('DECREMENT_LOAD_COUNT')
         })
 }
 
 const createUde = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.commit('INCREMENT_LOAD_COUNT')
 
     return axios.post("api/udes", form)
         .then((result) => {
@@ -58,12 +58,12 @@ const createUde = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.commit('DECREMENT_LOAD_COUNT')
         })
 }
 
 const editUde = (state, form) => {
-    state.commit('SET_IS_LOADING', true)
+    state.commit('INCREMENT_LOAD_COUNT')
 
     return axios.put(`api/udes/${form.id}`, form)
         .then((result) => {
@@ -90,7 +90,7 @@ const editUde = (state, form) => {
             }
         })
         .finally(() => {
-            state.commit('SET_IS_LOADING', false)
+            state.commit('DECREMENT_LOAD_COUNT')
         })
 }
 
