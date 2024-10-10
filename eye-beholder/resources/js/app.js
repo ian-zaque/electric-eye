@@ -8,6 +8,7 @@ require('./bootstrap');
 import App from './AppUser.vue'
 import VueRouter from 'vue-router'
 import store from './store'
+import { Multiselect } from 'vue-multiselect';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -54,6 +55,9 @@ const router = new VueRouter({
 
 //App
 Vue.component('app-user', require('./AppUser.vue').default);
+
+// Multiselect
+Vue.component("multiselect", Multiselect);
 
 // Sidebar
 Vue.component("side-bar", require("./components/Sidebar/Sidebar.vue").default);

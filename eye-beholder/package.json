@@ -26,6 +26,7 @@
     "dependencies": {
         "bootstrap-vue": "^2.23.1",
         "v-mask": "^2.3.0",
+        "vue-multiselect": "^2.1.6",
         "vue-router": "^3.6.5",
         "vue-sidebar-menu": "^4.8.1",
         "vuex": "^3.6.2"

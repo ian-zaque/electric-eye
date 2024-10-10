@@ -3,6 +3,7 @@ const sensor = {
     type_sensor: '',
     model: '',
     description: '',
+    emergencies: [],
 }
 
 const sensorsList = []

@@ -5,6 +5,7 @@ const RESET_CURRENT_SENSOR = (state) => {
         type_sensor: '',
         model: '',
         description: '',
+        emergencies: [],
     } 
 }
 
