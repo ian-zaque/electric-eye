@@ -21,4 +21,8 @@ class Sensor extends Model //implements Auditable
         return $this->belongsTo('App\TypeSensor', 'type_sensor_id');
     }
 
+    public function emergencies(){
+        return $this->hasManyThrough(Emergency::class, SensorEmergency::class, 'emergency_id', 'id');
+    }
+
 }

@@ -15,7 +15,7 @@ class SensorController extends Controller
      */
     public function index()
     {
-        return response()->json(Sensor::with(['type_sensor'])->get());
+        return response()->json(Sensor::with(['type_sensor', 'emergencies'])->get());
     }
 
     /**
@@ -42,12 +42,30 @@ class SensorController extends Controller
             'description' => 'required|min:3|max:1000',
         ]);
 
+        $validator->sometimes('emergencies.*.sensor_id','required|integer',function($request){ 
+            return sizeof($request->emergencies) > 0;
+        });
+
+        $validator->sometimes('emergencies.*.emergency_id','required|integer',function($request){ 
+            return sizeof($request->emergencies) > 0;
+        });
+
+        $emergencies = collect($request->emergencies)->map(function($item, $key){
+            // return eu sou uma princesa de humanas <3
+            return $item['id'];
+        })->toArray();
+
+        dd($emergencies);
+
         if($validator->fails()){ return response()->json($validator->errors(), 403); }
         else{
             $sensorData = $request->all();
             $sensor = new Sensor();
             $sensor->fill($sensorData)->save();
             $sensor = Sensor::with(['type_sensor'])->find($sensor->id);
+
+            dd($request->emergencies);
+            
             return response()->json($sensor, 200);
         }
     }

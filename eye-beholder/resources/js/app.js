@@ -8,11 +8,12 @@ require('./bootstrap');
 import App from './AppUser.vue'
 import VueRouter from 'vue-router'
 import store from './store'
-import { Multiselect } from 'vue-multiselect';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
+import Multiselect from 'vue-multiselect';
 
 import VueSidebarMenu from 'vue-sidebar-menu'
 import Home from './components/Home/Home.vue'

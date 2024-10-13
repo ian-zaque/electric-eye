@@ -43,8 +43,8 @@
                 <b-row>
                     <b-col cols="12">
                         <b-form-group label="Emergências Associadas">
-                            <multiselect v-model="sensor.emergencies" label="name" track-by="id" placeholder="Escolha uma ou mais emergências" 
-                                :options="emergenciesList" :multiple="true" :taggable="true" :searchable="true">
+                            <multiselect v-model="sensor.emergencies" label="name" value="id" track-by="id" placeholder="Escolha uma ou mais emergências" 
+                                :options="emergenciesList" :multiple="true" :taggable="true" :searchable="true" selectLabel="Selecione uma opção" class="border rounded">
                             </multiselect>
                         </b-form-group>
                     </b-col>
@@ -55,11 +55,11 @@
                 <div class="text-center">
                     <b-row align-h="end">
                         <b-col cols="6">
-                            <b-button @click="submitSensor" variant="primary" size="sm" class="float-right">{{ okButtonTitle }}</b-button>
+                            <b-button @click="submitSensor" variant="primary" class="float-right">{{ okButtonTitle }}</b-button>
                         </b-col>
 
                         <b-col cols="6">
-                            <b-button @click="closeModal" variant="secondary" size="sm" class="float-right">Cancelar</b-button>
+                            <b-button @click="closeModal" variant="secondary" class="float-right">Cancelar</b-button>
                         </b-col>
                     </b-row>
                 </div>
