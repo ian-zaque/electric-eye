@@ -40,11 +40,11 @@
                 <div class="text-center">
                     <b-row align-h="end">
                         <b-col cols="6">
-                            <b-button @click="submitTypeSensor" variant="primary" size="sm" class="float-right">{{ okButtonTitle }}</b-button>
+                            <b-button @click="submitTypeSensor" variant="primary" class="float-right">{{ okButtonTitle }}</b-button>
                         </b-col>
 
                         <b-col cols="6">
-                            <b-button @click="closeModal" variant="secondary" size="sm" class="float-right">Cancelar</b-button>
+                            <b-button @click="closeModal" variant="secondary" class="float-right">Cancelar</b-button>
                         </b-col>
                     </b-row>
                 </div>
