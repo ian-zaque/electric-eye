@@ -16,4 +16,13 @@ class SensorEmergency extends Model //implements Auditable
     protected $fillable = [
         "sensor_id", "emergency_id",
     ];
+
+    public function sensor(){
+        return $this->belongsTo(Sensor::class);
+    }
+
+    public function emergency(){
+        return $this->belongsTo(Emergency::class);
+    }
+
 }

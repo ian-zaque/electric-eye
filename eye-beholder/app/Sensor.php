@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\SensorEmergency;
+use App\Emergency;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // use OwenIt\Auditing\Contracts\Auditable;
@@ -22,7 +24,8 @@ class Sensor extends Model //implements Auditable
     }
 
     public function emergencies(){
-        return $this->hasManyThrough(Emergency::class, SensorEmergency::class, 'emergency_id', 'id');
+        // return $this->belongsToMany(Emergency::class, 'sensors_emergencies')->using(SensorEmergency::class);
+        return $this->hasManyThrough(Emergency::class, SensorEmergency::class, 'sensor_id', 'id', 'id', 'emergency_id');
     }
 
 }

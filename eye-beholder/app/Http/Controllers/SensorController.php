@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Sensor;
+use App\SensorEmergency;
+use App\Emergency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,8 +25,7 @@ class SensorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         //
     }
 
@@ -42,30 +43,33 @@ class SensorController extends Controller
             'description' => 'required|min:3|max:1000',
         ]);
 
-        $validator->sometimes('emergencies.*.sensor_id','required|integer',function($request){ 
-            return sizeof($request->emergencies) > 0;
-        });
-
-        $validator->sometimes('emergencies.*.emergency_id','required|integer',function($request){ 
+        $validator->sometimes('emergencies.*','required|',function($request){ 
             return sizeof($request->emergencies) > 0;
         });
 
         $emergencies = collect($request->emergencies)->map(function($item, $key){
-            // return eu sou uma princesa de humanas <3
             return $item['id'];
-        })->toArray();
-
-        dd($emergencies);
+        });
 
         if($validator->fails()){ return response()->json($validator->errors(), 403); }
         else{
             $sensorData = $request->all();
             $sensor = new Sensor();
             $sensor->fill($sensorData)->save();
-            $sensor = Sensor::with(['type_sensor'])->find($sensor->id);
 
-            dd($request->emergencies);
-            
+            $emergencies->each(function($item, $key) use ($sensor) {
+                $data = [
+                    'sensor_id' => $sensor->id,
+                    'emergency_id' => $item,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
+
+                $sensor_emergency = new SensorEmergency();
+                $sensor_emergency->fill($data)->save();
+            });
+
+            $sensor = Sensor::with(['type_sensor', 'emergencies'])->find($sensor->id);
             return response()->json($sensor, 200);
         }
     }
@@ -76,8 +80,7 @@ class SensorController extends Controller
      * @param  \App\Sensor  $sensor
      * @return \Illuminate\Http\Response
      */
-    public function show(Sensor $sensor)
-    {
+    public function show(Sensor $sensor){
         //
     }
 
@@ -87,8 +90,7 @@ class SensorController extends Controller
      * @param  \App\Sensor  $sensor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sensor $sensor)
-    {
+    public function edit(Sensor $sensor){
         //
     }
 
@@ -107,12 +109,54 @@ class SensorController extends Controller
             'description' => 'required|min:3|max:1000',
         ]);
 
+        $request_emergencies = collect($request->emergencies)->map(function($item, $key){
+            return $item['id'];
+        });
+
+        $validator->sometimes('emergencies.*','required',function($request){ 
+            return sizeof($request->emergencies) > 0;
+        });
+
         if($validator->fails()){ return response()->json($validator->errors(), 403); }
         else{
             $sensorData = $request->all();
             $sensor->update($sensorData);
             $sensor->save();
-            $sensor = Sensor::with(['type_sensor'])->find($sensor->id);
+
+            $present_sensors_emergencies = collect($sensor->emergencies)->map(function($item, $key){
+                return $item['id'];
+            });
+
+            $save_emergencies = collect($request_emergencies)->diff($present_sensors_emergencies);              // NEW ONES
+            $remove_emergencies = collect($present_sensors_emergencies)->diff($request_emergencies);            // REMOVE THES
+            // $intersect_emergencies = collect($present_sensors_emergencies)->intersect($request_emergencies);    // KEEP THOSE -> DO NOTHING
+            // dd($request_emergencies, $save_emergencies, $remove_emergencies, $intersect_emergencies, $present_sensors_emergencies);
+
+            // NEW SENSOR EMERGENCIES
+            // MUST BE SAVED CUZ THEY ARE BEING ADDED TO THE EMERGENCIES RELATION
+            if(sizeof($save_emergencies) > 0){
+                $save_emergencies->each(function($item, $key) use ($sensor) {
+                    $data = [
+                        'sensor_id' => $sensor->id,
+                        'emergency_id' => $item,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+    
+                    $sensor_emergency = new SensorEmergency();
+                    $sensor_emergency->fill($data)->save();
+                });
+            }
+
+            // REMOVE SENSOR EMERGENCIES
+            // MUST BE REMOVED CUZ THEY WERE DELETED TO THE EMERGENCIES RELATION
+            if(sizeof($remove_emergencies) > 0){
+                $remove_emergencies->each(function($item, $key) use ($sensor) {
+                    $sensor_emergency = SensorEmergency::where('sensor_id', '=', $sensor->id)->where('emergency_id', '=', $item)->delete();
+                });
+            }
+
+            $sensor = Sensor::with(['type_sensor', 'emergencies'])->find($sensor->id);
             return response()->json($sensor, 200);
         }
     }
