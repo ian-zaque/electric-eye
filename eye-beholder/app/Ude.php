@@ -25,4 +25,8 @@ class Ude extends Model //implements Auditable
         return $this->belongsTo('App\InterestZone', 'interest_zone_id');
     }
 
+    public function sensors(){
+        return $this->hasManyThrough(Sensor::class, UdeSensor::class, 'ude_id', 'id', 'id', 'sensor_id');
+    }
+
 }

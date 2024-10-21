@@ -127,8 +127,8 @@ class SensorController extends Controller
                 return $item['id'];
             });
 
-            $save_emergencies = collect($request_emergencies)->diff($present_sensors_emergencies);              // NEW ONES
-            $remove_emergencies = collect($present_sensors_emergencies)->diff($request_emergencies);            // REMOVE THES
+            $save_emergencies = collect($request_emergencies)->diff($present_sensors_emergencies);                 // NEW ONES
+            $remove_emergencies = collect($present_sensors_emergencies)->diff($request_emergencies);               // REMOVE THESE
             // $intersect_emergencies = collect($present_sensors_emergencies)->intersect($request_emergencies);    // KEEP THOSE -> DO NOTHING
             // dd($request_emergencies, $save_emergencies, $remove_emergencies, $intersect_emergencies, $present_sensors_emergencies);
 

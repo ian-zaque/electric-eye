@@ -72,6 +72,16 @@
                         </b-form-group>
                     </b-col>
                 </b-row>
+
+                <b-row>
+                    <b-col cols="12">
+                        <b-form-group label="Sensores Associados">
+                            <multiselect v-model="ude.sensors" label="model" value="id" track-by="id" placeholder="Escolha um ou mais sensores" 
+                                :options="sensorsList" :multiple="true" :taggable="true" :searchable="true" selectLabel="Selecione uma opção" class="border rounded">
+                            </multiselect>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
             </b-container>
 
             <template #modal-footer>
@@ -101,6 +111,7 @@ const defaultInputState = {
     longitude: false,
     class_id: false,
     interest_zone_id: false,
+    sensors: false,
 };
 
 export default {
@@ -140,6 +151,9 @@ export default {
             udeClassesList: "getUdeClassesList",
         }),
 
+        ...mapGetters('sensors',{
+            sensorsList: "getSensorsList",
+        }),
 
         isModalVisible(){ return this.showModal },
 
@@ -176,6 +190,11 @@ export default {
             if (this.inputState.longitude || this.errorsUdes == {}) { return null; }
             return Object.keys(this.errorsUdes).length === 0 ? null: this.errorsUdes.longitude ? false : true;
         },
+
+        stateSensors() {
+            if (this.inputState.sensors || this.errorsUdes == {}) { return null; }
+            return Object.keys(this.errorsUdes).length === 0 ? null: this.errorsUdes.sensors ? false : true;
+        },
     },
 
     methods: {
@@ -192,6 +211,10 @@ export default {
 
         ...mapActions('udeClasses', [
             "fetchUdeClasses",
+        ]),
+
+        ...mapActions('sensors',[
+            "fetchSensors",
         ]),
 
         convertToUppercase(){ this.ude.mac_id = this.ude.mac_id.toUpperCase(); },
@@ -235,11 +258,13 @@ export default {
         macIdClick() { if (this.errorsUdes.mac_id) { this.inputState.mac_id = true; } },
         classIdClick() { if (this.errorsUdes.class_id) { this.inputState.class_id = true; } },
         interestZoneIdClick() { if (this.errorsUdes.interest_zone_id) { this.inputState.interest_zone_id = true; } },
+        sensorsClick() { if (this.errorsUdes.sensors) { this.inputState.sensors = true; } },
     },
 
     async mounted() {
         await this.fetchInterestZones()
         await this.fetchUdeClasses()
+        await this.fetchSensors()
     },
 
 }
