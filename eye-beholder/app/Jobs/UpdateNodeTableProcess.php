@@ -26,23 +26,54 @@ class UpdateNodeTableProcess implements ShouldQueue
     public function __construct()
     {
         $this->topic = 'update_node_table';
-        $udes = collect(Ude::with(['ude_class', 'interest_zone', 'interest_zone.region'])->get()->toArray());
-        $this->data = collect([]);
+        $udes = collect(Ude::with([
+            'ude_class', 
+            'sensors', 
+            'sensors.type_sensor', 
+            'sensors.emergencies', 
+            'sensors.emergencies.emergency_parameters', 
+            'interest_zone', 
+            'interest_zone.region'
+            ])
+            ->get()->toArray());
+
         $array_item = null;
+        $this->data = collect([]);
+        $sensors = collect([]);
+        $emergencies = collect([]);
 
-        $udes->each(function($item, $key){
+        $processEmergencyParameters = function ($emergency) {
+            return collect($emergency['emergency_parameters'])->mapWithKeys(function ($param) {
+                return [$param['name'] => $param['value']];
+            })->toArray();
+        };
+        
+        $processEmergencies = function ($sensor) use ($processEmergencyParameters) {
+            return collect($sensor['emergencies'])->mapWithKeys(function ($emergency) use ($processEmergencyParameters) {
+                $emergency_name = $emergency['name'];
+                $parameters = $processEmergencyParameters($emergency);
+                return [$emergency_name => $parameters];
+            })->toArray();
+        };
+        
+        $udes->each(function ($ude) use ($sensors, $emergencies, $processEmergencies) {
+            collect($ude['sensors'])->each(function ($sensor) use ($sensors, $emergencies, $processEmergencies) {
+                $emergencies->push($processEmergencies($sensor));
+                $sensors->push($sensor['type_sensor']['type']);
+            });
+        
             $array_item = [
-                'MAC' => $item['mac_id'],
-                'class' => $item['ude_class']['class'],
-                'id_node' => $item['id'],
-                'Latitude' => $item['latitude'],
-                'Longitude' => $item['longitude'],
-                'region' => $item['interest_zone']['region']['id'],
-                // add here ude's associate emergencies
+                'MAC' => $ude['mac_id'],
+                'class' => $ude['ude_class']['class'],
+                'id_node' => $ude['id'],
+                'Latitude' => $ude['latitude'],
+                'Longitude' => $ude['longitude'],
+                'region' => $ude['interest_zone']['region']['id'],
+                'emergency' => $emergencies->toArray(),
             ];
-
+        
             $this->data->push($array_item);
-        });
+        });        
 
         $this->data = json_encode([ "udes" => $this->data->toArray() ]);
     }

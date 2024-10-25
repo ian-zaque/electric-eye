@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UdeSensor extends Model //implements Auditable
 {
+    use SoftDeletes;
+    // use \OwenIt\Auditing\Auditable;
+
     protected $table = 'udes_sensors';
 
     protected $fillable = [

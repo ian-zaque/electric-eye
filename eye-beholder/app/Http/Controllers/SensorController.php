@@ -109,12 +109,12 @@ class SensorController extends Controller
             'description' => 'required|min:3|max:1000',
         ]);
 
-        $request_emergencies = collect($request->emergencies)->map(function($item, $key){
-            return $item['id'];
-        });
-
         $validator->sometimes('emergencies.*','required',function($request){ 
             return sizeof($request->emergencies) > 0;
+        });
+
+        $request_emergencies = collect($request->emergencies)->map(function($item, $key){
+            return $item['id'];
         });
 
         if($validator->fails()){ return response()->json($validator->errors(), 403); }

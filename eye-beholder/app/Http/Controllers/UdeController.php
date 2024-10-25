@@ -17,7 +17,7 @@ class UdeController extends Controller
      */
     public function index()
     {
-        return response()->json(Ude::with(['ude_class', 'interest_zone', 'interest_zone.region'])->get());
+        return response()->json(Ude::with(['ude_class', 'sensors', 'interest_zone', 'interest_zone.region'])->get());
     }
 
     /**
@@ -121,12 +121,54 @@ class UdeController extends Controller
             "longitude" => 'required|numeric',
         ]);
 
+        $validator->sometimes('sensors.*','required|',function($request){ 
+            return sizeof($request->sensors) > 0;
+        });
+
+        $request_sensors = collect($request->sensors)->map(function($item, $key){
+            return $item['id'];
+        });
+
         if($validator->fails()){ return response()->json($validator->errors(), 403); }
         else{
             $udeData = $request->all();
             $ude->update($udeData);
             $ude->save();
-            $ude = Ude::with(['ude_class', 'interest_zone', 'interest_zone.region'])->find($ude->id);
+
+            $present_udes_sensors = collect($ude->sensors)->map(function($item, $key){
+                return $item['id'];
+            });
+
+            $save_sensors = collect($request_sensors)->diff($present_udes_sensors);                 // NEW ONES
+            $remove_sensors = collect($present_udes_sensors)->diff($request_sensors);               // REMOVE THESE
+            // $intersect_emergencies = collect($present_udes_sensors)->intersect($request_sensors);    // KEEP THOSE -> DO NOTHING
+            // dd($request_sensors, $save_sensors, $remove_sensors, $intersect_emergencies, $present_udes_sensors);
+
+            // NEW SENSOR EMERGENCIES
+            // MUST BE SAVED CUZ THEY ARE BEING ADDED TO THE EMERGENCIES RELATION
+            if(sizeof($save_sensors) > 0){
+                $save_sensors->each(function($item, $key) use ($ude) {
+                    $data = [
+                        'ude_id' => $ude->id,
+                        'sensor_id' => $item,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+    
+                    $ude_sensor = new UdeSensor();
+                    $ude_sensor->fill($data)->save();
+                });
+            }
+
+            // REMOVE SENSOR EMERGENCIES
+            // MUST BE REMOVED CUZ THEY WERE DELETED TO THE EMERGENCIES RELATION
+            if(sizeof($remove_sensors) > 0){
+                $remove_sensors->each(function($item, $key) use ($ude) {
+                    $ude_sensor = UdeSensor::where('ude_id', '=', $ude->id)->where('sensor_id', '=', $item)->delete();
+                });
+            }
+
+            $ude = Ude::with(['ude_class', 'sensors', 'interest_zone', 'interest_zone.region'])->find($ude->id);
 
             $mqtt_publisher_service->subscribeUde($ude->mac_id);
 
