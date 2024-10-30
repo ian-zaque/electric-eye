@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 use PhpMqtt\Client\Facades\MQTT;
 use App\Ude;
 
@@ -17,6 +17,7 @@ class UpdateNodeTableProcess implements ShouldQueue
 
     private $topic;
     private $data;
+    private $udesEmergencies;
 
     /**
      * Create a new job instance.
@@ -41,6 +42,7 @@ class UpdateNodeTableProcess implements ShouldQueue
         $this->data = collect([]);
         $sensors = collect([]);
         $emergencies = collect([]);
+        $this->udesEmergencies = collect([]);
 
         $processEmergencyParameters = function ($emergency) {
             return collect($emergency['emergency_parameters'])->mapWithKeys(function ($param) {
@@ -69,11 +71,19 @@ class UpdateNodeTableProcess implements ShouldQueue
                 'Latitude' => $ude['latitude'],
                 'Longitude' => $ude['longitude'],
                 'region' => $ude['interest_zone']['region']['id'],
-                'emergency' => $emergencies->toArray(),
+            ];
+
+            $this->udesEmergencies = [
+                $ude['mac_id'] => $array_item,
             ];
         
             $this->data->push($array_item);
-        });        
+        });
+
+        // Armazene o parâmetro gerado em cache ou sessão
+        $cache = Cache::remember('udes_emergencies_UNTP', now()->addMinutes(5), function () {
+            return $this->udesEmergencies;
+        });
 
         $this->data = json_encode([ "udes" => $this->data->toArray() ]);
     }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use PhpMqtt\Client\Facades\MQTT;
 use App\Jobs\UpdateNodeTableProcess;
+use App\Jobs\ConfigProcess;
 
 class MqttPublisherService
 {   
@@ -13,7 +14,7 @@ class MqttPublisherService
 
         \App\Jobs\SubscribeUdeProcess::withChain([
             new UpdateNodeTableProcess,
-            // new ConfigProcess,
+            new ConfigProcess,
         ])
         ->dispatch($topic, $id_mac_json_data);
     }
