@@ -15,8 +15,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserRoleSeeder::class,
             UserRoleActionSeeder::class,
+            UserSeeder::class,
             UDEClassSeeder::class,
             MqttTopicSeeder::class,
+            RegionSeeder::class,
+            InterestZoneSeeder::class,
+            UdeSeeder::class,  //milene
         ]);
     }
 }
