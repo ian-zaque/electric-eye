@@ -19,7 +19,7 @@ class UdeSeeder extends Seeder
             $ude->interest_zone_id = 1;
             $ude->name = 'UDE CN-1';
             $ude->mac_id = '46-0A-CE-E4-E3-18';
-            $ude->latidude = '-12.22451';
+            $ude->latitude = '-12.22451';
             $ude->longitude = '-38.96423';
             $ude->save();
 
@@ -28,7 +28,7 @@ class UdeSeeder extends Seeder
             $ude->interest_zone_id = 2;
             $ude->name = 'UDE SI-1';
             $ude->mac_id = '3A-6B-A4-C2-19-3B';
-            $ude->latidude = '-12.25577';
+            $ude->latitude = '-12.25577';
             $ude->longitude = '-38.92097';
             $ude->save();
 
@@ -37,7 +37,7 @@ class UdeSeeder extends Seeder
             $ude->interest_zone_id = 3;
             $ude->name = 'UDE TO-1';
             $ude->mac_id = 'A8-DB-21-6F-7F-7F';
-            $ude->latidude = '-12.28720';
+            $ude->latitude = '-12.28720';
             $ude->longitude = '-38.95764';
             $ude->save();
 
@@ -46,7 +46,7 @@ class UdeSeeder extends Seeder
             $ude->interest_zone_id = 4;
             $ude->name = 'UDE SO-1';
             $ude->mac_id = '92-C7-7C-E8-4A-E4';
-            $ude->latidude = '-12.24351';
+            $ude->latitude = '-12.24351';
             $ude->longitude = '-38.97292';
             $ude->save();
         }

@@ -18,8 +18,34 @@ class UserSeeder extends Seeder
             $user = new User();
             $user->name = 'Ian Zaque Santos';
             $user->email = 'ianzaque.uefs@gmail.com';
-            $user->password = Hash::make("");
-            // 'user_role_id' => 1
+            $user->password = Hash::make("12344321");
+            $user->user_role_id = 2;
+            $user->email_verified_at = now();
+            $user->save();
+
+            $user = new User();
+            $user->name = 'Thiago Jesus';
+            $user->email = 'tcjesus@uefs.br';
+            $user->password = Hash::make("12344321");
+            $user->user_role_id = 2;
+            $user->email_verified_at = now();
+            $user->save();
+
+            $user = new User();
+            $user->name = 'Wild Freitas';
+            $user->email = 'wfssantos@uefs.br';
+            $user->password = Hash::make("12344321");
+            $user->user_role_id = 2;
+            $user->email_verified_at = now();
+            $user->save();
+
+            $user = new User();
+            $user->name = 'Banca Ecomp';
+            $user->email = 'ecomp@uefs.br';
+            $user->password = Hash::make("12344321");
+            $user->user_role_id = 1;
+            $user->email_verified_at = now();
+            $user->save();
         }
 
     }

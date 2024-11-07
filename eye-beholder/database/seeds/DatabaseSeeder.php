@@ -20,7 +20,13 @@ class DatabaseSeeder extends Seeder
             MqttTopicSeeder::class,
             RegionSeeder::class,
             InterestZoneSeeder::class,
-            UdeSeeder::class,  //milene
+            UdeSeeder::class,
+            EmergencySeeder::class,
+            EmergencyParameterSeeder::class,
+            TypeSensorSeeder::class,
+            SensorSeeder::class,
+            UdeSensorSeeder::class,
+            SensorEmergencySeeder::class,
         ]);
     }
 }

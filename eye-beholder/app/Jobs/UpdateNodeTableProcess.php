@@ -75,6 +75,7 @@ class UpdateNodeTableProcess implements ShouldQueue
 
             $this->udesEmergencies = [
                 $ude['mac_id'] => $array_item,
+                'emergencies' => $emergencies,
             ];
         
             $this->data->push($array_item);
