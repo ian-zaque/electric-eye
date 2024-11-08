@@ -27,7 +27,15 @@ class UpdateNodeTableProcess implements ShouldQueue
     public function __construct()
     {
         $this->topic = 'update_node_table';
-        $udes = collect(Ude::with([
+        $this->data = [];
+        $this->udesEmergencies = [];
+
+        $array_item = null;
+        $sensors = [];
+        $emergencies = [];
+        $current_ude = Cache::pull('current_ude');
+
+        $udes = Ude::with([
             'ude_class', 
             'sensors', 
             'sensors.type_sensor', 
@@ -35,58 +43,54 @@ class UpdateNodeTableProcess implements ShouldQueue
             'sensors.emergencies.emergency_parameters', 
             'interest_zone', 
             'interest_zone.region'
-            ])
-            ->get()->toArray());
+        ])->get();
 
-        $array_item = null;
-        $this->data = collect([]);
-        $sensors = collect([]);
-        $emergencies = collect([]);
-        $this->udesEmergencies = collect([]);
-
+        // Função para processar parâmetros de emergência
         $processEmergencyParameters = function ($emergency) {
-            return collect($emergency['emergency_parameters'])->mapWithKeys(function ($param) {
-                return [$param['name'] => $param['value']];
-            })->toArray();
+            $parameters = [];
+            foreach ($emergency['emergency_parameters'] as $param) {
+                $parameters[$param['name']] = $param['value'];
+            }
+            return $parameters;
         };
-        
+
+        // Função para processar emergências de um sensor
         $processEmergencies = function ($sensor) use ($processEmergencyParameters) {
-            return collect($sensor['emergencies'])->mapWithKeys(function ($emergency) use ($processEmergencyParameters) {
-                $emergency_name = $emergency['name'];
-                $parameters = $processEmergencyParameters($emergency);
-                return [$emergency_name => $parameters];
-            })->toArray();
+            $sensorEmergencies = [];
+            foreach ($sensor['emergencies'] as $emergency) {
+                $sensorEmergencies[$emergency['name']] = $processEmergencyParameters($emergency);
+            }
+            return $sensorEmergencies;
         };
-        
-        $udes->each(function ($ude) use ($sensors, $emergencies, $processEmergencies) {
-            collect($ude['sensors'])->each(function ($sensor) use ($sensors, $emergencies, $processEmergencies) {
-                $emergencies->push($processEmergencies($sensor));
-                $sensors->push($sensor['type_sensor']['type']);
-            });
-        
+
+        // Iteração principal
+        foreach ($udes as $ude) {
             $array_item = [
-                'MAC' => $ude['mac_id'],
-                'class' => $ude['ude_class']['class'],
-                'id_node' => $ude['id'],
-                'Latitude' => $ude['latitude'],
-                'Longitude' => $ude['longitude'],
-                'region' => $ude['interest_zone']['region']['id'],
+                'MAC' => $ude->mac_id,
+                'class' => $ude->ude_class->class,
+                'name' => $ude->name,
+                'id_node' => $ude->id,
+                'Latitude' => $ude->latitude,
+                'Longitude' => $ude->longitude,
+                'region' => $ude->interest_zone->region->id,
             ];
 
-            $this->udesEmergencies = [
-                $ude['mac_id'] => $array_item,
-                'emergencies' => $emergencies,
-            ];
-        
-            $this->data->push($array_item);
-        });
+            foreach ($ude->sensors as $sensor) {
+                if ($ude->mac_id == $current_ude) {
+                    $this->udesEmergencies = [
+                        $ude->mac_id => $array_item,
+                        'emergencies' => $emergencies[] = $processEmergencies($sensor),
+                    ];
+                }
+            }
+
+            $this->data[] = $array_item;
+        }
 
         // Armazene o parâmetro gerado em cache ou sessão
-        $cache = Cache::remember('udes_emergencies_UNTP', now()->addMinutes(5), function () {
-            return $this->udesEmergencies;
-        });
+        Cache::put('udes_emergencies_UNTP', $this->udesEmergencies, now()->addMinutes(1));
+        $this->data = json_encode(["udes" => $this->data]);
 
-        $this->data = json_encode([ "udes" => $this->data->toArray() ]);
     }
 
     /**

@@ -25,7 +25,7 @@ class ConfigProcess implements ShouldQueue
     public function __construct()
     {
         $this->topic = 'config';
-        $this->data =  json_encode(Cache::get('udes_emergencies_UNTP'));
+        $this->data =  json_encode(Cache::pull('udes_emergencies_UNTP'));
     }
 
     /**
