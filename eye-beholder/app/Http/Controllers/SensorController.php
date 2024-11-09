@@ -169,6 +169,8 @@ class SensorController extends Controller
      */
     public function destroy(Sensor $sensor)
     {
-        //
+        SensorEmergency::where('sensor_id','=',$sensor->id)->delete();
+        $sensor->delete();
+        return response()->json($sensor, 200);
     }
 }

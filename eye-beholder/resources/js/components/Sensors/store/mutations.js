@@ -19,6 +19,13 @@ const UPDATE_SENSORS_LIST = (state, payload) => {
 }
 const RESET_SENSORS_LIST = (state) => { state.sensorsList = [] }
 
+const DELETE_SENSOR_FROM_LIST = (state, sensor) => {
+    const index = state.sensorsList.findIndex(s => s.id === sensor.id);
+    if (index !== -1) {
+        state.sensorsList.splice(index, 1);
+    }
+}
+
 const SET_ERRORS_SENSORS = (state, payload) => { state.errorsSensors = payload }
 const RESET_ERRORS_SENSORS = (state) => { state.errorsSensors = {} }
 
@@ -33,4 +40,6 @@ export default {
 
     SET_ERRORS_SENSORS,
     RESET_ERRORS_SENSORS,
+
+    DELETE_SENSOR_FROM_LIST,
 }

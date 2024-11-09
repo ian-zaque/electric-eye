@@ -35,7 +35,7 @@
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </b-button>
 
-                                    <b-button @click="deleteSensor(data)" size="sm" variant="outline-danger">
+                                    <b-button @click="confirmDeleteSensor(data.item)" size="sm" variant="outline-danger">
                                         <i class="fa-solid fa-trash"></i>
                                     </b-button>
                                 </b-row>
@@ -87,6 +87,7 @@ export default {
     methods: {
         ...mapActions('sensors',[
             "fetchSensors",
+            "deleteSensor",
             "sensorStoreCommit",
         ]),
 
@@ -97,9 +98,31 @@ export default {
             this.openModalSensors()
         },
 
-        deleteSensor(sensor){
-            console.log("TYPE SENSOR >>", sensor)
+        confirmDeleteSensor(sensor){
+            this.$bvModal
+                    .msgBoxConfirm(`Deseja mesmo deletar o  sensor ${sensor.model} - ${sensor.id}'?`, {
+                    title: "Por favor confirme",
+                    size: "sm",
+                    buttonSize: "sm",
+                    okVariant: "danger",
+                    okTitle: "Sim",
+                    cancelTitle: "Não",
+                    footerClass: "p-2",
+                    hideHeaderClose: false,
+                    centered: false,
+                    top: true,
+                })
+                .then((confirmacao) => {
+                    if (confirmacao) {
+                        this.deleteSensor(sensor);
+                    }
+                })
+                .catch((err) => {
+                // An error occurred
+                });
         },
+
+        
 
         openModalSensors(){
             this.sensorStoreCommit({ mutation: "RESET_ERRORS_SENSORS" })

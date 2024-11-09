@@ -94,6 +94,37 @@ const editSensor = (state, form) => {
         })
 }
 
+const deleteSensor = (state, sensor) => {
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
+
+    return axios.delete(`api/sensors/${sensor.id}`, sensor)
+        .then(() => {
+            state.commit("RESET_ERRORS_SENSORS")
+            state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Sucesso ao deletar Sensor!`, type: "success" }}, {root:true})
+        })
+        .catch((error) => {
+            if (error.response) {
+                //ERRO NA RESPOSTA
+                state.commit("SET_ERRORS_SENSORS", error.response.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao deletar Sensor! Requisição recusada. Erro: ${error.response.status}!`, type: "danger" }}, {root:true})
+            }
+            else if (error.request) {
+                //ERRO NA REQUISIÇÃO
+                state.commit("SET_ERRORS_SENSORS", error.request.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao deletar Sensor! Servidor não respondendo. Erro: ${error.request.status}`, type: "danger" }}, {root:true})
+            }
+            else {
+                //ERRO DESCONHECIDO
+                state.commit("SET_ERRORS_SENSORS", error);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro desconhecido ao deletar Sensor!`, type: "danger" }}, {root:true})
+            }
+        })
+        .finally(() => {
+            state.commit('DELETE_SENSOR_FROM_LIST', sensor)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
+        })
+}
+
 const sensorStoreCommit  = (state, payload) => {
     state.commit(payload.mutation, payload.value)
 }
@@ -102,5 +133,6 @@ export default {
     fetchSensors,
     createSensor,
     editSensor,
+    deleteSensor,
     sensorStoreCommit ,
 }
