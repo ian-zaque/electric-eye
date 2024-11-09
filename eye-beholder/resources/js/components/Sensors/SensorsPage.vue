@@ -100,7 +100,7 @@ export default {
 
         confirmDeleteSensor(sensor){
             this.$bvModal
-                    .msgBoxConfirm(`Deseja mesmo deletar o  sensor ${sensor.model} - ${sensor.id}'?`, {
+                    .msgBoxConfirm(`Deseja mesmo deletar o sensor ${sensor.model} - ${sensor.id}'?`, {
                     title: "Por favor confirme",
                     size: "sm",
                     buttonSize: "sm",
@@ -121,8 +121,6 @@ export default {
                 // An error occurred
                 });
         },
-
-        
 
         openModalSensors(){
             this.sensorStoreCommit({ mutation: "RESET_ERRORS_SENSORS" })
