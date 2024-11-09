@@ -50,11 +50,11 @@
 
                             <template #cell(actions)="data">
                                 <b-row align-h="around">
-                                    <b-button :disabled="isDownloadingCsv" @click="editEmergency(data)" size="sm" variant="outline-secondary">
+                                    <b-button :disabled="isDownloadingCsv || isLoading" @click="editEmergency(data)" size="sm" variant="outline-secondary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </b-button>
 
-                                    <b-button disabled @click="deleteEmergency(data)" size="sm" variant="outline-danger">
+                                    <b-button :disabled="isDownloadingCsv || isLoading" @click="confirmDeleteEmergency(data.item)" size="sm" variant="outline-danger">
                                         <i class="fa-solid fa-trash"></i>
                                     </b-button>
                                 </b-row>
@@ -110,6 +110,7 @@ export default {
     methods: {
         ...mapActions('emergencies',[
             "fetchEmergencies",
+            "deleteEmergency",
             "emergenciesStoreCommit",
         ]),
 
@@ -123,8 +124,28 @@ export default {
             this.openModalEmergencies()
         },
 
-        deleteEmergency(emergency){
-            console.log("TYPE emergency >>", emergency)
+        confirmDeleteEmergency(emergency){
+            this.$bvModal
+                .msgBoxConfirm(`Deseja mesmo deletar a Emergência ${emergency.name} - ${emergency.id}'?`, {
+                title: "Por favor confirme",
+                size: "sm",
+                buttonSize: "sm",
+                okVariant: "danger",
+                okTitle: "Sim",
+                cancelTitle: "Não",
+                footerClass: "p-2",
+                hideHeaderClose: false,
+                centered: false,
+                top: true,
+            })
+            .then((confirmacao) => {
+                if (confirmacao) {
+                    this.deleteEmergency(emergency);
+                }
+            })
+            .catch((err) => {
+            // An error occurred
+            });
         },
 
         openModalEmergencies(){ 

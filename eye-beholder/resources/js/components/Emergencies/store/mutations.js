@@ -19,6 +19,13 @@ const UPDATE_EMERGENCIES_LIST = (state, payload) => {
 }
 const RESET_EMERGENCIES_LIST = (state) => { state.emergenciesList = [] }
 
+const DELETE_EMERGENCY_FROM_LIST = (state, emergency) => {
+    const index = state.emergenciesList.findIndex(e => e.id === emergency.id);
+    if (index !== -1) {
+        state.emergenciesList.splice(index, 1);
+    }
+}
+
 const SET_ERRORS_EMERGENCIES = (state, payload) => { state.errorsEmergencies = payload }
 const RESET_ERRORS_EMERGENCIES = (state) => { 
     state.errorsEmergencies = {}
@@ -32,6 +39,8 @@ export default {
     ADD_EMERGENCIES_LIST,
     UPDATE_EMERGENCIES_LIST,
     RESET_EMERGENCIES_LIST,
+
+    DELETE_EMERGENCY_FROM_LIST,
 
     SET_ERRORS_EMERGENCIES,
     RESET_ERRORS_EMERGENCIES,

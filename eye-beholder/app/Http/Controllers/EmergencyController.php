@@ -135,6 +135,8 @@ class EmergencyController extends Controller
      */
     public function destroy(Emergency $emergency)
     {
-        //
+        EmergencyParameter::where('emergency_id','=',$emergency->id)->delete();
+        $emergency->delete();
+        return response()->json($emergency, 200);
     }
 }
