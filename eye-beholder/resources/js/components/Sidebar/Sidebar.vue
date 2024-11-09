@@ -27,7 +27,7 @@ export default {
             sidebarItems: [
                 { header: true, title: "Eye of the Beholder", hiddenOnCollapse: true, },
                 { href: "/", title: "Início", icon: "fa-solid fa-house", },
-                { href: '/regions', title: "Regiões", icon: 'fa-solid fa-map-location-dot' },
+                { href: '/regions', title: "Regiões", icon: 'fa-solid fa-globe' },
                 { href: '/zones', title: "Zonas de Interesse", icon: 'fa-solid fa-magnifying-glass-location' },  
                 { href: '/udes', title: "UDEs", icon: 'fa-solid fa-tachograph-digital',
                     child: [
@@ -48,6 +48,7 @@ export default {
                     ]
                 },
                 { href: '/mqtt', title: "MQTT", icon: 'fa-solid fa-tower-broadcast' },
+                { href: '/eventos', title: "Eventos", icon: 'fa-solid fa-map-location-dot' },
                 // { href: '/configuration', title: "Configurações", icon: 'fa-solid fa-gears' },
             ],
         };

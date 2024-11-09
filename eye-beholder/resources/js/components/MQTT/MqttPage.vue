@@ -19,7 +19,7 @@
         <div v-if="!isLoading && splittedMqttTopicsList.length > 0">
             <b-row v-for="(half, index) in splittedMqttTopicsList" :key="index" cols="12">
                 <b-col v-for="(topic, idx) in half" :key="idx" cols="3">
-                    <b-card :title="topic.topic" border-variant="secondary" style="margin-bottom: 15px; margin-top: 10px; border-radius: 5%;">
+                    <b-card :title="topic.topic" class="rounded" border-variant="secondary" style="margin-bottom: 15px; margin-top: 10px;">
                         <b-card-text class="condensed">
                             {{ topic.description }}
                         </b-card-text>
