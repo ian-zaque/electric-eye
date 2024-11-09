@@ -94,6 +94,37 @@ const editTypeSensors = (state, form) => {
         })
 }
 
+const deleteTypeSensor = (state, type_sensor) => {
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
+
+    return axios.delete(`api/type-sensors/${type_sensor.id}`, type_sensor)
+        .then(() => {
+            state.commit("RESET_ERRORS_TYPE_SENSORS")
+            state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Sucesso ao deletar Tipo de Sensor!`, type: "success" }}, {root:true})
+        })
+        .catch((error) => {
+            if (error.response) {
+                //ERRO NA RESPOSTA
+                state.commit("SET_ERRORS_TYPE_SENSORS", error.response.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao deletar Tipo de Sensor! Requisição recusada. Erro: ${error.response.status}!`, type: "danger" }}, {root:true})
+            }
+            else if (error.request) {
+                //ERRO NA REQUISIÇÃO
+                state.commit("SET_ERRORS_TYPE_SENSORS", error.request.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao deletar Tipo de Sensor! Servidor não respondendo. Erro: ${error.request.status}`, type: "danger" }}, {root:true})
+            }
+            else {
+                //ERRO DESCONHECIDO
+                state.commit("SET_ERRORS_TYPE_SENSORS", error);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro desconhecido ao deletar Tipo de Sensor!`, type: "danger" }}, {root:true})
+            }
+        })
+        .finally(() => {
+            state.commit('DELETE_TYPE_SENSOR_FROM_LIST', type_sensor)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
+        })
+}
+
 const typeSensorStoreCommit  = (state, payload) => {
     state.commit(payload.mutation, payload.value)
 }
@@ -102,5 +133,6 @@ export default {
     fetchTypeSensors,
     createTypeSensors,
     editTypeSensors,
+    deleteTypeSensor,
     typeSensorStoreCommit ,
 }

@@ -15,6 +15,13 @@ const RESET_TYPE_SENSORS_LIST = (state) => {
     state.typeSensorsList = []
 }
 
+const DELETE_TYPE_SENSOR_FROM_LIST = (state, type_sensor) => {
+    const index = state.typeSensorsList.findIndex(t => t.id === type_sensor.id);
+    if (index !== -1) {
+        state.typeSensorsList.splice(index, 1);
+    }
+}
+
 const SET_ERRORS_TYPE_SENSORS = (state, payload) => { state.errorsTypeSensors = payload }
 const RESET_ERRORS_TYPE_SENSORS = (state) => {
     state.errorsTypeSensors = {}
@@ -28,6 +35,8 @@ export default {
     ADD_TYPE_SENSORS_LIST,
     UPDATE_TYPE_SENSORS_LIST,
     RESET_TYPE_SENSORS_LIST,
+
+    DELETE_TYPE_SENSOR_FROM_LIST,
 
     SET_ERRORS_TYPE_SENSORS,
     RESET_ERRORS_TYPE_SENSORS,

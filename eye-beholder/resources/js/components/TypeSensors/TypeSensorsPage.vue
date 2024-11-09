@@ -6,11 +6,11 @@
             </b-col>
             
             <b-col cols="2">
-                <b-button :disabled="isDownloadingCsv" @click="openModalTypes" variant="primary" squared>
+                <b-button :disabled="isDownloadingCsv" @click="openModalTypes" variant="primary">
                     <i class="fa-solid fa-plus"></i>
                 </b-button>
 
-                <b-button :disabled="isDownloadingCsv || typeSensorsList.length == 0" @click="downloadCsv" variant="outline-success" outlined squared>
+                <b-button :disabled="isDownloadingCsv || typeSensorsList.length == 0" @click="downloadCsv" variant="outline-success" outlined>
                     <i class="fa-solid fa-download"></i>
                 </b-button>
             </b-col>
@@ -35,7 +35,7 @@
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </b-button>
                                     
-                                    <b-button @click="deleteTypeSensor(data)" size="sm" variant="outline-danger">
+                                    <b-button @click="confirmDeleteSensor(data.item)" size="sm" variant="outline-danger">
                                         <i class="fa-solid fa-trash"></i>
                                     </b-button>
                                 </b-row>
@@ -89,6 +89,7 @@ export default {
     methods: {
         ...mapActions('typeSensors',[
             "fetchTypeSensors",
+            "deleteTypeSensor",
             "typeSensorStoreCommit",
         ]),
 
@@ -99,8 +100,28 @@ export default {
             this.openModalTypes()
         },
 
-        deleteTypeSensor(typeSensor){
-            console.log("TYPE SENSOR >>", typeSensor)
+        confirmDeleteSensor(type_sensor){
+            this.$bvModal
+                .msgBoxConfirm(`Deseja mesmo deletar o Tipo de Sensor ${type_sensor.type} - ${type_sensor.id}'?`, {
+                title: "Por favor confirme",
+                size: "sm",
+                buttonSize: "sm",
+                okVariant: "danger",
+                okTitle: "Sim",
+                cancelTitle: "Não",
+                footerClass: "p-2",
+                hideHeaderClose: false,
+                centered: false,
+                top: true,
+            })
+            .then((confirmacao) => {
+                if (confirmacao) {
+                    this.deleteTypeSensor(type_sensor);
+                }
+            })
+            .catch((err) => {
+            // An error occurred
+            });
         },
 
         openModalTypes(){ 

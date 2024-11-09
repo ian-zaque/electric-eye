@@ -171,6 +171,6 @@ class SensorController extends Controller
     {
         SensorEmergency::where('sensor_id','=',$sensor->id)->delete();
         $sensor->delete();
-        return response()->json($sensor, 200);
+        return response()->json(['message' => 'Sensor deletado com sucesso.'], 200);
     }
 }

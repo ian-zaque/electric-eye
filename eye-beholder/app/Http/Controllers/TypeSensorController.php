@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\TypeSensor;
+use App\Sensor;
+use App\SensorEmergency;
+use App\UdeSensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -107,6 +110,19 @@ class TypeSensorController extends Controller
      */
     public function destroy(TypeSensor $typeSensor)
     {
-        //
+        // Obtém os IDs dos sensores do tipo especificado
+        $ids_sensors = Sensor::where('type_sensor_id', $typeSensor->id)->pluck('id');
+
+        // Deleta os registros relacionados em lote para evitar múltiplas queries
+        UdeSensor::whereIn('sensor_id', $ids_sensors)->delete();                        // ligação entre sensor e ude
+        SensorEmergency::whereIn('sensor_id', $ids_sensors)->delete();                  // ligação entre sensor e emergências
+        Sensor::whereIn('id', $ids_sensors)->delete();
+
+        // Deleta o tipo de sensor
+        $typeSensor->delete();
+
+        // Retorna resposta JSON de sucesso
+        return response()->json(['message' => 'Tipo de sensor e sensores associados deletados com sucesso.'], 200);
+
     }
 }
