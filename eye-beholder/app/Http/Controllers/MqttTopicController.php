@@ -107,6 +107,7 @@ class MqttTopicController extends Controller
      */
     public function destroy(MqttTopic $mqttTopic)
     {
-        //
+        $mqttTopic->delete();
+        return response()->json(['message' => 'Tópico MQTT deletado com sucesso.'], 200);
     }
 }

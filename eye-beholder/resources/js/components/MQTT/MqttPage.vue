@@ -30,7 +30,7 @@
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </b-button>
 
-                                <b-button :disabled="isDownloadingCsv" @click="deleteMqttTopic(topic)" size="sm" variant="outline-danger">
+                                <b-button :disabled="isDownloadingCsv" @click="confirmDeleteMqttTopic(topic)" size="sm" variant="outline-danger">
                                     <i class="fa-solid fa-trash"></i>
                                 </b-button>
                             </b-col>
@@ -105,6 +105,7 @@ export default {
         ...mapActions('mqtt',[
             "fetchMqttTopics",
             "mqttTopicStoreCommit",
+            "deleteMqttTopic",
         ]),
 
         editMqttTopic(topic){
@@ -114,8 +115,28 @@ export default {
             this.openModalMqttTopics()
         },
 
-        deleteMqttTopic(mqttTopic){
-            console.log("TYPE MqttTopic >>", mqttTopic)
+        confirmDeleteMqttTopic(mqtt_topic){
+            this.$bvModal
+                .msgBoxConfirm(`Deseja mesmo deletar o Tópico MQTT ${mqtt_topic.topic} - ${mqtt_topic.id}'?`, {
+                title: "Por favor confirme",
+                size: "sm",
+                buttonSize: "sm",
+                okVariant: "danger",
+                okTitle: "Sim",
+                cancelTitle: "Não",
+                footerClass: "p-2",
+                hideHeaderClose: false,
+                centered: false,
+                top: true,
+            })
+            .then((confirmacao) => {
+                if (confirmacao) {
+                    this.deleteMqttTopic(mqtt_topic);
+                }
+            })
+            .catch((err) => {
+            // An error occurred
+            });
         },
 
         openModalMqttTopics(){ 

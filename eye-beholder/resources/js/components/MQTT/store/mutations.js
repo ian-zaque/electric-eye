@@ -17,6 +17,13 @@ const UPDATE_MQTT_TOPICS_LIST = (state, payload) => {
 }
 const RESET_MQTT_TOPICS_LIST = (state) => { state.topicsList = [] }
 
+const DELETE_MQTT_TOPICS_FROM_LIST = (state, mqtt_topic) => {
+    const index = state.topicsList.findIndex(t => t.id === mqtt_topic.id);
+    if (index !== -1) {
+        state.topicsList.splice(index, 1);
+    }
+}
+
 const SET_ERRORS_MQTT_TOPICS = (state, payload) => { state.errorsTopics = payload }
 const RESET_ERRORS_MQTT_TOPICS = (state) => { 
     state.errorsTopics = {}
@@ -33,4 +40,6 @@ export default {
 
     SET_ERRORS_MQTT_TOPICS,
     RESET_ERRORS_MQTT_TOPICS,
+
+    DELETE_MQTT_TOPICS_FROM_LIST,
 }
