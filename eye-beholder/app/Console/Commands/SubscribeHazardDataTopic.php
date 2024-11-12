@@ -12,7 +12,7 @@ class SubscribeHazardDataTopic extends Command
      *
      * @var string
      */
-    protected $signature = 'mqtt-topic-hazardData:subscribe';
+    protected $signature = 'hazardData:fetch';
 
     /**
      * The console command description.
@@ -45,8 +45,11 @@ class SubscribeHazardDataTopic extends Command
 
         // Definir o callback que será chamado ao receber uma mensagem no tópico
         $mqtt->subscribe($topic, function (string $topic, string $message) {
-            // Processar a mensagem recebida
             // echo "Mensagem recebida no tópico '{$topic}': {$message}\n";
+
+            $received_data = json_decode($message, true);
+            var_dump($received_data);
+
         }, 0);
 
         // Iniciar o loop de escuta
