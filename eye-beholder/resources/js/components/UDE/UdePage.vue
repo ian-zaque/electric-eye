@@ -34,7 +34,7 @@
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </b-button>
 
-                                    <b-button disabled @click="deleteUde(data)" size="sm" variant="outline-danger">
+                                    <b-button :disabled="isDownloadingCsv" @click="confirmDeleteUde(data.item)" size="sm" variant="outline-danger">
                                         <i class="fa-solid fa-trash"></i>
                                     </b-button>
                                 </b-row>
@@ -88,6 +88,7 @@ export default {
         ...mapActions('udes',[
             "fetchUdes",
             "udeStoreCommit",
+            "deleteUde",
         ]),
 
         editUde(data){
@@ -97,8 +98,28 @@ export default {
             this.openModalUdes()
         },
 
-        deleteUde(ude){
-            console.log("TYPE ude >>", ude)
+        confirmDeleteUde(ude){
+            this.$bvModal
+                .msgBoxConfirm(`Deseja mesmo deletar a UDE ${ude.name} - ${ude.id}'?`, {
+                title: "Por favor confirme",
+                size: "sm",
+                buttonSize: "sm",
+                okVariant: "danger",
+                okTitle: "Sim",
+                cancelTitle: "Não",
+                footerClass: "p-2",
+                hideHeaderClose: false,
+                centered: false,
+                top: true,
+            })
+            .then((confirmacao) => {
+                if (confirmacao) {
+                    this.deleteUde(ude);
+                }
+            })
+            .catch((err) => {
+            // An error occurred
+            });
         },
 
         openModalUdes(){ this.udeStoreCommit({ mutation: "RESET_ERRORS_UDES" }); this.openModal = true; },

@@ -94,6 +94,37 @@ const editUde = (state, form) => {
         })
 }
 
+const deleteUde = (state, ude) => {
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
+
+    return axios.delete(`api/udes/${ude.id}`, ude)
+        .then(() => {
+            state.commit("RESET_ERRORS_UDES")
+            state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Sucesso ao deletar UDE!`, type: "success" }}, {root:true})
+        })
+        .catch((error) => {
+            if (error.response) {
+                //ERRO NA RESPOSTA
+                state.commit("SET_ERRORS_UDES", error.response.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao deletar UDE! Requisição recusada. Erro: ${error.response.status}!`, type: "danger" }}, {root:true})
+            }
+            else if (error.request) {
+                //ERRO NA REQUISIÇÃO
+                state.commit("SET_ERRORS_UDES", error.request.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao deletar UDE! Servidor não respondendo. Erro: ${error.request.status}`, type: "danger" }}, {root:true})
+            }
+            else {
+                //ERRO DESCONHECIDO
+                state.commit("SET_ERRORS_UDES", error);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro desconhecido ao deletar UDE!`, type: "danger" }}, {root:true})
+            }
+        })
+        .finally(() => {
+            state.commit('DELETE_UDES_FROM_LIST', ude)
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
+        })
+}
+
 const udeStoreCommit = (state, payload) => {
     state.commit(payload.mutation, payload.value)
 }
@@ -102,5 +133,6 @@ export default {
     fetchUdes,
     createUde,
     editUde,
+    deleteUde,
     udeStoreCommit,
 }

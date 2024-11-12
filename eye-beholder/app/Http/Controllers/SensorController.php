@@ -169,7 +169,8 @@ class SensorController extends Controller
      */
     public function destroy(Sensor $sensor)
     {
-        SensorEmergency::where('sensor_id','=',$sensor->id)->delete();
+        SensorEmergency::whereIn('sensor_id', $sensor->id)->delete();                  // ligação entre emergencias e sensor
+        UdeSensor::whereIn('sensor_id', $sensor->id)->delete();                        // ligação entre sensor e ude
         $sensor->delete();
         return response()->json(['message' => 'Sensor deletado com sucesso.'], 200);
     }

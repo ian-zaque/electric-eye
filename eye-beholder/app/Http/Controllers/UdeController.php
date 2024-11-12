@@ -184,6 +184,8 @@ class UdeController extends Controller
      */
     public function destroy(Ude $ude)
     {
-        //
+        UdeSensor::where('ude_id', '=', $ude->id)->delete();                        // ligação entre sensor e ude
+        $ude->delete();
+        return response()->json(['message' => 'UDE deletada com sucesso.'], 200);
     }
 }
