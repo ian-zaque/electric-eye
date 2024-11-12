@@ -39,7 +39,7 @@
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </b-button>
 
-                                    <b-button disabled @click="deleteInterestZone(data)" size="sm" variant="outline-danger">
+                                    <b-button :disabled="isDownloadingCsv" @click="confirmDeleteInterestZone(data.item)" size="sm" variant="outline-danger">
                                         <i class="fa-solid fa-trash"></i>
                                     </b-button>
                                 </b-row>
@@ -92,6 +92,7 @@ export default {
     methods: {
         ...mapActions('interestZones',[
             "fetchInterestZones",
+            "deleteInterestZone",
             "interestZoneStoreCommit",
         ]),
 
@@ -102,8 +103,28 @@ export default {
             this.openModalInterestZones()
         },
 
-        deleteInterestZone(interestZone){
-            console.log("TYPE InterestZone >>", interestZone)
+        confirmDeleteInterestZone(interestZone){
+            this.$bvModal
+                .msgBoxConfirm(`Deseja mesmo deletar a Zona de Interesse ${interestZone.name} - ${interestZone.id}'?`, {
+                title: "Por favor confirme",
+                size: "sm",
+                buttonSize: "sm",
+                okVariant: "danger",
+                okTitle: "Sim",
+                cancelTitle: "Não",
+                footerClass: "p-2",
+                hideHeaderClose: false,
+                centered: false,
+                top: true,
+            })
+            .then((confirmacao) => {
+                if (confirmacao) {
+                    this.deleteInterestZone(interestZone);
+                }
+            })
+            .catch((err) => {
+            // An error occurred
+            });
         },
 
         openModalInterestZones(){ this.interestZoneStoreCommit({ mutation: "RESET_ERRORS_INTEREST_ZONES" }); this.openModal = true; },

@@ -18,6 +18,13 @@ const UPDATE_INTEREST_ZONES_LIST = (state, payload) => {
 }
 const RESET_INTEREST_ZONES_LIST = (state) => { state.interestZonesList = [] }
 
+const DELETE_INTEREST_ZONES_FROM_LIST = (state, zone) => {
+    const index = state.interestZonesList.findIndex(z => z.id === zone.id);
+    if (index !== -1) {
+        state.interestZonesList.splice(index, 1);
+    }
+}
+
 const SET_ERRORS_INTEREST_ZONES = (state, payload) => { state.errorsInterestZones = payload }
 const RESET_ERRORS_INTEREST_ZONES = (state) => { 
     state.errorsInterestZones = {}
@@ -31,6 +38,8 @@ export default {
     ADD_INTEREST_ZONES_LIST,
     UPDATE_INTEREST_ZONES_LIST,
     RESET_INTEREST_ZONES_LIST,
+
+    DELETE_INTEREST_ZONES_FROM_LIST,
 
     SET_ERRORS_INTEREST_ZONES,
     RESET_ERRORS_INTEREST_ZONES,

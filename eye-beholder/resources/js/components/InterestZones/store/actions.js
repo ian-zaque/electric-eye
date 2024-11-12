@@ -94,6 +94,37 @@ const editInterestZone = (state, form) => {
         })
 }
 
+const deleteInterestZone = (state, zone) => {
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
+
+    return axios.delete(`api/interest-zones/${zone.id}`, zone)
+            .then(() => {
+                state.commit("RESET_ERRORS_INTEREST_ZONES")
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Sucesso ao deletar Zona de Interesse!`, type: "success" }}, {root:true})
+            })
+            .catch((error) => {
+                if (error.response) {
+                    //ERRO NA RESPOSTA
+                    state.commit("SET_ERRORS_INTEREST_ZONES", error.response.data);
+                    state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao deletar Zona de Interesse! Requisição recusada. Erro: ${error.response.status}!`, type: "danger" }}, {root:true})
+                }
+                else if (error.request) {
+                    //ERRO NA REQUISIÇÃO
+                    state.commit("SET_ERRORS_INTEREST_ZONES", error.request.data);
+                    state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao deletar Zona de Interesse! Servidor não respondendo. Erro: ${error.request.status}`, type: "danger" }}, {root:true})
+                }
+                else {
+                    //ERRO DESCONHECIDO
+                    state.commit("SET_ERRORS_INTEREST_ZONES", error);
+                    state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro desconhecido ao deletar Zona de Interesse!`, type: "danger" }}, {root:true})
+                }
+            })
+            .finally(() => {
+                state.commit('DELETE_INTEREST_ZONES_FROM_LIST', zone)
+                state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
+            })
+}
+
 const interestZoneStoreCommit = (state, payload) => {
     state.commit(payload.mutation, payload.value)
 }
@@ -102,5 +133,6 @@ export default {
     fetchInterestZones,
     createInterestZone,
     editInterestZone,
+    deleteInterestZone,
     interestZoneStoreCommit,
 }
