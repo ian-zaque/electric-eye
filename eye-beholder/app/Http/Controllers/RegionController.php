@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Region;
+use App\InterestZone;
+use App\Ude;
+use App\UdeSensor;
+use App\Sensor;
+use App\EmergencyParameter;
+use App\Emergency;
+use App\SensorEmergency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -105,6 +112,21 @@ class RegionController extends Controller
      */
     public function destroy(Region $region)
     {
-        //
+        $ids_interest_zones = InterestZone::where('region_id', '=', $region->id)->pluck('id');
+        $ids_emergencies = Emergency::whereIn('interest_zone_id', $ids_interest_zones)->pluck('id');
+        $ids_udes = Ude::whereIn('interest_zone_id', $ids_emergencies)->pluck('id');
+        $ids_sensors = SensorEmergency::whereIn('emergency_id', $ids_emergencies)->pluck('sensor_id');
+
+        EmergencyParameter::whereIn('emergency_id', $ids_emergencies)->delete();
+        SensorEmergency::whereIn('emergency_id', $ids_emergencies)->delete();
+        UdeSensor::whereIn('ude_id', $ids_udes)->delete();
+        
+        Emergency::whereIn('id', $ids_emergencies)->delete();
+        Ude::whereIn('id', $ids_udes)->delete();
+        Sensor::whereIn('id', $ids_sensors)->delete();
+        InterestZone::whereIn('id', $ids_interest_zones)->delete();
+
+        $region->delete();
+        return response()->json(['message' => 'Região deletada com sucesso.'], 200);
     }
 }

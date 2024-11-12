@@ -35,7 +35,7 @@
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </b-button>
 
-                                    <b-button disabled @click="deleteRegion(data)" size="sm" variant="outline-danger">
+                                    <b-button :disabled="isDownloadingCsv" @click="confirmDeleteRegion(data.item)" size="sm" variant="outline-danger">
                                         <i class="fa-solid fa-trash"></i>
                                     </b-button>
                                 </b-row>
@@ -87,6 +87,7 @@ export default {
     methods: {
         ...mapActions('regions',[
             "fetchRegions",
+            "deleteRegion",
             "regionStoreCommit",
         ]),
 
@@ -97,8 +98,30 @@ export default {
             this.openModalRegions()
         },
 
-        deleteRegion(region){
-            console.log("TYPE region >>", region)
+        confirmDeleteRegion(region){
+            console.log('REGIÃO >>>>', region);
+
+            this.$bvModal
+                .msgBoxConfirm(`Deseja mesmo deletar a Região ${region.name} - ${region.id}'?`, {
+                title: "Por favor confirme",
+                size: "sm",
+                buttonSize: "sm",
+                okVariant: "danger",
+                okTitle: "Sim",
+                cancelTitle: "Não",
+                footerClass: "p-2",
+                hideHeaderClose: false,
+                centered: false,
+                top: true,
+            })
+            .then((confirmacao) => {
+                if (confirmacao) {
+                    this.deleteRegion(region);
+                }
+            })
+            .catch((err) => {
+            // An error occurred
+            });
         },
 
         openModalRegions(){ this.regionStoreCommit({ mutation: "RESET_ERRORS_REGIONS" }); this.openModal = true; },

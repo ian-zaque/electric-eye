@@ -16,6 +16,13 @@ const UPDATE_REGIONS_LIST = (state, payload) => {
 }
 const RESET_REGIONS_LIST = (state) => { state.regionsList = [] }
 
+const DELETE_REGIONS_FROM_LIST = (state, region) => {
+    const index = state.regionsList.findIndex(r => r.id === region.id);
+    if (index !== -1) {
+        state.regionsList.splice(index, 1);
+    }
+}
+
 const SET_ERRORS_REGIONS = (state, payload) => { state.errorsRegions = payload }
 const RESET_ERRORS_REGIONS = (state) => { 
     state.errorsRegions = {}
@@ -29,6 +36,8 @@ export default {
     ADD_REGIONS_LIST,
     UPDATE_REGIONS_LIST,
     RESET_REGIONS_LIST,
+
+    DELETE_REGIONS_FROM_LIST,
 
     SET_ERRORS_REGIONS,
     RESET_ERRORS_REGIONS,
