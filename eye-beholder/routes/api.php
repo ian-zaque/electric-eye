@@ -27,6 +27,7 @@ Route::resources([
     'mqtt-topics' => 'MqttTopicController',
     'sensors' => 'SensorController',
     'type-sensors' => 'TypeSensorController',
+    'events' => 'EventController',
 ]);
 // 'emergency-parameters' => 'EmergencyParameterController',
 // Route::resource('user-roles', 'UserRoleController');

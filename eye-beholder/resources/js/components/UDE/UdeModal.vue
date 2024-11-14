@@ -224,8 +224,8 @@ export default {
             bvModalEvt.preventDefault();
 
             try {
-                if(this.isEditing){ await this.editUde(this.ude) }
-                else{ await this.createUde(this.ude) }
+                if(this.isEditing){ this.editUde(this.ude) }
+                else{ this.createUde(this.ude) }
 
                 if(Object.values(this.errorsUdes).length == 0 || this.errorsUdes == null || this.errorsUdes == undefined){
                     this.closeModal()
