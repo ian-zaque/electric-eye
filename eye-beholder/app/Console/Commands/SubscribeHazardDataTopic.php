@@ -62,7 +62,7 @@ class SubscribeHazardDataTopic extends Command
             $event->fill($eventData)->save();
             // $event = Event::find($event->id);
 
-            // echo "Salvando novo evento: '{$event}' \n\n ";
+            echo "Salvando novo evento: '{$received_data}' \n\n ";
 
             // dd($received_data);
 

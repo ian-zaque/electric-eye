@@ -17,6 +17,10 @@ class Event extends Model //implements Auditable
         "ude_id", "region_id", "event", "timestamp",
     ];
 
+    protected $casts = [
+        'event' => 'json',
+    ];
+
     public function ude(){
         return $this->belongsTo(Ude::class);
     }

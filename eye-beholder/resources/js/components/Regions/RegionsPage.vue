@@ -99,8 +99,6 @@ export default {
         },
 
         confirmDeleteRegion(region){
-            console.log('REGIÃO >>>>', region);
-
             this.$bvModal
                 .msgBoxConfirm(`Deseja mesmo deletar a Região ${region.name} - ${region.id}'?`, {
                 title: "Por favor confirme",

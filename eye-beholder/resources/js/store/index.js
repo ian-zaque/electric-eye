@@ -10,6 +10,7 @@ import udes from '../components/UDE/store/index.js'
 import udeClasses from '../components/UdeClasses/store/index.js'
 import emergencies from '../components/Emergencies/store/index.js'
 import mqtt from '../components/MQTT/store/index.js'
+import events from '../components/Events/store/index.js'
 
 Vue.use(Vuex)
 
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     udeClasses,
     emergencies,
     mqtt,
+    events,
   },
 
   actions: {

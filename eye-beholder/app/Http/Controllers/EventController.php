@@ -14,7 +14,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Event::with(['ude', 'ude.ude_class', 'region'])->get());
     }
 
     /**

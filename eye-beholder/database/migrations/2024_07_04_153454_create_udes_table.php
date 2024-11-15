@@ -21,8 +21,8 @@ class CreateUdesTable extends Migration
             $table->foreign('interest_zone_id')->references('id')->on('interest_zones');
             $table->string('name', 100);
             $table->string('mac_id', 100);
-            $table->double('latitude', 8, 2);
-            $table->double('longitude', 8, 2);
+            $table->double('latitude', 8, 5);
+            $table->double('longitude', 8, 5);
             $table->timestampsTz();
             $table->softDeletesTz();
         });

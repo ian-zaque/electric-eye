@@ -14,6 +14,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
 import Multiselect from 'vue-multiselect';
+import * as Leaflet from 'leaflet';
 
 import VueSidebarMenu from 'vue-sidebar-menu'
 import Home from './components/Home/Home.vue'
@@ -25,6 +26,7 @@ import UdePage from './components/UDE/UdePage.vue'
 import UdeClassPage from './components/UdeClasses/UdeClassPage.vue'
 import EmergenciesPage from './components/Emergencies/EmergenciesPage.vue';
 import MqttPage from './components/MQTT/MqttPage.vue';
+import EventsPage from './components/Events/EventsPage.vue';
 
 window.Vue = require('vue');
 
@@ -32,6 +34,7 @@ Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(IconsPlugin);
 Vue.use(VueSidebarMenu)
+Vue.use(Leaflet)
 
 const router = new VueRouter({
     mode: 'history',
@@ -49,6 +52,7 @@ const router = new VueRouter({
         { path: '/ude-classes', name: 'Classes de UDEs', component: UdeClassPage },
         { path: '/emergency', name: 'Emergências', component: EmergenciesPage },
         { path: '/mqtt', name: 'MQTT', component: MqttPage },
+        { path: '/events', name: 'Eventos', component: EventsPage },
     ]
 })
 
@@ -102,6 +106,10 @@ Vue.component("emergencies-modal", require("./components/Emergencies/Emergencies
 // MQTT Topic
 Vue.component("mqtt-page", require("./components/MQTT/MqttPage.vue").default);
 Vue.component("mqtt-modal", require("./components/MQTT/MqttModal.vue").default);
+
+// Eventos
+Vue.component("events-page", require("./components/Events/EventsPage.vue").default);
+// Vue.component("mqtt-modal", require("./components/MQTT/MqttModal.vue").default);
 
 const app = new Vue({
     router,
