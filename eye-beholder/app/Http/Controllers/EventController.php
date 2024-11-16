@@ -13,8 +13,34 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return response()->json(Event::with(['ude', 'ude.ude_class', 'region'])->get());
+    {   
+        // Data inicial (start_date)
+        $start_date = date("Y-m-d H:i:s", time() - 3600 * 48);
+
+        // Data final (end_date)
+        $end_date = date("Y-m-d H:i:s", time() + 3600 * 48);
+
+        $events = Event::with(['ude', 'ude.ude_class', 'region'])
+            ->when($start_date, function ($b) use ($start_date) { $b->where('timestamp', '>=', $start_date); })
+            ->when($end_date, function ($b) use ($end_date) { $b->where('timestamp', '<=', $end_date); })
+            ->get();
+
+        return response()->json($events);
+    }
+
+    public function getEventsByDate(Request $request)
+    {   
+        // dd($request->all());
+        $dates = json_decode($request->all()['dates']);
+        $start_date = $dates->start_date;
+        $end_date = $dates->end_date;
+
+        $events = Event::with(['ude', 'ude.ude_class', 'region'])
+            ->when($start_date, function ($b) use ($start_date) { $b->where('timestamp', '>=', $start_date); })
+            ->when($end_date, function ($b) use ($end_date) { $b->where('timestamp', '<=', $end_date); })
+            ->get();
+
+        return response()->json($events);
     }
 
     /**

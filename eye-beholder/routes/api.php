@@ -14,21 +14,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes(['verify' => true]);
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resources([
-    'regions' => 'RegionController',
-    'interest-zones' => 'InterestZoneController',
-    'udes' => 'UdeController',
-    'ude-classes' => 'UdeClassController',
-    'emergencies' => 'EmergencyController',
-    'mqtt-topics' => 'MqttTopicController',
-    'sensors' => 'SensorController',
-    'type-sensors' => 'TypeSensorController',
-    'events' => 'EventController',
-]);
+Route::middleware(['middleware' => 'api'])->group(function () {
+    Route::resources([
+        'regions' => 'RegionController',
+        'interest-zones' => 'InterestZoneController',
+        'udes' => 'UdeController',
+        'ude-classes' => 'UdeClassController',
+        'emergencies' => 'EmergencyController',
+        'mqtt-topics' => 'MqttTopicController',
+        'sensors' => 'SensorController',
+        'type-sensors' => 'TypeSensorController',
+        'events' => 'EventController',
+    ]);
+
+    Route::get('/event/eventsByDate', 'EventController@getEventsByDate');
+});
+
+
 // 'emergency-parameters' => 'EmergencyParameterController',
 // Route::resource('user-roles', 'UserRoleController');
 // Route::resource('user-role-actions', 'UserRoleActionController');

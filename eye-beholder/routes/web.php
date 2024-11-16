@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 // Redireciona NotFoundUrl para Home
 // Route::get('/{vue?}', 'HomeController@index')->where('vue', '[\/\w\.-]*');
 
+Route::get('index', function () {
+    return csrf_token();
+});
+
 Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home')->middleware('verified');

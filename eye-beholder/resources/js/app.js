@@ -15,6 +15,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
 import Multiselect from 'vue-multiselect';
 import * as Leaflet from 'leaflet';
+import 'element-ui/lib/theme-chalk/index.css';
+import lang from 'element-ui/lib/locale/lang/pt-br'
+import locale from 'element-ui/lib/locale'
 
 import VueSidebarMenu from 'vue-sidebar-menu'
 import Home from './components/Home/Home.vue'
@@ -27,8 +30,11 @@ import UdeClassPage from './components/UdeClasses/UdeClassPage.vue'
 import EmergenciesPage from './components/Emergencies/EmergenciesPage.vue';
 import MqttPage from './components/MQTT/MqttPage.vue';
 import EventsPage from './components/Events/EventsPage.vue';
+import Vue from 'vue';
 
 window.Vue = require('vue');
+
+locale.use(lang)
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
@@ -63,6 +69,8 @@ Vue.component('app-user', require('./AppUser.vue').default);
 
 // Multiselect
 Vue.component("multiselect", Multiselect);
+
+// Vue.component("el-datetime-picker", DateTimePicker);
 
 // Sidebar
 Vue.component("side-bar", require("./components/Sidebar/Sidebar.vue").default);

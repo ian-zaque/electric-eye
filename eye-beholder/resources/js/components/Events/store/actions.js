@@ -1,8 +1,51 @@
+import moment from "moment"
+
 const fetchEvents = async (state) => {
     state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
     state.commit('RESET_EVENTS_LIST')
 
     return await axios.get("api/events")
+        .then((result) => {
+            const response = result.data
+            state.commit("RESET_ERRORS_EVENTS")
+            state.commit('SET_EVENTS_LIST', response)
+        })
+        .catch((error) => {
+            if (error.response) {
+                //ERRO NA RESPOSTA
+                state.commit("SET_ERRORS_EVENTS", error.response.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao carregar Eventos! Requisição recusada. Erro: ${error.response.status}`, type: "danger" }}, {root:true})
+            }
+            else if (error.request) {
+                //ERRO NA REQUISIÇÃO
+                state.commit("SET_ERRORS_EVENTS", error.request.data);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro ao carregar Eventos!  Servidor não respondendo. Erro: ${error.request.status}`, type: "danger" }}, {root:true})
+            }
+            else {
+                //ERRO DESCONHECIDO
+                state.commit("SET_ERRORS_EVENTS", error);
+                state.dispatch("dispatchNotification", { mutation: "PUSH_NOTIFICATION", payload: { message: `Erro desconhecido ao carregar Eventos!`, type: "danger" }}, {root:true})  
+            }
+        })
+        .finally(() => {
+            state.dispatch("dispatchLoading", { mutation: "DECREMENT_LOAD_COUNT", payload: null }, {root:true})
+        })
+}
+
+const fetchEventsByDate = async (state, form_dates) => {
+    state.dispatch("dispatchLoading", { mutation: "INCREMENT_LOAD_COUNT", payload: null }, {root:true})
+    state.commit('RESET_EVENTS_LIST')
+
+    const start_date = form_dates.start_date != '' ? moment(form_dates.start_date).format("YYYY-MM-DD HH:mm:ss") : null
+    const end_date = form_dates.end_date != '' ? moment(form_dates.end_date).format("YYYY-MM-DD HH:mm:ss") : null
+    const dates = { start_date: start_date, end_date: end_date }
+    console.log('FORM DATES >>>>', start_date, end_date);
+
+    return await axios.get("/api/event/eventsByDate", {
+        params: {
+            dates
+        }
+    })
         .then((result) => {
             const response = result.data
             state.commit("RESET_ERRORS_EVENTS")
@@ -131,6 +174,7 @@ const eventsStoreCommit = (state, payload) => {
 
 export default {
     fetchEvents,
+    fetchEventsByDate,
     createEvent,
     editEvent,
     deleteEvent,
