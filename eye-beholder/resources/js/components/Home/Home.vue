@@ -47,7 +47,7 @@
         <!-- SEGUNDA LINHA -->
         <b-row class="pt-4">
           <b-col xs="12" sm="12" md="4" lg="4">
-            <router-link to="/sensors" class="text-gray">
+            <router-link to="/udes" class="text-gray">
               <b-card class="subcard-p-3">
                 <p class="text-gray mb-0 text-center h1">
                   <i class="fa-solid fa-hard-drive"></i>
@@ -69,7 +69,7 @@
           </b-col>
 
           <b-col xs="12" sm="12" md="4" lg="4">
-            <router-link to="/sensors" class="text-gray">
+            <router-link to="/emergency" class="text-gray">
               <b-card class="subcard-p-3">
                 <p class="text-gray mb-0 text-center h1">
                   <i class="fa-solid fa-cloud-bolt"></i>
