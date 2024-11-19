@@ -49,6 +49,7 @@ export default {
                 },
                 { href: '/mqtt', title: "MQTT", icon: 'fa-solid fa-tower-broadcast' },
                 { href: '/events', title: "Eventos", icon: 'fa-solid fa-map-location-dot' },
+                { href: '/reports', title: "Relatórios", icon: 'fa-solid fa-chart-line' },
                 // { href: '/configuration', title: "Configurações", icon: 'fa-solid fa-gears' },
             ],
         };

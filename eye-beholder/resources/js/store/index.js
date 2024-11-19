@@ -11,6 +11,7 @@ import udeClasses from '../components/UdeClasses/store/index.js'
 import emergencies from '../components/Emergencies/store/index.js'
 import mqtt from '../components/MQTT/store/index.js'
 import events from '../components/Events/store/index.js'
+import reports from '../components/Reports/store/index.js'
 
 Vue.use(Vuex)
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     emergencies,
     mqtt,
     events,
+    reports,
   },
 
   actions: {

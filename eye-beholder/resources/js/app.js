@@ -30,6 +30,7 @@ import UdeClassPage from './components/UdeClasses/UdeClassPage.vue'
 import EmergenciesPage from './components/Emergencies/EmergenciesPage.vue';
 import MqttPage from './components/MQTT/MqttPage.vue';
 import EventsPage from './components/Events/EventsPage.vue';
+import EventsReport from './components/Reports/EventsReport.vue';
 import Vue from 'vue';
 
 window.Vue = require('vue');
@@ -59,6 +60,7 @@ const router = new VueRouter({
         { path: '/emergency', name: 'Emergências', component: EmergenciesPage },
         { path: '/mqtt', name: 'MQTT', component: MqttPage },
         { path: '/events', name: 'Eventos', component: EventsPage },
+        { path: '/reports', name: 'Relatórios', component: EventsReport },
     ]
 })
 
@@ -117,7 +119,9 @@ Vue.component("mqtt-modal", require("./components/MQTT/MqttModal.vue").default);
 
 // Eventos
 Vue.component("events-page", require("./components/Events/EventsPage.vue").default);
-// Vue.component("mqtt-modal", require("./components/MQTT/MqttModal.vue").default);
+
+// Relatórios
+Vue.component("events-report", require("./components/Reports/EventsReport.vue").default);
 
 const app = new Vue({
     router,
