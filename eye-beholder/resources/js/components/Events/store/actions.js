@@ -39,7 +39,6 @@ const fetchEventsByDate = async (state, form_dates) => {
     const start_date = form_dates.start_date != '' ? moment(form_dates.start_date).format("YYYY-MM-DD HH:mm:ss") : null
     const end_date = form_dates.end_date != '' ? moment(form_dates.end_date).format("YYYY-MM-DD HH:mm:ss") : null
     const dates = { start_date: start_date, end_date: end_date }
-    console.log('FORM DATES >>>>', start_date, end_date);
 
     return await axios.get("/api/event/eventsByDate", {
         params: {

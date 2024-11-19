@@ -13,24 +13,22 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        // Data inicial (start_date)
-        $start_date = date("Y-m-d H:i:s", time() - 3600 * 48);
-
-        // Data final (end_date)
-        $end_date = date("Y-m-d H:i:s", time() + 3600 * 48);
+    {
+        $tomorrow = new \DateTime("now", new \DateTimeZone('America/Bahia'));
+        $tomorrow = $tomorrow->modify('+1 day')->format("Y-m-d H:i:s");
+        $yesterday = new \DateTime("now", new \DateTimeZone('America/Bahia'));
+        $yesterday = $yesterday->modify('-1 day')->format("Y-m-d H:i:s");
 
         $events = Event::with(['ude', 'ude.ude_class', 'region'])
-            ->when($start_date, function ($b) use ($start_date) { $b->where('timestamp', '>=', $start_date); })
-            ->when($end_date, function ($b) use ($end_date) { $b->where('timestamp', '<=', $end_date); })
+            ->when($tomorrow, function ($b) use ($tomorrow) { $b->where('timestamp', '>=', $tomorrow); })
+            ->when($yesterday, function ($b) use ($yesterday) { $b->where('timestamp', '<=', $yesterday); })
             ->get();
 
         return response()->json($events);
     }
 
     public function getEventsByDate(Request $request)
-    {   
-        // dd($request->all());
+    {
         $dates = json_decode($request->all()['dates']);
         $start_date = $dates->start_date;
         $end_date = $dates->end_date;

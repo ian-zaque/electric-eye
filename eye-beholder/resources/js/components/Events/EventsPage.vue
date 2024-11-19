@@ -6,11 +6,7 @@
                     <h3 class="mb-1">Eventos</h3>
                 </b-col>
 
-                <b-col class="pb-2 m-0">
-                    <!-- <b-button size="sm" variant="outline-transparent" v-b-toggle.collapse-1 data-toggle="tooltip" data-placement="bottom" title="Mais Filtros">
-                        <b-icon icon="filter-square-fill" variant="secondary" scale="1.5"></b-icon>
-                    </b-button> -->
-
+                <b-col class="pb-2 m-0 pl-0 pr-0">
                     <b-form inline>
                         <label class="sr-only" for="inline-form-input-inicio">Início</label>
                         <b-input-group size="sm" class="mr-sm-2 mb-sm-0">
@@ -39,10 +35,7 @@
             </div>
 
             <div v-else>
-                <div class="text-center text-secondary my-2">
-                    <b-spinner class="align-middle"></b-spinner>
-                    <strong>Carregando...</strong>
-                </div>
+                <b-skeleton-img height="500px"></b-skeleton-img>
             </div>
         </b-card>
     </div>
@@ -71,7 +64,7 @@ export default {
     },
 
     computed: {
-      ...mapGetters('events', { 
+        ...mapGetters('events', { 
            eventsList: "getEventsList",
            errors: "getErrorsEvents",
         }),
@@ -94,17 +87,6 @@ export default {
         ...mapGetters('loading', {
             isLoading: "isLoading",
         }),
-
-        filteredEvents(){
-            if(this.searchQuery.length > 0){
-                return this.eventsList.filter(function(value, index){
-
-                })
-            }
-            else {
-                return this.eventsList
-            }
-        },
     },
 
     watch: {
@@ -112,9 +94,7 @@ export default {
 
     data() {
         return {
-            eventsMap: null, searchQuery: "",
-            filtro: { regions: [], udes: [], sensors: [], },
-            filtro_inicio: new Date(), filtro_final: "",
+            eventsMap: null, filtro_inicio: "", filtro_final: "",
             pickerOptions: {
                 shortcuts: [
                     { text: 'Semana passada', onClick(picker) { let semanaPassada = new Date(); semanaPassada.setTime(semanaPassada.getTime() - 3600 * 1000 * 24 * 7); picker.$emit('pick', semanaPassada); } },
@@ -128,7 +108,7 @@ export default {
     },
 
     methods: {
-      ...mapActions('events', [
+        ...mapActions('events', [
             'fetchEvents',
             'fetchEventsByDate',
             "eventsStoreCommit",
@@ -147,9 +127,9 @@ export default {
         ]),
 
         populateEventsMap(){
-            if(this.filteredEvents && this.filteredEvents.length > 0){
+            if(this.eventsList && this.eventsList.length > 0){
                 const markers = Leaflet.markerClusterGroup();
-                this.filteredEvents.map(function(value, index){
+                this.eventsList.map(function(value, index){
                     var measured_value = Object.values(JSON.parse(value.event))[0]
 
                     const each_marker = Leaflet.marker([value.ude.latitude, value.ude.longitude])
@@ -192,8 +172,8 @@ export default {
         searchEvents(){
             if(moment(this.filtro_inicio).isAfter(this.filtro_final)){
                 this.$bvModal
-                    .msgBoxConfirm('A data final é anterior a data inicial', {
-                    title: "Seleção de datas",
+                    .msgBoxConfirm('A data final é anterior a data inicial. Por favor, altere!', {
+                    title: "Seleção inválida de datas",
                     size: "sm",
                     buttonSize: "sm",
                     okVariant: "primary",
@@ -226,10 +206,6 @@ export default {
     },
 
     async mounted(){
-        this.fetchSensors()
-        this.fetchRegions()
-        this.fetchUdes()
-
         await this.fetchEvents()
             .then(() => {
                 this.createEventsMap()
