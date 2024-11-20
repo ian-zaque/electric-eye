@@ -127,6 +127,7 @@ Vue.component("events-report", require("./components/Reports/EventsReport.vue").
 Vue.component("events-by-region-bar-chart", require("./components/Reports/charts/EventsByRegionBarChart.vue").default);
 Vue.component("events-by-hour-line-chart", require("./components/Reports/charts/EventsByHourLineChart.vue").default);
 Vue.component("events-by-date-bar-chart", require("./components/Reports/charts/EventByDateBarChart.vue").default);
+Vue.component("events-by-emergency-bar-chart", require("./components/Reports/charts/EventsByEmergencyBarChart.vue").default);
 
 const app = new Vue({
     router,

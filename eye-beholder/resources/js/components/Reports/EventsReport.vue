@@ -29,7 +29,7 @@
                 </b-col>
             </b-row>
 
-            <b-container fluid>
+            <b-container fluid class="pb-5">
                 <b-row>
                     <b-col xs="12" sm="12" md="4" lg="4">
                         <b-card class="subcard-p-3">
@@ -144,6 +144,25 @@
                     <b-col cols="6">
                         <b-card class="pb-0" body-class="pb-0" header-bg-variant="transparent">
                             <template v-slot:header>
+                                <div class="row">
+                                    <h3 class="mb-0 pr-0 col-md-12 col-sm-12">Eventos por emergência</h3>
+                                </div>
+                            </template>
+
+                            <div style="margin: 0; padding: 0;">
+                                <div v-if="!isLoading && eventsList.length > 0">
+                                    <events-by-emergency-bar-chart :defaultBarThickness="defaultBarThickness" :maxBarThickness="maxBarThickness">
+                                    </events-by-emergency-bar-chart>
+                                </div>
+
+                                <b-skeleton-img v-else-if="isLoading" style="margin: 0; padding: 0;" height="200px" class="pb-0"></b-skeleton-img>
+                            </div>
+                        </b-card>
+                    </b-col>
+
+                    <b-col cols="6">
+                        <b-card class="pb-0" body-class="pb-0" header-bg-variant="transparent">
+                            <template v-slot:header>
                                 <b-row class="d-flex justify-content-between">
                                     <b-col>
                                         <h3 class="mb-0 pr-0 col-md-12 col-sm-12">Eventos por data</h3>
@@ -188,6 +207,7 @@ import { DatePicker } from 'element-ui'
 import EventsByRegionBarChart from './charts/EventsByRegionBarChart.vue';
 import EventsByHourLineChart from './charts/EventsByHourLineChart.vue';
 import EventByDateBarChart from './charts/EventByDateBarChart.vue';
+import EventsByEmergencyBarChart from './charts/EventsByEmergencyBarChart.vue';
 
 export default {
     name: '',
@@ -197,6 +217,7 @@ export default {
         EventsByRegionBarChart,
         EventsByHourLineChart,
         EventByDateBarChart,
+        EventsByEmergencyBarChart,
     },
 
     props:{
@@ -241,7 +262,13 @@ export default {
     },
 
     watch: {
-        
+        eventsList(newValue){
+            if(newValue){
+                newValue.map(function(value, index){
+                    console.log('VALUE >>>>', value.timestamp);
+                })
+            }
+        },
     },
 
     data() {
