@@ -128,7 +128,8 @@ export default {
           mode: 'point',
           callbacks: {
             label: function (tooltipItem, data) {
-              return data.labels[tooltipItem.index] + ': ' + data.datasets[0]['data'][tooltipItem.index] + ' eventos'
+              var labelString = data.datasets[0]['data'][tooltipItem.index] > 1 ? ' eventos' : ' evento'
+              return data.datasets[0]['data'][tooltipItem.index] + labelString
             }
           }
         },
@@ -165,7 +166,7 @@ export default {
   },
 
   mounted() {
-    if(this.eventsList.length > 0 && this.regionsList.length > 0){
+    if (this.eventsList.length > 0 && this.regionsList.length > 0) {
       this.createEventsByRegion()
     }
   },

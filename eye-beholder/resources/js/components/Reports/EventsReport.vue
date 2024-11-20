@@ -33,41 +33,49 @@
                 <b-row>
                     <b-col xs="12" sm="12" md="3" lg="3">
                         <b-card class="subcard-p-3">
-                            <h4 class="card-title mb-0">Regiões</h4>
-                            <p v-if="!isLoading" class="text-gray mb-0">
-                                <b>{{ regionsList.length }}</b>
-                            </p>
-                            <b-skeleton v-else width="85%"></b-skeleton>
+                            <h4 v-if="!isLoading" class="card-title mb-0">
+                                <p class="text-gray mb-0 d-flex justify-content-between">
+                                    Regiões
+                                    <b>{{ regionsList.length }}</b>
+                                </p>
+                            </h4>
+                            <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
                         </b-card>
                     </b-col>
 
                     <b-col xs="12" sm="12" md="3" lg="3">
                         <b-card class="subcard-p-3">
-                            <h4 class="card-title mb-0">ZIs</h4>
-                            <p v-if="!isLoading" class="text-gray mb-0">
-                                <b>{{ interestZonesList.length }}</b>
-                            </p>
-                            <b-skeleton v-else width="85%"></b-skeleton>
+                            <h4 v-if="!isLoading" class="card-title mb-0">
+                                <p class="text-gray mb-0 d-flex justify-content-between">
+                                    ZIs
+                                    <b>{{ interestZonesList.length }}</b>
+                                </p>
+                            </h4>
+                            <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
                         </b-card>
                     </b-col>
 
                     <b-col xs="12" sm="12" md="3" lg="3">
                         <b-card class="subcard-p-3">
-                            <h4 class="card-title mb-0">UDEs</h4>
-                            <p v-if="!isLoading" class="text-gray mb-0">
-                                <b>{{ udesList.length }}</b>
-                            </p>
-                            <b-skeleton v-else width="85%"></b-skeleton>
+                            <h4 v-if="!isLoading" class="card-title mb-0">
+                                <p class="text-gray mb-0 d-flex justify-content-between">
+                                    UDEs
+                                    <b>{{ udesList.length }}</b>
+                                </p>
+                            </h4>
+                            <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
                         </b-card>
                     </b-col>
 
                     <b-col xs="12" sm="12" md="3" lg="3">
                         <b-card class="subcard-p-3">
-                            <h4 class="card-title mb-0">Sensores</h4>
-                            <p v-if="!isLoading" class="text-gray mb-0">
-                                <b>{{ sensorsList.length }}</b>
-                            </p>
-                            <b-skeleton v-else width="85%"></b-skeleton>
+                            <h4 v-if="!isLoading" class="card-title mb-0">
+                                <p class="text-gray mb-0 d-flex justify-content-between">
+                                    Sensores
+                                    <b>{{ sensorsList.length }}</b>
+                                </p>
+                            </h4>
+                            <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
                         </b-card>
                     </b-col>
                 </b-row>
@@ -82,12 +90,12 @@
                             </template>
 
                             <div style="margin: 0; padding: 0;">
-                                <div v-if="!isLoading">
+                                <div v-if="!isLoading && eventsList.length > 0">
                                     <events-by-region-bar-chart :defaultBarThickness="defaultBarThickness" :maxBarThickness="maxBarThickness">
                                     </events-by-region-bar-chart>
                                 </div>
 
-                                <b-skeleton-img v-else style="margin: 0; padding: 0;" height="200px" class="pb-0"></b-skeleton-img>
+                                <b-skeleton-img v-else-if="isLoading" style="margin: 0; padding: 0;" height="200px" class="pb-0"></b-skeleton-img>
                             </div>
                         </b-card>
                     </b-col>
@@ -101,12 +109,49 @@
                             </template>
 
                             <div style="margin: 0; padding: 0;">
-                                <div v-if="!isLoading">
+                                <div v-if="!isLoading && eventsList.length > 0">
                                     <events-by-hour-line-chart :defaultBarThickness="defaultBarThickness" :maxBarThickness="maxBarThickness">
                                     </events-by-hour-line-chart>
                                 </div>
 
-                                <b-skeleton-img v-else style="margin: 0; padding: 0;" height="200px" class="pb-0"></b-skeleton-img>
+                                <b-skeleton-img v-else-if="isLoading" style="margin: 0; padding: 0;" height="200px" class="pb-0"></b-skeleton-img>
+                            </div>
+                        </b-card>
+                    </b-col>
+                </b-row>
+
+                <b-row class="pt-5">
+                    <b-col cols="6">
+                        <b-card class="pb-0" body-class="pb-0" header-bg-variant="transparent">
+                            <template v-slot:header>
+                                <b-row class="d-flex justify-content-between">
+                                    <b-col>
+                                        <h3 class="mb-0 pr-0 col-md-12 col-sm-12">Eventos por data</h3>
+                                    </b-col>
+
+                                    <b-col v-if="!isLoading && eventsList.length > 0" class="text-right">
+                                        <b-button variant="primary" outline :class="{ 'active': eventByDateView === 'month' }" @click="eventByDateView = 'month'" class="btn btn-sm">
+                                            mês
+                                        </b-button>
+
+                                        <b-button variant="primary" outline :class="{ 'active': eventByDateView === 'day' }" @click="eventByDateView = 'day'" class="btn btn-sm">
+                                            data
+                                        </b-button>
+
+                                        <b-button variant="primary" outline :class="{ 'active': eventByDateView === 'weekday' }" @click="eventByDateView = 'weekday'" class="btn btn-sm">
+                                            dia da semana
+                                        </b-button>
+                                    </b-col>
+                                </b-row>
+                            </template>
+
+                            <div style="margin: 0; padding: 0;">
+                                <div v-if="!isLoading && eventsList.length > 0">
+                                    <events-by-date-bar-chart :eventByDateView="eventByDateView" :defaultBarThickness="defaultBarThickness" :maxBarThickness="maxBarThickness">
+                                    </events-by-date-bar-chart>
+                                </div>
+
+                                <b-skeleton-img v-else-if="isLoading" style="margin: 0; padding: 0;" height="200px" class="pb-0"></b-skeleton-img>
                             </div>
                         </b-card>
                     </b-col>
@@ -122,6 +167,7 @@ import moment from "moment"
 import { DatePicker } from 'element-ui'
 import EventsByRegionBarChart from './charts/EventsByRegionBarChart.vue';
 import EventsByHourLineChart from './charts/EventsByHourLineChart.vue';
+import EventByDateBarChart from './charts/EventByDateBarChart.vue';
 
 export default {
     name: '',
@@ -130,6 +176,7 @@ export default {
         DatePicker,
         EventsByRegionBarChart,
         EventsByHourLineChart,
+        EventByDateBarChart,
     },
 
     props:{
@@ -184,7 +231,8 @@ export default {
                     { text: 'Semana que vem', onClick(picker) { let semanaQueVem = new Date(); semanaQueVem.setTime(semanaQueVem.getTime() + 3600 * 1000 * 24 * 7); picker.$emit('pick', semanaQueVem); } },
                 ]
             },
-            defaultBarThickness: 8, maxBarThickness: 30,
+            defaultBarThickness: 12, maxBarThickness: 30,
+            eventByDateView: 'weekday',
         }
     },
 
