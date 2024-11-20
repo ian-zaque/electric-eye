@@ -23,7 +23,7 @@
                         </b-input-group>
 
                         <b-button @click.prevent="searchEvents($event)" class="mr-sm-2 mb-sm-0" size="sm" variant="outline-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="Buscar">
-                            <b-icon icon="search"></b-icon>
+                            Buscar
                         </b-button>
                     </b-form>
                 </b-col>

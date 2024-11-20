@@ -1,5 +1,9 @@
-const getBarChart = (state) =>{ return state.barChart }
+const getEventsByRegionChart = (state) =>{ return state.eventsByRegionChart }
+const getEventsByHourChart = (state) =>{ return state.eventsByHourChart }
+const getErrorsReports = (state) =>{ return state.errorsReports }
 
 export default {
-    getBarChart,
+    getEventsByRegionChart,
+    getEventsByHourChart,
+    getErrorsReports,
 }

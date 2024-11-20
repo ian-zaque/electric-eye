@@ -23,7 +23,7 @@
                         </b-input-group>
 
                         <b-button @click.prevent="searchEvents($event)" class="mr-sm-2 mb-sm-0" size="sm" variant="outline-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="Buscar">
-                            <b-icon icon="search"></b-icon>
+                            Buscar
                         </b-button>
                     </b-form>
                 </b-col>
@@ -37,6 +37,7 @@
                             <p v-if="!isLoading" class="text-gray mb-0">
                                 <b>{{ regionsList.length }}</b>
                             </p>
+                            <b-skeleton v-else width="85%"></b-skeleton>
                         </b-card>
                     </b-col>
 
@@ -46,6 +47,7 @@
                             <p v-if="!isLoading" class="text-gray mb-0">
                                 <b>{{ interestZonesList.length }}</b>
                             </p>
+                            <b-skeleton v-else width="85%"></b-skeleton>
                         </b-card>
                     </b-col>
 
@@ -55,6 +57,7 @@
                             <p v-if="!isLoading" class="text-gray mb-0">
                                 <b>{{ udesList.length }}</b>
                             </p>
+                            <b-skeleton v-else width="85%"></b-skeleton>
                         </b-card>
                     </b-col>
 
@@ -64,12 +67,49 @@
                             <p v-if="!isLoading" class="text-gray mb-0">
                                 <b>{{ sensorsList.length }}</b>
                             </p>
+                            <b-skeleton v-else width="85%"></b-skeleton>
                         </b-card>
                     </b-col>
                 </b-row>
 
-                <b-row>
-                    
+                <b-row class="pt-5">
+                    <b-col cols="6">
+                        <b-card class="pb-0" body-class="pb-0" header-bg-variant="transparent">
+                            <template v-slot:header>
+                                <div class="row">
+                                    <h3 class="mb-0 pr-0 col-md-12 col-sm-12">Eventos por região</h3>
+                                </div>
+                            </template>
+
+                            <div style="margin: 0; padding: 0;">
+                                <div v-if="!isLoading">
+                                    <events-by-region-bar-chart :defaultBarThickness="defaultBarThickness" :maxBarThickness="maxBarThickness">
+                                    </events-by-region-bar-chart>
+                                </div>
+
+                                <b-skeleton-img v-else style="margin: 0; padding: 0;" height="200px" class="pb-0"></b-skeleton-img>
+                            </div>
+                        </b-card>
+                    </b-col>
+
+                    <b-col cols="6">
+                        <b-card class="pb-0" body-class="pb-0" header-bg-variant="transparent">
+                            <template v-slot:header>
+                                <div class="row">
+                                    <h3 class="mb-0 pr-0 col-md-12 col-sm-12">Eventos por horário</h3>
+                                </div>
+                            </template>
+
+                            <div style="margin: 0; padding: 0;">
+                                <div v-if="!isLoading">
+                                    <events-by-hour-line-chart :defaultBarThickness="defaultBarThickness" :maxBarThickness="maxBarThickness">
+                                    </events-by-hour-line-chart>
+                                </div>
+
+                                <b-skeleton-img v-else style="margin: 0; padding: 0;" height="200px" class="pb-0"></b-skeleton-img>
+                            </div>
+                        </b-card>
+                    </b-col>
                 </b-row>
             </b-container>
         </div>
@@ -78,13 +118,18 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import moment from "moment"
 import { DatePicker } from 'element-ui'
+import EventsByRegionBarChart from './charts/EventsByRegionBarChart.vue';
+import EventsByHourLineChart from './charts/EventsByHourLineChart.vue';
 
 export default {
     name: '',
 
     components:{
         DatePicker,
+        EventsByRegionBarChart,
+        EventsByHourLineChart,
     },
 
     props:{
@@ -139,6 +184,7 @@ export default {
                     { text: 'Semana que vem', onClick(picker) { let semanaQueVem = new Date(); semanaQueVem.setTime(semanaQueVem.getTime() + 3600 * 1000 * 24 * 7); picker.$emit('pick', semanaQueVem); } },
                 ]
             },
+            defaultBarThickness: 8, maxBarThickness: 30,
         }
     },
 
@@ -162,20 +208,6 @@ export default {
         ...mapActions('interestZones',[
             "fetchInterestZones",
         ]),
-
-        //METHOD TO GROUP BY KEYGETTER.
-        //KEYGETTER MUST BE "foo => foo.fieldYouWantToGroupBy"
-        groupBy(list, keyGetter) {
-            const map = new Map();
-            list.forEach((item) => {
-                const key = keyGetter(item);
-                const collection = map.get(key);
-
-                if (!collection) { map.set(key, [item]); }
-                else { collection.push(item); }
-            });
-            return Array.from(map);
-        },
 
         searchEvents(){
             if(moment(this.filtro_inicio).isAfter(this.filtro_final)){
@@ -218,3 +250,10 @@ export default {
 
 }
 </script>
+
+<style>
+.no-border-card .card-footer {
+  border-top: 0;
+}
+
+</style>

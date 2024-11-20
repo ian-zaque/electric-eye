@@ -123,6 +123,10 @@ Vue.component("events-page", require("./components/Events/EventsPage.vue").defau
 // Relatórios
 Vue.component("events-report", require("./components/Reports/EventsReport.vue").default);
 
+// Charts
+Vue.component("events-by-region-bar-chart", require("./components/Reports/charts/EventsByRegionBarChart.vue").default);
+Vue.component("events-by-hour-line-chart", require("./components/Reports/charts/EventsByHourLineChart.vue").default);
+
 const app = new Vue({
     router,
     store,

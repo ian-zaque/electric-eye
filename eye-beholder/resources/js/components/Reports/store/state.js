@@ -1,5 +1,9 @@
-const barChart = []
+const eventsByRegionChart = []
+const eventsByHourChart = []
+const errorsReports = {}
 
 export default {
-    barChart,
+    eventsByRegionChart,
+    eventsByHourChart,
+    errorsReports
 }
