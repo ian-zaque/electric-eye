@@ -25,7 +25,7 @@
             <router-link to="/events" class="text-gray">
               <b-card class="subcard-p-3">
                 <p class="text-gray mb-0 text-center h1">
-                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <i class="fa-solid fa-map-location-dot"></i>
                 </p>
                 <h4 class="card-title mb-0 text-center">Eventos</h4>
               </b-card>

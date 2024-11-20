@@ -55,7 +55,7 @@ export default {
 
   data() {
     return {
-      eventsByHourObject: {}, colors: color_pallete.color_pallete_1,
+      eventsByHourObject: null, colors: color_pallete.color_pallete_1,
     }
   },
 
@@ -75,6 +75,12 @@ export default {
     },
 
     createEventsByHour() {
+      let chartId = $("#idEventsByHourChart")
+      this.eventsByHourObject = new Chart(chartId, {
+        type: 'line',
+        data: [],
+        options: []
+      });
       var timestampDataArray = new Array(24).fill(0)
       var datetimeLabels = new Array(24).fill(0)
       datetimeLabels.map((v, i) => { datetimeLabels[i] = `${i > 9 ? '' : '0'}${i}:00` })
@@ -118,7 +124,6 @@ export default {
           callbacks: {
             label: function (tooltipItem, data) {
               var labelString = data.datasets[0]['data'][tooltipItem.index] > 1 ? ' eventos' : ' evento'
-
               return data.datasets[0]['data'][tooltipItem.index] + labelString
             }
           }
@@ -130,10 +135,14 @@ export default {
             position: 'left',
             title: 'Qntd.',
             barPercentage: 0.3,
-            min: 0,
-            beginAtZero: true
+            ticks: {
+              beginAtZero: true
+            },
           }],
           xAxes: [{
+            ticks: {
+              beginAtZero: true
+            },
             gridLines: {
               drawBorder: false,
               drawOnChartArea: false,
@@ -145,12 +154,9 @@ export default {
         },
       }
 
-      let chartId = $("#idEventsByHourChart")
-      this.eventsByHourObject = new Chart(chartId, {
-        type: 'line',
-        data: chartData,
-        options: extraOptions
-      });
+      this.eventsByHourObject.data = chartData
+      this.eventsByHourObject.options = extraOptions
+      this.eventsByHourObject.update()
     },
 
   },

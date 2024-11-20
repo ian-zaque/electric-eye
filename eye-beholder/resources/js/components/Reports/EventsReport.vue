@@ -31,48 +31,68 @@
 
             <b-container fluid>
                 <b-row>
-                    <b-col xs="12" sm="12" md="3" lg="3">
+                    <b-col xs="12" sm="12" md="4" lg="4">
                         <b-card class="subcard-p-3">
                             <h4 v-if="!isLoading" class="card-title mb-0">
                                 <p class="text-gray mb-0 d-flex justify-content-between">
-                                    Regiões
-                                    <b>{{ regionsList.length }}</b>
+                                    Eventos <b>{{ eventsList.length }}</b>
                                 </p>
                             </h4>
                             <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
                         </b-card>
                     </b-col>
 
-                    <b-col xs="12" sm="12" md="3" lg="3">
+                    <b-col xs="12" sm="12" md="4" lg="4">
                         <b-card class="subcard-p-3">
                             <h4 v-if="!isLoading" class="card-title mb-0">
                                 <p class="text-gray mb-0 d-flex justify-content-between">
-                                    ZIs
-                                    <b>{{ interestZonesList.length }}</b>
+                                    Regiões <b>{{ regionsList.length }}</b>
                                 </p>
                             </h4>
                             <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
                         </b-card>
                     </b-col>
 
-                    <b-col xs="12" sm="12" md="3" lg="3">
+                    <b-col xs="12" sm="12" md="4" lg="4">
                         <b-card class="subcard-p-3">
                             <h4 v-if="!isLoading" class="card-title mb-0">
                                 <p class="text-gray mb-0 d-flex justify-content-between">
-                                    UDEs
-                                    <b>{{ udesList.length }}</b>
+                                    ZIs <b>{{ interestZonesList.length }}</b>
+                                </p>
+                            </h4>
+                            <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
+                        </b-card>
+                    </b-col>
+                </b-row>
+
+                <b-row class="pt-3">
+                    <b-col xs="12" sm="12" md="4" lg="4">
+                        <b-card class="subcard-p-3">
+                            <h4 v-if="!isLoading" class="card-title mb-0">
+                                <p class="text-gray mb-0 d-flex justify-content-between">
+                                    UDEs <b>{{ udesList.length }}</b>
                                 </p>
                             </h4>
                             <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
                         </b-card>
                     </b-col>
 
-                    <b-col xs="12" sm="12" md="3" lg="3">
+                    <b-col xs="12" sm="12" md="4" lg="4">
                         <b-card class="subcard-p-3">
                             <h4 v-if="!isLoading" class="card-title mb-0">
                                 <p class="text-gray mb-0 d-flex justify-content-between">
-                                    Sensores
-                                    <b>{{ sensorsList.length }}</b>
+                                    Sensores <b>{{ sensorsList.length }}</b>
+                                </p>
+                            </h4>
+                            <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
+                        </b-card>
+                    </b-col>
+
+                    <b-col xs="12" sm="12" md="4" lg="4">
+                        <b-card class="subcard-p-3">
+                            <h4 v-if="!isLoading" class="card-title mb-0">
+                                <p class="text-gray mb-0 d-flex justify-content-between">
+                                    Emergências <b>{{ emergenciesList.length }}</b>
                                 </p>
                             </h4>
                             <b-skeleton v-else width="85%" class="text-center"></b-skeleton>
@@ -130,15 +150,15 @@
                                     </b-col>
 
                                     <b-col v-if="!isLoading && eventsList.length > 0" class="text-right">
-                                        <b-button variant="primary" outline :class="{ 'active': eventByDateView === 'month' }" @click="eventByDateView = 'month'" class="btn btn-sm">
+                                        <b-button variant="outline-primary" :class="{ 'active': eventByDateView === 'month' }" @click="eventByDateView = 'month'" class="btn btn-sm">
                                             mês
                                         </b-button>
 
-                                        <b-button variant="primary" outline :class="{ 'active': eventByDateView === 'day' }" @click="eventByDateView = 'day'" class="btn btn-sm">
+                                        <b-button variant="outline-primary" :class="{ 'active': eventByDateView === 'day' }" @click="eventByDateView = 'day'" class="btn btn-sm">
                                             data
                                         </b-button>
 
-                                        <b-button variant="primary" outline :class="{ 'active': eventByDateView === 'weekday' }" @click="eventByDateView = 'weekday'" class="btn btn-sm">
+                                        <b-button variant="outline-primary" :class="{ 'active': eventByDateView === 'weekday' }" @click="eventByDateView = 'weekday'" class="btn btn-sm">
                                             dia da semana
                                         </b-button>
                                     </b-col>
@@ -212,6 +232,11 @@ export default {
         ...mapGetters('loading', {
             isLoading: "isLoading",
         }),
+
+        ...mapGetters('emergencies',{
+            errorsEmergencies: "getErrorsEmergencies",
+            emergenciesList: "getEmergenciesList",
+        }),
         
     },
 
@@ -257,6 +282,10 @@ export default {
             "fetchInterestZones",
         ]),
 
+        ...mapActions('emergencies',[
+            "fetchEmergencies",
+        ]),
+
         searchEvents(){
             if(moment(this.filtro_inicio).isAfter(this.filtro_final)){
                 this.$bvModal
@@ -294,6 +323,7 @@ export default {
         this.fetchRegions()
         this.fetchUdes()
         this.fetchInterestZones()
+        this.fetchEmergencies()
     },
 
 }

@@ -28,6 +28,12 @@
                     </b-form>
                 </b-col>
             </b-row>
+
+            <b-row v-if="eventsList.length > 0">
+                <b-col>
+                    <h5 class="small">{{ eventsList.length + ' eventos registrados' }}</h5>
+                </b-col>
+            </b-row>
         </div>
 
         <b-card class="rounded border">

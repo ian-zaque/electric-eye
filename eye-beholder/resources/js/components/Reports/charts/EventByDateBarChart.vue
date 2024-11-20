@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <canvas id="idEventsByDateChart" style="max-height: 350px;"></canvas>
+            <canvas id="idEventsByDateChart" style="max-height: 450px;"></canvas>
         </div>
     </div>
 </template>
@@ -49,6 +49,7 @@ export default {
         }),
 
         monthNames() { return ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'] },
+        weekdayLabels() { return ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'] },
     },
 
     watch: {
@@ -67,7 +68,7 @@ export default {
 
     data() {
         return {
-            eventsByDateObject: {}, colors: color_pallete.color_pallete_1,
+            eventsByDateObject: null, colors: color_pallete.color_pallete_1,
         }
     },
 
@@ -87,10 +88,21 @@ export default {
         },
 
         createEventsByDate() {
+            if(this.eventsByDateObject != null && this.eventsByDateObject.chart.id != undefined){
+                this.eventsByDateObject.destroy()
+            }
+
             var vm = this
             var labels = []    //LABELS OF CHART
             var grouppedTimestamp = this.groupBy(this.eventsList, event => moment(event.timestamp).format("YYYY-MM-DD"))
             var timestampDataArray = []
+
+            let chartId = $("#idEventsByDateChart")
+            this.eventsByDateObject = new Chart(chartId, {
+                type: 'bar',
+                data: [],
+                options: []
+            });
 
             if (this.eventByDateView == 'month') {
                 // Creating array of dates => ["Dez/2023", "Jan/2024", ....]
@@ -120,7 +132,7 @@ export default {
                 })
             }
 
-            else if (this.eventByDateView == 'day') {
+            if (this.eventByDateView == 'day') {
                 labels = grouppedTimestamp.map(function (val, idx) { return moment(val[0]).format("DD/MM/YYYY") })
                 labels.sort()
                 timestampDataArray = new Array(labels.length).fill(0)
@@ -132,9 +144,8 @@ export default {
                 })
             }
 
-            else if (this.eventByDateView == 'weekday') {
-                var weekdayLabels = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
-                labels = weekdayLabels
+            if (this.eventByDateView == 'weekday') {
+                labels = this.weekdayLabels
                 timestampDataArray = new Array(labels.length).fill(0)
 
                 grouppedTimestamp.map(function (val, idx) {
@@ -171,7 +182,6 @@ export default {
                     callbacks: {
                         label: function (tooltipItem, data) {
                             var labelString = data.datasets[0]['data'][tooltipItem.index] > 1 ? ' eventos' : ' evento'
-
                             return data.datasets[0]['data'][tooltipItem.index] + labelString
                         }
                     }
@@ -183,10 +193,14 @@ export default {
                         position: 'left',
                         title: 'Qntd.',
                         barPercentage: 0.3,
-                        min: 0,
-                        beginAtZero: true
+                        ticks: {
+                            beginAtZero: true
+                        }
                     }],
                     xAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
                         gridLines: {
                             drawBorder: false,
                             drawOnChartArea: false,
@@ -198,12 +212,9 @@ export default {
                 },
             }
 
-            let chartId = $("#idEventsByDateChart")
-            this.eventsByHourObject = new Chart(chartId, {
-                type: 'bar',
-                data: chartData,
-                options: extraOptions
-            });
+            this.eventsByDateObject.data = chartData
+            this.eventsByDateObject.options = extraOptions
+            this.eventsByDateObject.update()
         },
 
     },

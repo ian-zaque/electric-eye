@@ -66,7 +66,7 @@ export default {
 
   data() {
     return {
-      eventsByRegionObject: {}, colors: color_pallete.color_pallete_1,
+      eventsByRegionObject: null, colors: color_pallete.color_pallete_1,
     }
   },
 
@@ -89,6 +89,12 @@ export default {
     },
 
     createEventsByRegion() {
+      let chartId = $("#idEventsByRegionChart")
+      this.eventsByRegionObject = new Chart(chartId, {
+        type: 'bar',
+        data: [],
+        options: []
+      });
       var regionsLabel = this.regionsList.map(r => r.name).sort()
       var eventsAmountArray = new Array(regionsLabel.length).fill(0)
 
@@ -140,10 +146,14 @@ export default {
             position: 'left',
             title: 'Qntd.',
             barPercentage: 0.3,
-            min: 0,
-            beginAtZero: true
+            ticks: {
+              beginAtZero: true
+            }
           }],
           xAxes: [{
+            ticks: {
+              beginAtZero: true
+            },
             gridLines: {
               drawBorder: false,
               drawOnChartArea: false,
@@ -155,12 +165,9 @@ export default {
         },
       }
 
-      let chartId = $("#idEventsByRegionChart")
-      this.eventsByRegionObject = new Chart(chartId, {
-        type: 'bar',
-        data: chartData,
-        options: extraOptions
-      });
+      this.eventsByRegionObject.data = chartData
+      this.eventsByRegionObject.options = extraOptions
+      this.eventsByRegionObject.update()
     },
 
   },
