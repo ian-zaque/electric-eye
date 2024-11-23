@@ -25,7 +25,7 @@ export default {
         return {
             isSidebarOpen: true, sidebarProps: { theme: "default", width: "250px", disableHover: false, relative: true, },
             sidebarItems: [
-                { header: true, title: "Eye of the Beholder", hiddenOnCollapse: true, },
+                { header: true, title: "Electric Eye", hiddenOnCollapse: true, },
                 { href: "/", title: "Início", icon: "fa-solid fa-house", },
                 { href: '/regions', title: "Regiões", icon: 'fa-solid fa-globe' },
                 { href: '/zones', title: "Zonas de Interesse", icon: 'fa-solid fa-magnifying-glass-location' },  
