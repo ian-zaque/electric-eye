@@ -133,17 +133,51 @@ export default {
         ]),
 
         populateEventsMap(){
+            var vm = this
+
             if(this.eventsList && this.eventsList.length > 0){
                 const markers = Leaflet.markerClusterGroup();
                 this.eventsList.map(function(value, index){
-                    var measured_value = Object.values(JSON.parse(value.event))[0]
+                    var emergency = Object.values(JSON.parse(value.event))[0]
+                    var parameter = null
+                    var event_type = ''
+                    var each_marker = null
 
-                    const each_marker = Leaflet.marker([value.ude.latitude, value.ude.longitude])
-                        .bindPopup(`<strong> Evento ${value.id} </strong> <br>
+                    vm.sensorsList.map(function(sensor, idx){
+                        sensor.emergencies.map(function(params, i){
+                            params.emergency_parameters.map(function(emerg){
+                                if(emerg.name == emergency.sensor){
+                                    parameter = emerg
+                                }
+                            })
+                        })
+                    })
+
+                    if(parameter.value <= emergency.value){
+                        each_marker = Leaflet.marker([value.ude.latitude, value.ude.longitude])
+                        event_type = 'Padrão'
+                    }
+                    else {
+                        var goldenIcon = new L.Icon({
+                            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
+                            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                            iconSize: [25, 41],
+                            iconAnchor: [12, 41],
+                            popupAnchor: [1, -34],
+                            shadowSize: [41, 41]
+                        });
+                        event_type = 'Anômalo'
+
+                        each_marker = Leaflet.marker([value.ude.latitude, value.ude.longitude], { icon: goldenIcon } )
+                    }
+
+                    var popup = `<strong> Evento ${value.id} </strong> <br>
                             UDE ${value.ude.ude_class.class}: ${value.ude.name} <br>
                             Data: ${moment(value.timestamp).format("DD/MM/YYYY hh:mm:ss")} <br>
-                            <strong>${measured_value.sensor}: ${measured_value.value} </strong>
-                        `);
+                            <strong>${emergency.sensor}: ${emergency.value} </strong> <br>
+                            Evento: ${event_type}.`
+
+                    each_marker.bindPopup(popup);
                     markers.addLayer(each_marker);
                 })
                 this.eventsMap.addLayer(markers)
@@ -212,6 +246,8 @@ export default {
     },
 
     async mounted(){
+        this.fetchSensors()
+
         await this.fetchEvents()
             .then(() => {
                 this.createEventsMap()

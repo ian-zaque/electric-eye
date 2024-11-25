@@ -262,13 +262,13 @@ export default {
     },
 
     watch: {
-        eventsList(newValue){
-            if(newValue){
-                newValue.map(function(value, index){
-                    console.log('VALUE >>>>', value.timestamp);
-                })
-            }
-        },
+        // eventsList(newValue){
+        //     if(newValue){
+        //         newValue.map(function(value, index){
+        //             console.log('VALUE >>>>', value.timestamp);
+        //         })
+        //     }
+        // },
     },
 
     data() {

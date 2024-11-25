@@ -88,7 +88,7 @@ class UpdateNodeTableProcess implements ShouldQueue
         }
 
         // Armazene o parâmetro gerado em cache ou sessão
-        Cache::put('udes_emergencies_UNTP', $this->udesEmergencies, now()->addMinutes(1));
+        Cache::put('udes_emergencies_UNTP', $this->udesEmergencies, now()->addMinutes(1));              // UNTP => Update Node Table Process
         $this->data = json_encode(["udes" => $this->data]);
 
     }

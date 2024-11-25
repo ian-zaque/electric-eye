@@ -17,7 +17,7 @@ class SensorController extends Controller
      */
     public function index()
     {
-        return response()->json(Sensor::with(['type_sensor', 'emergencies'])->get());
+        return response()->json(Sensor::with(['type_sensor', 'emergencies', 'emergencies.emergency_parameters'])->get());
     }
 
     /**
