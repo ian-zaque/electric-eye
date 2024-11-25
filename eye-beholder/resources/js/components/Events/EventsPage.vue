@@ -153,7 +153,7 @@ export default {
                         })
                     })
 
-                    if(parameter.value <= emergency.value){
+                    if(parameter.value > emergency.value){
                         each_marker = Leaflet.marker([value.ude.latitude, value.ude.longitude])
                         event_type = 'Padrão'
                     }
@@ -174,8 +174,9 @@ export default {
                     var popup = `<strong> Evento ${value.id} </strong> <br>
                             UDE ${value.ude.ude_class.class}: ${value.ude.name} <br>
                             Data: ${moment(value.timestamp).format("DD/MM/YYYY hh:mm:ss")} <br>
+                            Tipo: ${event_type} <br>
                             <strong>${emergency.sensor}: ${emergency.value} </strong> <br>
-                            Evento: ${event_type}.`
+                            Parâmetro: ${parameter.value}.`
 
                     each_marker.bindPopup(popup);
                     markers.addLayer(each_marker);
